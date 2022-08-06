@@ -1,0 +1,3083 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Econometrics in R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Econometrics in R
+## Lecture 4
+### <br>Louis SIRUGUE
+### M1 APE - Fall 2022
+
+---
+
+
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 31%;} &lt;/style&gt;
+
+
+
+
+
+### What we've seen so far
+
+#### Manipulate data with `dplyr`
+
+--
+
+
+```r
+read.csv("ligue1.csv") 
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+```
+
+
+```text
+##     Wk Day       Date  Time          Home  xG Score xG.1          Away Attendance  ...
+## 1    1 Fri 2021-08-06 21:00        Monaco 2.0   1–1  0.3        Nantes       7500  ...
+## 2    1 Sat 2021-08-07 17:00          Lyon 1.4   1–1  0.8         Brest      29018  ...
+## 3    1 Sat 2021-08-07 21:00        Troyes 0.8   1–2  1.2     Paris S-G      15248  ...
+## 4    1 Sun 2021-08-08 13:00        Rennes 0.6   1–1  2.0          Lens      22567  ...
+## 5    1 Sun 2021-08-08 15:00      Bordeaux 0.7   0–2  3.3 Clermont Foot      18748  ...
+## 6    1 Sun 2021-08-08 15:00    Strasbourg 0.4   0–2  0.9        Angers      23250  ...
+## 7    1 Sun 2021-08-08 15:00          Nice 0.8   0–0  0.2         Reims      18030  ...
+## 8    1 Sun 2021-08-08 15:00 Saint-Étienne 2.1   1–1  1.3       Lorient      20461  ...
+## 9    1 Sun 2021-08-08 17:00          Metz 0.7   3–3  1.4         Lille      15551  ...
+ ...  ... ...        ...   ...           ... ...   ...  ...           ...        ...  ...                      
+```
+
+
+---
+
+### What we've seen so far
+
+#### Manipulate data with `dplyr`
+
+
+```r
+read.csv("ligue1.csv") %&gt;%
+  select(Home, xG, Score, xG.1, Away)               # Keep/drop certain columns
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+```
+
+
+```text
+##              Home  xG Score xG.1          Away
+## 1          Monaco 2.0   1–1  0.3        Nantes
+## 2            Lyon 1.4   1–1  0.8         Brest
+## 3          Troyes 0.8   1–2  1.2     Paris S-G
+## 4          Rennes 0.6   1–1  2.0          Lens
+## 5        Bordeaux 0.7   0–2  3.3 Clermont Foot
+## 6      Strasbourg 0.4   0–2  0.9        Angers
+## 7            Nice 0.8   0–0  0.2         Reims
+## 8   Saint-Étienne 2.1   1–1  1.3       Lorient
+## 9            Metz 0.7   3–3  1.4         Lille
+ ...             ... ...   ...  ...           ...
+```
+
+---
+
+### What we've seen so far
+
+#### Manipulate data with `dplyr`
+
+
+```r
+read.csv("ligue1.csv") %&gt;%
+  select(Home, xG, Score, xG.1, Away) %&gt;%           # Keep/drop certain columns
+  mutate(home_winner = xG &gt; xG.1)                   # Create a new variable
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+```
+
+
+
+```text
+##              Home  xG Score xG.1          Away home_winner
+## 1          Monaco 2.0   1–1  0.3        Nantes        TRUE
+## 2            Lyon 1.4   1–1  0.8         Brest        TRUE
+## 3          Troyes 0.8   1–2  1.2     Paris S-G       FALSE
+## 4          Rennes 0.6   1–1  2.0          Lens       FALSE
+## 5        Bordeaux 0.7   0–2  3.3 Clermont Foot       FALSE
+## 6      Strasbourg 0.4   0–2  0.9        Angers       FALSE
+## 7            Nice 0.8   0–0  0.2         Reims        TRUE
+## 8   Saint-Étienne 2.1   1–1  1.3       Lorient        TRUE
+## 9            Metz 0.7   3–3  1.4         Lille       FALSE
+ ...             ... ...   ...  ...           ...         ...
+```
+
+---
+
+### What we've seen so far
+
+#### Manipulate data with `dplyr`
+
+
+```r
+read.csv("ligue1.csv") %&gt;%
+  select(Home, xG, Score, xG.1, Away) %&gt;%           # Keep/drop certain columns
+  mutate(home_winner = xG &gt; xG.1) %&gt;%               # Create a new variable
+  filter(Home == "Rennes")                          # Keep/drop certain rows 
+                                                    #
+                                                    #
+                                                    #
+```
+
+
+```text
+##      Home  xG Score xG.1          Away home_winner
+## 1  Rennes 0.6   1–1  2.0          Lens       FALSE
+## 2  Rennes 0.9   1–0  0.5        Nantes        TRUE
+## 3  Rennes 1.0   0–2  0.5         Reims        TRUE
+## 4  Rennes 2.4   6–0  0.3 Clermont Foot        TRUE
+## 5  Rennes 0.8   2–0  1.4     Paris S-G       FALSE
+## 6  Rennes 1.5   1–0  0.6    Strasbourg        TRUE
+## 7  Rennes 3.8   4–1  1.1          Lyon        TRUE
+## 8  Rennes 3.1   2–0  0.7   Montpellier        TRUE
+## 9  Rennes 0.8   1–2  0.6         Lille        TRUE
+         ... ...   ...  ...           ...         ...
+```
+
+---
+
+### What we've seen so far
+
+#### Manipulate data with `dplyr`
+
+
+```r
+read.csv("ligue1.csv") %&gt;%
+  select(Home, xG, Score, xG.1, Away) %&gt;%           # Keep/drop certain columns
+  mutate(home_winner = xG &gt; xG.1) %&gt;%               # Create a new variable
+  filter(Home == "Rennes") %&gt;%                      # Keep/drop certain rows
+  arrange(-xG)                                      # Sort rows
+                                                    #
+                                                    #
+```
+
+
+```text
+##      Home  xG Score xG.1          Away home_winner
+## 1  Rennes 3.8   4–1  1.1          Lyon        TRUE
+## 2  Rennes 3.3   6–0  0.4      Bordeaux        TRUE
+## 3  Rennes 3.3   6–1  0.9          Metz        TRUE
+## 4  Rennes 3.1   2–0  0.7   Montpellier        TRUE
+## 5  Rennes 2.7   2–0  0.3         Brest        TRUE
+## 6  Rennes 2.6   4–1  0.4        Troyes        TRUE
+## 7  Rennes 2.4   6–0  0.3 Clermont Foot        TRUE
+## 8  Rennes 1.9   2–3  2.9        Monaco       FALSE
+## 9  Rennes 1.7   2–0  0.3        Angers        TRUE
+         ... ...   ...  ...           ...         ...
+```
+
+---
+
+### What we've seen so far
+
+#### Manipulate data with `dplyr`
+
+
+```r
+read.csv("ligue1.csv") %&gt;%
+  select(Home, xG, Score, xG.1, Away) %&gt;%           # Keep/drop certain columns
+  mutate(home_winner = xG &gt; xG.1) %&gt;%               # Create a new variable
+  filter(Home == "Rennes") %&gt;%                      # Keep/drop certain rows
+  arrange(-xG) %&gt;%                                  # Sort rows
+  summarise(expected_wins = mean(home_winner),      # Aggregate into statistics
+            expected_goals = sum(xG))               #
+```
+
+```
+##   expected_wins expected_goals
+## 1     0.8421053           36.6
+```
+
+---
+
+### What we've seen so far
+
+#### Plot data with `ggplot()`
+
+--
+
+
+```r
+ggplot(read.csv("wid.csv"))                                         # Data
+                                                                    #
+```
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-14-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### What we've seen so far
+
+#### Plot data with `ggplot()`
+ 
+
+```r
+ggplot(read.csv("wid.csv"), aes(x = inc_head, y = top1))            # Data &amp; aesthetics
+                                                                    #
+```
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### What we've seen so far
+
+#### Plot data with `ggplot()`
+
+
+```r
+ggplot(read.csv("wid.csv"), aes(x = inc_head, y = top1)) +          # Data &amp; aesthetics
+  geom_point()                                                      # Geometry
+```
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-18-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### What we've seen so far
+
+#### Write reports with `R markdown`
+
+--
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.left-column[
+
+````markdown
+---
+title: "Starbucks"
+author: "Louis Sirugue"
+output: html_document
+---
+````
+]
+
+.right-column[
+]
+
+&lt;img src = "starbucks_top.png" width = "399" style = "margin-top:-15.25cm !important;margin-left:18.6cm;margin-bottom:19cm"/&gt;
+
+---
+
+### What we've seen so far
+
+#### Write reports with `R markdown`
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.left-column[
+
+````markdown
+---
+title: "Starbucks"
+author: "Louis Sirugue"
+output: html_document
+---
+
+```{r, echo = F, message = F, warning = F}
+library(ggplot2) # Load package
+starbucks &lt;- read.csv("starbucks.csv", sep = ";") # Load data
+```
+
+Nutritional values of `r nrow(starbucks)` *starbucks* beverages
+
+````
+]
+
+.right-column[
+]
+
+&lt;img src = "starbucks_mid.png" width = "399" style = "margin-top:-15.25cm !important;margin-left:18.6cm;margin-bottom:15cm"/&gt;
+
+
+---
+
+### What we've seen so far
+
+#### Write reports with `R markdown`
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+.left-column[
+
+````markdown
+---
+title: "Starbucks"
+author: "Louis Sirugue"
+output: html_document
+---
+
+```{r, echo = F, message = F, warning = F}
+library(ggplot2) # Load package
+starbucks &lt;- read.csv("starbucks.csv", sep = ";") # Load data
+```
+
+Nutritional values of `r nrow(starbucks)` *starbucks* beverages
+
+```{r, fig.height = 4}
+ggplot(starbucks, aes(x = Calories, y = Cholesterol, 
+                      size = Trans.Fat, color = Sugars)) +
+  geom_point(alpha = .3) + theme_minimal(base_size = 14) +
+  scale_color_gradient(low = "green", high = "red") 
+```
+````
+]
+
+.right-column[
+]
+
+&lt;img src = "starbucks.png" width = "399" style = "margin-top:-15cm !important;margin-left:18.6cm;margin-bottom:1.08cm"/&gt;
+
+---
+
+&lt;h3&gt;Today: Econometrics in R!&lt;/h3&gt;
+
+--
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Univariate regressions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous dependent variable&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete dependent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Multivariate regressions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Categorical dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Interactions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Inference&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Report and export results&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+
+---
+
+&lt;h3&gt;Today: Econometrics in R!&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Univariate regressions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous dependent variable&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete dependent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;For this part we're going to work with the &lt;b&gt;&lt;i&gt;'Great Gatsby Curve'&lt;/b&gt;&lt;/i&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It refers to the positive relationship between &lt;b&gt;inequality&lt;/b&gt; and &lt;b&gt;intergenerational income persistence&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The term was coined by Alan Krueger based on the research of Miles Corak&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+```r
+ggcurve &lt;- read.csv("ggcurve.csv")
+str(ggcurve)
+```
+
+```
+## 'data.frame':	22 obs. of  3 variables:
+##  $ country: chr  "Denmark" "Norway" "Finland" "Canada" ...
+##  $ ige    : num  0.15 0.17 0.18 0.19 0.26 0.27 0.29 0.32 0.34 0.4 ...
+##  $ gini   : num  0.378 0.325 0.378 0.463 0.439 ...
+```
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;For &lt;b&gt;22 countries&lt;/b&gt; we have the following variables&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;ige:&lt;/b&gt; The intergenerational income elasticity, the higher the more child income is close to parent income&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;gini:&lt;/b&gt; The Gini coefficient of income inequality, the higher the more income is concentrated&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;You must already be quite familiar with univariate &lt;b&gt;regressions&lt;/b&gt; \(y = \alpha + \beta x + \varepsilon\)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:3.02cm;"&gt;
+
+
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-21-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;You must already be quite familiar with univariate &lt;b&gt;regressions&lt;/b&gt; \(y = \alpha + \beta x + \varepsilon\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We're looking for the line \(\hat{y_i} = \hat{\alpha} + \hat{\beta} x_i\) that &lt;b&gt;mimimizes distance&lt;/b&gt; to the data points \(\sum\varepsilon_i^2\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:2.1cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-22-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;You must already be quite familiar with univariate &lt;b&gt;regressions&lt;/b&gt; \(y = \alpha + \beta x + \varepsilon\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We're looking for the line \(\hat{y_i} = \hat{\alpha} + \hat{\beta} x_i\) that &lt;b&gt;mimimizes distance&lt;/b&gt; to the data points \(\sum\varepsilon_i^2\)&lt;/li&gt;
+    &lt;li&gt;Such that for a &lt;b&gt;one unit increase&lt;/b&gt; in \(x\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.38cm;"&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-23-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;You must already be quite familiar with univariate &lt;b&gt;regressions&lt;/b&gt; \(y = \alpha + \beta x + \varepsilon\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We're looking for the line \(\hat{y_i} = \hat{\alpha} + \hat{\beta} x_i\) that &lt;b&gt;mimimizes distance&lt;/b&gt; to the data points \(\sum\varepsilon_i^2\)&lt;/li&gt;
+    &lt;li&gt;Such that for a &lt;b&gt;one unit increase&lt;/b&gt; in \(x\)&lt;/li&gt;
+    &lt;li&gt;Its slope \(\hat{\beta}\) indicates the associated &lt;b&gt;expected change&lt;/b&gt; in \(y\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-24-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;In R we can &lt;b&gt;estimate a regression&lt;/b&gt; model using the &lt;b&gt;lm()&lt;/b&gt; command &lt;i&gt;(for &lt;b&gt;L&lt;/b&gt;inear &lt;b&gt;M&lt;/b&gt;odel)&lt;/i&gt;&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+
+```r
+lm( , )
+```
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;In R we can &lt;b&gt;estimate a regression&lt;/b&gt; model using the &lt;b&gt;lm()&lt;/b&gt; command &lt;i&gt;(for &lt;b&gt;L&lt;/b&gt;inear &lt;b&gt;M&lt;/b&gt;odel)&lt;/i&gt;&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;The first argument is the &lt;b&gt;formula&lt;/b&gt;, written as &lt;b&gt;y ~ x&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+
+```r
+lm(ige ~ gini, )
+```
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;In R we can &lt;b&gt;estimate a regression&lt;/b&gt; model using the &lt;b&gt;lm()&lt;/b&gt; command &lt;i&gt;(for &lt;b&gt;L&lt;/b&gt;inear &lt;b&gt;M&lt;/b&gt;odel)&lt;/i&gt;&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;The first argument is the &lt;b&gt;formula&lt;/b&gt;, written as &lt;b&gt;y ~ x&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The second argument is the &lt;b&gt;data&lt;/b&gt; containing the variables&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+
+```r
+lm(ige ~ gini, ggcurve)
+```
+
+--
+
+
+```
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## Coefficients:
+## (Intercept)         gini  
+##    -0.09129      1.01546
+```
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;This is great but the &lt;b&gt;output&lt;/b&gt; is a bit minimalistic&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;To get a more &lt;b&gt;exhaustive description&lt;/b&gt; of our regression we can apply the &lt;b&gt;summary()&lt;/b&gt; function to lm()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+ggmodel &lt;- lm(ige ~ gini, ggcurve) %&gt;% summary()
+```
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;p style = "margin-bottom:-.35cm;"&gt;&lt;/p&gt;
+
+
+```r
+ggmodel
+```
+
+```
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.188991 -0.088238 -0.000855  0.047284  0.252310 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -0.09129    0.12870  -0.709  0.48631   
+## gini         1.01546    0.26425   3.843  0.00102 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1159 on 20 degrees of freedom
+## Multiple R-squared:  0.4247,	Adjusted R-squared:  0.396 
+## F-statistic: 14.77 on 1 and 20 DF,  p-value: 0.001016
+```
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * It gives back the **command** 
+ 
+.left-column[
+
+&lt;p style = "margin-bottom:-.53cm;"&gt;&lt;/p&gt;
+ 
+
+```text
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+```
+]
+
+.right-column[
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Command
+]
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * A description of the **distribution** of **residuals**
+ 
+.left-column[
+
+&lt;p style = "margin-bottom:-.53cm;"&gt;&lt;/p&gt;
+
+
+```text
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.188991 -0.088238 -0.000855  0.047284  0.252310 
+## 
+## 
+##
+## 
+##
+## 
+## 
+## 
+## 
+## 
+## 
+```
+]
+
+.right-column[
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Command  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residuals distribution
+]
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * **Coefficients** along with their **standard error**, **t-value**, and **p-value**
+ 
+.left-column[
+
+&lt;p style = "margin-bottom:-.53cm;"&gt;&lt;/p&gt;
+ 
+
+```text
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.188991 -0.088238 -0.000855  0.047284  0.252310 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -0.09129    0.12870  -0.709  0.48631   
+## gini         1.01546    0.26425   3.843  0.00102 
+## 
+## 
+## 
+## 
+## 
+## 
+```
+]
+
+.right-column[
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Command  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residuals distribution  
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Coefs, s.e., t-/p-values
+]
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * **Significance** thresholds with symbols
+ 
+.left-column[
+
+&lt;p style = "margin-bottom:-.53cm;"&gt;&lt;/p&gt;
+  
+
+```text
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.188991 -0.088238 -0.000855  0.047284  0.252310 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -0.09129    0.12870  -0.709  0.48631   
+## gini         1.01546    0.26425   3.843  0.00102 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## 
+## 
+## 
+```
+]
+
+.right-column[
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Command  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residuals distribution  
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Coefs, s.e., t-/p-values  
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Significance  
+]
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+&lt;p style = "margin-bottom:-.07cm;"&gt;&lt;/p&gt;
+
+ * The **residual standard error** `\(\sqrt{\sum{(y_i-\hat{y_i})^2}/\text{df}}\)` and **degrees of freedom**
+ 
+&lt;p style = "margin-bottom:-.07cm;"&gt;&lt;/p&gt;
+
+.left-column[
+
+&lt;p style = "margin-bottom:-.53cm;"&gt;&lt;/p&gt;
+  
+
+```text
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.188991 -0.088238 -0.000855  0.047284  0.252310 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -0.09129    0.12870  -0.709  0.48631   
+## gini         1.01546    0.26425   3.843  0.00102 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1159 on 20 degrees of freedom
+## 
+## 
+```
+]
+
+.right-column[
+&lt;p style = "margin-bottom:-.02cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Command  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residuals distribution  
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Coefs, s.e., t-/p-values  
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Significance  
+&lt;p style = "margin-bottom:-.2cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residual s.e. &amp; df.  
+]
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * The `\(R^2\)` and **adjusted** `\(R^2\)`
+ 
+.left-column[
+
+&lt;p style = "margin-bottom:-.53cm;"&gt;&lt;/p&gt;
+  
+
+```text
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.188991 -0.088238 -0.000855  0.047284  0.252310 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -0.09129    0.12870  -0.709  0.48631   
+## gini         1.01546    0.26425   3.843  0.00102 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1159 on 20 degrees of freedom
+## Multiple R-squared:  0.4247,    Adjusted R-squared:  0.396 
+## 
+```
+]
+
+.right-column[
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Command  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residuals distribution  
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Coefs, s.e., t-/p-values  
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Significance  
+&lt;p style = "margin-bottom:-.2cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residual s.e. &amp; df.  
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; R&lt;sup&gt;2&lt;/sup&gt; &amp; adjusted R&lt;sup&gt;2&lt;/sup&gt;  
+]
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * The result of an **F-test** ($H_0: \beta_k = 0 \forall k$)
+ 
+.left-column[
+
+&lt;p style = "margin-bottom:-.53cm;"&gt;&lt;/p&gt;
+  
+
+```text
+## 
+## Call:
+## lm(formula = ige ~ gini, data = ggcurve)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.188991 -0.088238 -0.000855  0.047284  0.252310 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept) -0.09129    0.12870  -0.709  0.48631   
+## gini         1.01546    0.26425   3.843  0.00102 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.1159 on 20 degrees of freedom
+## Multiple R-squared:  0.4247,    Adjusted R-squared:  0.396 
+## F-statistic: 14.77 on 1 and 20 DF,  p-value: 0.001016
+```
+]
+
+.right-column[
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Command  
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residuals distribution  
+&lt;p style = "margin-bottom:1.75cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Coefs, s.e., t-/p-values  
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Significance  
+&lt;p style = "margin-bottom:-.2cm;"&gt;&lt;/p&gt;
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; Residual s.e. &amp; df.  
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; R&lt;sup&gt;2&lt;/sup&gt; &amp; adjusted R&lt;sup&gt;2&lt;/sup&gt;  
+&lt;b&gt;&amp;#x1F804;&lt;/b&gt; F-test results
+]
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * All these elements are then easily accessible with the `$` operator 
+
+
+```r
+str(ggmodel, give.attr = F)
+```
+
+```
+## List of 11
+##  $ call         : language lm(formula = ige ~ gini, data = ggcurve)
+##  $ terms        :Classes 'terms', 'formula'  language ige ~ gini
+##  $ residuals    : Named num [1:22] -0.1427 -0.0687 -0.1125 -0.189 -0.094 ...
+##  $ coefficients : num [1:2, 1:4] -0.0913 1.0155 0.1287 0.2642 -0.7093 ...
+##  $ aliased      : Named logi [1:2] FALSE FALSE
+##  $ sigma        : num 0.116
+##  $ df           : int [1:3] 2 20 2
+##  $ r.squared    : num 0.425
+##  $ adj.r.squared: num 0.396
+##  $ fstatistic   : Named num [1:3] 14.8 1 20
+##  $ cov.unscaled : num [1:2, 1:2] 1.23 -2.48 -2.48 5.19
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&lt;i&gt;&amp;#10140; Let's try it out!&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * Take the **coefficients** for instance
+
+
+```r
+ggmodel$coefficients
+```
+
+```
+##                Estimate Std. Error    t value    Pr(&gt;|t|)
+## (Intercept) -0.09129311  0.1287045 -0.7093234 0.486311455
+## gini         1.01546204  0.2642477  3.8428420 0.001015706
+```
+
+--
+
+ * We can **subset** this matrix like we would do with a regular `data.frame`
+ 
+
+```r
+ggmodel$coefficients[2, 1]
+```
+
+```
+## [1] 1.015462
+```
+
+--
+
+
+```r
+ggmodel$coefficients[, "Pr(&gt;|t|)"]
+```
+
+```
+## (Intercept)        gini 
+## 0.486311455 0.001015706
+```
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * We can also easily **plot** the **distribution** of our **residuals** 
+ 
+
+```r
+ggplot(tibble(x = ggmodel$residuals), aes(x = x)) +
+  geom_density() + geom_vline(xintercept = 0, linetype = "dashed")
+```
+
+--
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-43-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Continuous dependent variable
+
+ * Note that ggplot() has a dedicated **geometry for fitted values:** `geom_smooth()`
+
+--
+
+
+```r
+ggplot(ggcurve, aes(x = gini, y = ige)) + 
+  geom_point() + geom_smooth(method = "lm")
+```
+
+--
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-45-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Practice 
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Check that lm() works fine by computing the \(R^2\) manually&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+#### 1) Start by creating a variable for `\(\hat{\beta}\)`, then for `\(\hat{\alpha}\)`, `\(\hat{y_i}\)`, and `\(\hat{\varepsilon_i}\)`.
+
+--
+
+`$$\hat{\beta} = \frac{\text{Cov}(x, y)}{\text{Var}(x)} \:\:\:\: \:\:\:\:\: ; \:\:\:\:\:\:\:\:\: \hat{\alpha} = \bar{y} - \hat{\beta} \times\bar{x}$$`
+
+*You're gonna need the `cov()` and `var()` functions*
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+#### 2) Summarise the data into only `\(\hat{\alpha}\)`, `\(\hat{\beta}\)`, and the `\(R^2\)`
+
+--
+
+`$$R^2 = 1 - \frac{\sum(y_i-\hat{y_i})^2}{\sum(y_i-\bar{y_i})^2}$$`
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+<div class="countdown" id="timer_62ed594e" style="top:0;right:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+### Solution
+
+
+```r
+ggcurve %&gt;% 
+    mutate(beta = cov(gini, ige) / var(gini)) 
+#
+#
+#
+#
+#
+#
+```
+
+
+```text
+##           country  ige      gini     beta 
+## 1         Denmark 0.15 0.3781796 1.015462 
+## 2          Norway 0.17 0.3250102 1.015462 
+## 3         Finland 0.18 0.3779868 1.015462 
+## 4          Canada 0.19 0.4631237 1.015462 
+## 5       Australia 0.26 0.4385511 1.015462 
+## 6          Sweden 0.27 0.3582480 1.015462 
+## 7     New Zealand 0.29 0.5039373 1.015462 
+## 8         Germany 0.32 0.4377010 1.015462 
+## 9           Japan 0.34 0.5198383 1.015462 
+## 10          Spain 0.40 0.4826243 1.015462 
+## 11         France 0.41 0.4495654 1.015462 
+## ..            ...  ...       ...      ... 
+```
+
+---
+
+### Solution
+
+
+```r
+ggcurve %&gt;% 
+    mutate(beta = cov(gini, ige) / var(gini),
+           alpha = mean(ige) - beta * mean(gini))
+#
+#
+#
+#
+#
+```
+
+
+```text
+##           country  ige      gini     beta       alpha 
+## 1         Denmark 0.15 0.3781796 1.015462 -0.09129311 
+## 2          Norway 0.17 0.3250102 1.015462 -0.09129311 
+## 3         Finland 0.18 0.3779868 1.015462 -0.09129311 
+## 4          Canada 0.19 0.4631237 1.015462 -0.09129311 
+## 5       Australia 0.26 0.4385511 1.015462 -0.09129311 
+## 6          Sweden 0.27 0.3582480 1.015462 -0.09129311 
+## 7     New Zealand 0.29 0.5039373 1.015462 -0.09129311 
+## 8         Germany 0.32 0.4377010 1.015462 -0.09129311 
+## 9           Japan 0.34 0.5198383 1.015462 -0.09129311 
+## 10          Spain 0.40 0.4826243 1.015462 -0.09129311 
+## 11         France 0.41 0.4495654 1.015462 -0.09129311 
+## ..            ...  ...       ...      ...         ... 
+```
+
+---
+
+### Solution
+
+
+```r
+ggcurve %&gt;% 
+    mutate(beta = cov(gini, ige) / var(gini),
+           alpha = mean(ige) - beta * mean(gini),
+           fit = alpha + beta * gini)  
+#
+#
+#
+#
+```
+
+
+```text
+##           country  ige      gini     beta       alpha       fit 
+## 1         Denmark 0.15 0.3781796 1.015462 -0.09129311 0.2927339 
+## 2          Norway 0.17 0.3250102 1.015462 -0.09129311 0.2387424 
+## 3         Finland 0.18 0.3779868 1.015462 -0.09129311 0.2925381 
+## 4          Canada 0.19 0.4631237 1.015462 -0.09129311 0.3789915 
+## 5       Australia 0.26 0.4385511 1.015462 -0.09129311 0.3540389 
+## 6          Sweden 0.27 0.3582480 1.015462 -0.09129311 0.2724942 
+## 7     New Zealand 0.29 0.5039373 1.015462 -0.09129311 0.4204361 
+## 8         Germany 0.32 0.4377010 1.015462 -0.09129311 0.3531757 
+## 9           Japan 0.34 0.5198383 1.015462 -0.09129311 0.4365829 
+## 10          Spain 0.40 0.4826243 1.015462 -0.09129311 0.3987935
+## 11         France 0.41 0.4495654 1.015462 -0.09129311 0.3652234
+## ..            ...  ...       ...      ...         ...       ...
+```
+
+---
+
+### Solution
+
+
+```r
+ggcurve %&gt;% 
+    mutate(beta = cov(gini, ige) / var(gini),
+           alpha = mean(ige) - beta * mean(gini),
+           fit = alpha + beta * gini,
+           residuals = ige - fit)
+#
+#
+#
+```
+
+
+```text
+##           country  ige      gini     beta       alpha       fit     residuals
+## 1         Denmark 0.15 0.3781796 1.015462 -0.09129311 0.2927339 -0.1427339244
+## 2          Norway 0.17 0.3250102 1.015462 -0.09129311 0.2387424 -0.0687424324
+## 3         Finland 0.18 0.3779868 1.015462 -0.09129311 0.2925381 -0.1125381050
+## 4          Canada 0.19 0.4631237 1.015462 -0.09129311 0.3789915 -0.1889914561
+## 5       Australia 0.26 0.4385511 1.015462 -0.09129311 0.3540389 -0.0940388831
+## 6          Sweden 0.27 0.3582480 1.015462 -0.09129311 0.2724942 -0.0024941569
+## 7     New Zealand 0.29 0.5039373 1.015462 -0.09129311 0.4204361 -0.1304360777
+## 8         Germany 0.32 0.4377010 1.015462 -0.09129311 0.3531757 -0.0331756674
+## 9           Japan 0.34 0.5198383 1.015462 -0.09129311 0.4365829 -0.0965829037
+## 10          Spain 0.40 0.4826243 1.015462 -0.09129311 0.3987935  0.0012065012
+## 11         France 0.41 0.4495654 1.015462 -0.09129311 0.3652234  0.0447765627
+## ..            ...  ...       ...      ...         ...       ...           ...
+```
+
+---
+
+### Solution
+
+
+```r
+ggcurve %&gt;% 
+    mutate(beta = cov(gini, ige) / var(gini),
+           alpha = mean(ige) - beta * mean(gini),
+           fit = alpha + beta * gini,
+           residuals = ige - fit) %&gt;%
+    summarise(alpha = alpha[1],
+              beta = beta[1],
+              r2 = 1 - sum(residuals^2)/sum((ige - mean(ige))^2))
+```
+
+
+```text
+##         alpha     beta       r2
+## 1 -0.09129311 1.015462 0.424749
+```
+
+--
+
+
+```r
+ggmodel$coefficients[, "Estimate"]
+```
+
+```
+## (Intercept)        gini 
+## -0.09129311  1.01546204
+```
+
+--
+
+
+```r
+ggmodel$r.squared
+```
+
+```
+## [1] 0.424749
+```
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+ * Now consider that we want to know the **relationship** between **not** being a **European country** and the **ige**
+
+--
+
+
+```r
+ggcurve$country
+```
+
+```
+##  [1] "Denmark"        "Norway"         "Finland"        "Canada"        
+##  [5] "Australia"      "Sweden"         "New Zealand"    "Germany"       
+##  [9] "Japan"          "Spain"          "France"         "Singapore"     
+## [13] "Pakistan"       "Switzerland"    "United States"  "Argentina"     
+## [17] "Italy"          "United Kingdom" "Chile"          "Brazil"        
+## [21] "China"          "Peru"
+```
+
+--
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+europe &lt;- c("Denmark", "Norway", "Finland", "Sweden", "Germany", "Spain", 
+            "France", "Switzerland", "Italy", "United Kingdom")
+```
+
+--
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+ggcurve &lt;- ggcurve %&gt;%
+  mutate(continent = ifelse(country %in% europe, "Europe", "Other"))
+```
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+ * Can we just **regress** ige **on** continent even though it's a **character** variable?
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+```r
+lm(ige ~ continent, ggcurve)
+```
+
+--
+
+
+```
+## 
+## Call:
+## lm(formula = ige ~ continent, data = ggcurve)
+## 
+## Coefficients:
+##    (Intercept)  continentOther  
+##         0.3360          0.1065
+```
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+ * Seems like we can!
+ 
+--
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+ 
+&lt;center&gt;&lt;b&gt;&lt;i&gt;&amp;#10140; But what's actually going on?&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+ * R implicitely **converts** character variables into **binary** variables
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-63-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+ * Such that just **like** in the **continuous** case...
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-64-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+ * ... we're looking at a **1-unit increase** in `\(x\)` *(i.e., swiching from 0 (Europe) to 1 (Other))*
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-65-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+ * As you know the **fit** is necessarily going through the **mean of each category**
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-66-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+ * Such that `\(\hat{\alpha}\)` is the **mean of the reference group** 
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-67-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+&lt;p style = "margin-bottom:-.1cm;"&gt;&lt;/p&gt;
+
+ * And `\(\hat{\beta}\)` is the **difference in means**
+ 
+&lt;p style = "margin-bottom:-.025cm;"&gt;&lt;/p&gt;
+ 
+&lt;img src="slides_files/figure-html/unnamed-chunk-68-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 1. Univariate regressions
+
+#### 1.1. Discrete dependent variable
+
+ * We can verify that easily:
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+ 
+.pull-left[
+
+```r
+ggcurve %&gt;% 
+  group_by(continent) %&gt;%
+  summarise(ybar = mean(ige)) %&gt;%
+  mutate(relative = ybar - ybar[1])
+```
+
+```
+## # A tibble: 2 x 3
+##   continent  ybar relative
+##   &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Europe    0.336    0    
+## 2 Other     0.442    0.106
+```
+]
+
+--
+
+.pull-right[
+
+```r
+lm(ige ~ continent, ggcurve)
+```
+
+```
+## 
+## Call:
+## lm(formula = ige ~ continent, data = ggcurve)
+## 
+## Coefficients:
+##    (Intercept)  continentOther  
+##         0.3360          0.1065
+```
+]
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; And what about discrete variables with more than 2 categories?&lt;/b&gt;&lt;/center&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Univariate regressions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous dependent variable&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete dependent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Multivariate regressions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Categorical dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Interactions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. Inference&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. Report and export results&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Univariate regressions &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. Continuous dependent variable&lt;/li&gt;
+    &lt;li&gt;1.2. Discrete dependent variable&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Multivariate regressions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Categorical dependent variable&lt;/li&gt;
+    &lt;li&gt;2.2. Interactions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;Let's work on the &lt;a href = "https://www.census.gov/data/datasets/time-series/demo/cps/cps-asec.html"&gt;2020 Annual Social and Economic (ASEC) Supplement&lt;/a&gt; to the US CPS&lt;/li&gt;
+  &lt;ul&gt;
+  &lt;li&gt;Here is an extract on 64,336 working individuals with positive earnings&lt;/li&gt;
+  &lt;li&gt;For which I kept only 4 variables:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+asec &lt;- read.csv("asec.csv")
+str(asec)
+```
+
+```
+## 'data.frame':	64336 obs. of  4 variables:
+##  $ Sex     : chr  "Female" "Male" "Female" "Male" ...
+##  $ Earnings: int  52500 34000 40000 8424 58000 42000 55000 28000 200 25000 ...
+##  $ Race    : chr  "White" "White" "White" "White" ...
+##  $ Hours   : int  40 40 44 21 60 40 40 40 20 40 ...
+```
+
+--
+
+ * Let's say we want to regress earnings on Race
+
+
+```r
+unique(asec$Race)
+```
+
+```
+## [1] "White" "Other" "Black"
+```
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;Just like the &lt;b&gt;2-category&lt;/b&gt; variable was equivalent to &lt;b&gt;1 dummy&lt;/b&gt; variable&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;An &lt;b&gt;n-category&lt;/b&gt; variable is equivalent to &lt;b&gt;n-1 dummy&lt;/b&gt; variables&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt; &lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Continent &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Other &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Race &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; Other  &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; White &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Black &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Black &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; White &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Other &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:left;width: 3em; "&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; White &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+
+```r
+lm(Earnings ~ Race, asec)
+```
+
+```
+## 
+## Call:
+## lm(formula = Earnings ~ Race, data = asec)
+## 
+## Coefficients:
+## (Intercept)    RaceOther    RaceWhite  
+##       50577        17477        12303
+```
+
+]
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+ * Instead of 1 `\(x\)` axis we're going to have n-1 `\(x\)` axes
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+&lt;center&gt;&lt;b&gt;2-category variable&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-75-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.pull-right[
+&lt;!-- --&gt;
+&lt;center&gt;&lt;b&gt;3-category variable&lt;/b&gt;&lt;/center&gt;
+
+&lt;!-- --&gt;
+]
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+ * Once again the **constant** is the **average** `\(y\)` and the **slopes** are the relative **differences in means**
+
+.pull-left[
+
+```r
+lm(Earnings ~ Race, asec)
+```
+
+```
+## 
+## Call:
+## lm(formula = Earnings ~ Race, data = asec)
+## 
+## Coefficients:
+## (Intercept)    RaceOther    RaceWhite  
+##       50577        17477        12303
+```
+]
+
+--
+
+.pull-right[
+
+```r
+asec %&gt;%
+  group_by(Race) %&gt;%
+  summarise(ybar = mean(Earnings)) %&gt;%
+  mutate(relative = ybar - ybar[1])
+```
+
+```
+## # A tibble: 3 x 3
+##   Race    ybar relative
+##   &lt;chr&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Black 50577.       0 
+## 2 Other 68055.   17477.
+## 3 White 62880.   12303.
+```
+
+]
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Note that R always sorts &lt;b&gt;character&lt;/b&gt; variables by &lt;b&gt;alphabetical order&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But it would be more natural to interpret relative to the &lt;b&gt;majority group&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Then how to change the &lt;b&gt;reference category&lt;/b&gt; in the regression?&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;The function to set the reference category is &lt;b&gt;relevel()&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The first argument is the &lt;b&gt;vector&lt;/b&gt; to indicate the reference of&lt;/li&gt;
+    &lt;li&gt;The second argument is the value of the &lt;b&gt;reference group&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+lm(Earnings ~ relevel(Race, "White"), asec)
+```
+
+--
+
+
+```
+## Error in relevel.default(Race, "White"): 'relevel' only for (unordered) factors
+```
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+ * Oops! I need to introduce you a &lt;b&gt;new class&lt;/b&gt; of R objects first: `factors`
+
+--
+
+.pull-left[
+
+```r
+as.factor(asec$Race) %&gt;% 
+  levels()
+```
+
+```
+## [1] "Black" "Other" "White"
+```
+]
+
+--
+
+.pull-right[
+
+```r
+as.factor(asec$Race) %&gt;% 
+  relevel("White") %&gt;% 
+  levels()
+```
+
+```
+## [1] "White" "Black" "Other"
+```
+]
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;factor class&lt;/b&gt; is made for variables whose values &lt;b&gt;indicate&lt;/b&gt; different &lt;b&gt;groups&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Values are just &lt;b&gt;arbitrary group classifiers&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+individuals &lt;- as.factor(c(1, 2, 3, 4, 5))
+individuals[1]
+```
+
+```
+## [1] 1
+## Levels: 1 2 3 4 5
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;With &lt;b&gt;factors&lt;/b&gt;, R understands that the different values &lt;b&gt;do not mean anything&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;And applying &lt;b&gt;standard operations&lt;/b&gt; to factors &lt;b&gt;does not make sense&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+individuals * 2
+```
+
+```
+## Warning in Ops.factor(individuals, 2): '*' not meaningful for factors
+```
+
+```
+## [1] NA NA NA NA NA
+```
+
+---
+
+### Practice
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 1) Open the data from the World Inequality Database we used in lecture 2
+&lt;p style = "margin-bottom:1.55cm;"&gt;&lt;/p&gt;
+
+--
+
+#### 2) Regress the income share of the top 1% on the year variable
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+#### 3) Redo the same regression after having converted the year variable as a `factor`
+
+&lt;p style = "margin-bottom:3.5cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 5 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+<div class="countdown" id="timer_62ed5805" style="top:0;right:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+### Solution
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 1) Open the data from the World Inequality Database we used in lecture 2
+
+--
+
+
+```r
+wid &lt;- read.csv("wid.csv")
+```
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+#### 2) Regress the income share of the top 1% on the year variable
+
+--
+
+
+```r
+lm(top1 ~ year, wid)
+```
+
+```
+## 
+## Call:
+## lm(formula = top1 ~ year, data = wid)
+## 
+## Coefficients:
+## (Intercept)         year  
+##   2.242e-01   -3.131e-05
+```
+
+---
+
+### Solution
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 3) Redo the same regression after having converted the year variable as a `factor`
+
+--
+
+
+```r
+lm(top1 ~ year, wid %&gt;% mutate(year = as.factor(year)))
+```
+
+```
+## 
+## Call:
+## lm(formula = top1 ~ year, data = wid %&gt;% mutate(year = as.factor(year)))
+## 
+## Coefficients:
+## (Intercept)     year2011     year2012     year2013     year2014     year2015  
+##   0.1621494   -0.0011366   -0.0026891   -0.0013401   -0.0004469   -0.0008683  
+##    year2016     year2017     year2018     year2019  
+##  -0.0001450   -0.0004857   -0.0015236   -0.0018488
+```
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;Another option to include categorical variables is to &lt;b&gt;&lt;i&gt;one hot encode&lt;/i&gt;&lt;/b&gt; the data&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It simply mean &lt;b&gt;converting&lt;/b&gt; the discrete variables into dummies such that &lt;b&gt;everything&lt;/b&gt; is &lt;b&gt;numeric&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+asec &lt;- asec %&gt;% mutate(White = as.numeric(Race == "White"),
+                        Black = as.numeric(Race == "Black"),
+                        Other = as.numeric(Race == "Other"))
+```
+
+--
+
+ * Then we can use the `+` symbol to include n-1 categories in the regression
+
+
+```r
+lm(Earnings ~ Black + Other, asec)
+```
+
+--
+
+
+```
+## 
+## Call:
+## lm(formula = Earnings ~ Black + Other, data = asec)
+## 
+## Coefficients:
+## (Intercept)        Black        Other  
+##       62880       -12303         5174
+```
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+&lt;ul&gt;
+  &lt;li&gt;But do we really need to &lt;b&gt;omit&lt;/b&gt; one &lt;b&gt;category?&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;As we are in the multivariate case let's move from \(\hat{\beta} = \frac{\text{Cov}(x, y)}{\text{Var}(x)}\)&lt;/li&gt;
+    &lt;li&gt;To \(\hat{\beta} = (X'X)^{-1}X'y\)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style="margin-bottom:1.5cm"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+y &lt;- as.matrix(asec$Earnings)
+
+X &lt;- asec %&gt;% 
+  mutate(constant = 1) %&gt;% 
+  select(constant, White, Black, Other) %&gt;% 
+  as.matrix()
+```
+
+&lt;p style="margin-bottom:.75cm"&gt;&lt;/p&gt;
+
+--
+
+.left-column[
+.pull-left[
+
+```r
+dim(X)
+```
+
+```
+## [1] 64336     4
+```
+
+]
+.pull-right[
+
+```r
+dim(t(X))
+```
+
+```
+## [1]     4 64336
+```
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-.53cm"&gt;&lt;/p&gt;
+
+```r
+dim(t(X) %*% X)
+```
+
+```
+## [1] 4 4
+```
+]
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+ * Because of perfect &lt;b&gt;multicollinearity&lt;/b&gt; it will not be possible to invert `\(X'X\)`
+
+
+```r
+solve(t(X) %*% X)
+```
+
+```text
+## Error in solve.default(t(X) %*% X): system is computationally singular
+```
+
+--
+
+.pull-left[
+
+ * We have to &lt;b&gt;remove one category&lt;/b&gt;
+
+
+```r
+X &lt;- asec %&gt;% mutate(constant = 1) %&gt;% 
+* select(constant, Black, Other) %&gt;% 
+  as.matrix()
+  
+solve(t(X) %*% X) %*% (t(X) %*% y)
+```
+
+```
+##                [,1]
+## constant  62880.488
+## Black    -12302.993
+## Other      5174.141
+```
+]
+
+--
+
+.pull-right[
+
+ * Or to &lt;b&gt;remove the constant&lt;/b&gt;
+
+
+```r
+X &lt;- asec %&gt;% #mutate(constant = 1) %&gt;% 
+* select(White, Black, Other) %&gt;% 
+  as.matrix()
+  
+solve(t(X) %*% X) %*% (t(X) %*% y)
+```
+
+```
+##           [,1]
+## White 62880.49
+## Black 50577.49
+## Other 68054.63
+```
+]
+
+---
+
+### 1. Multivariate regressions
+
+#### 2.1 Categorical dependent variable
+
+ * Note that you can remove the constant in lm() by adding `- 1` in the formula
+
+
+```r
+lm(Earnings ~ White + Black + Other - 1, asec)
+```
+
+--
+
+
+```text
+## Coefficients:
+## White  Black  Other  
+## 62880  50577  68055
+```
+
+
+--
+
+.left-column[
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+ * And that it would drop a category anyway
+
+
+```r
+lm(Earnings ~ White + Black + Other, asec)
+```
+
+
+```text
+## Coefficients:
+## (Intercept)        White        Black        Other  
+##       68055        -5174       -17477           NA
+```
+
+]
+
+--
+
+.right-column[
+&lt;p style="margin-bottom:3cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;But it's not because multicollinearity does not break lm() that you should not pay attention to it!&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Case study
+
+#### 2.1 Variable transformation
+
+ * Imagine you want to estimate the **relationship** between **weekly hours** of work and **annual earnings**
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+--
+
+`$$\text{Earnings}_i = \alpha + \beta \text{Hours}_i + \varepsilon_i$$`
+
+--
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+ * We can **estimate it in R** using the Annual Social and Economic Supplement to the US CPS
+
+--
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+ 
+
+```r
+lm(Earnings ~ Hours, asec)
+```
+ 
+
+```text
+## Coefficients:
+## (Intercept)        Hours  
+##      -20039         2078
+```
+
+--
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+ * Are we done?
+ 
+--
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; Let's take a look at what we just did!&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 2. Case study
+
+#### 2.1 Variable transformation
+
+
+```r
+ggplot(asec, aes(x = Hours, y = Earnings)) +
+  geom_point() + geom_smooth(method = "lm")
+```
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-108-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.right-column[
+&lt;p style="margin-bottom:2cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&amp;#10140; Not very satisfactory&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The joint distribution does &lt;b&gt;not seem adequate&lt;/b&gt; on the the &lt;b&gt;y dimension&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Let's take a &lt;b&gt;look&lt;/b&gt; at the earnings &lt;b&gt;distribution&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 2. Case study
+
+#### 2.1 Variable transformation
+
+
+```r
+ggplot(asec, aes(x = Earnings)) +
+  geom_density() 
+```
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-110-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+--
+
+.right-column[
+&lt;p style="margin-bottom:2cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;It's clearly &lt;b&gt;log-normal&lt;/b&gt;&lt;/center&gt;
+&lt;/ul&gt;
+
+&lt;p style="margin-bottom:1.5cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&amp;#10140; Let's &lt;b&gt;plot the log&lt;/b&gt; of it&lt;/center&gt;
+]
+
+---
+
+### 2. Case study
+
+#### 2.1 Variable transformation
+
+
+```r
+ggplot(asec, aes(x = log(Earnings))) +
+  geom_density() 
+```
+
+.left-column[
+&lt;img src="slides_files/figure-html/unnamed-chunk-112-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+]
+--
+
+.right-column[
+&lt;p style="margin-bottom:2cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Better!&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1.5cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&amp;#10140; Let's &lt;b&gt;update&lt;/b&gt; the &lt;b&gt;scatterplot&lt;/b&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Case study
+
+#### 2.1 Functional form
+
+
+```r
+ggplot(asec, aes(x = Hours, y = log(Earnings))) +
+  geom_point(alpha = .1) + geom_smooth(method = "lm")
+```
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-114-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.right-column[
+&lt;p style="margin-bottom:2cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Definitely better!&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1.5cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&amp;#10140; But something &lt;b&gt;still&lt;/b&gt; feels &lt;b&gt;off&lt;/b&gt;&lt;/center&gt;
+]
+
+
+
+---
+
+### 2. Case study
+
+#### 2.1 Functional form
+
+
+```r
+ggplot(asec, aes(x = Hours, y = log(Earnings))) +
+  geom_point(alpha = .1) + geom_smooth(method = "lm", formula = y ~ poly(x, 2))
+```
+
+.left-column[
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-116-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.right-column[
+&lt;p style="margin-bottom:4cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;&amp;#10140; There we go&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Case study
+
+#### 2.1 Functional form
+
+ * We'd better rewrite our model as:
+ 
+`$$\log(\text{Earnings}_i) = \alpha + \beta_1 \text{Hours}_i + \beta_2 \text{Hours}^2_i + \varepsilon_i$$`
+
+--
+
+ * Create the new variables
+
+
+```r
+asec &lt;- asec %&gt;%
+  mutate(lEarnings = log(Earnings),
+         sqHours = Hours^2)
+```
+
+--
+
+.left-column[
+
+ * And run the regression
+
+
+```r
+lm(lEarnings ~ Hours + sqHours, asec)
+```
+
+
+```text
+## Coefficients:
+## (Intercept)        Hours      sqHours  
+##   7.3637848    0.1192609   -0.0008804
+```
+
+]
+
+--
+
+.right-column[
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Is that it?&lt;/b&gt;&lt;/center&gt;
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;Isn't there something we could/should add in our regression?&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Case study
+
+#### 2.1 Controls
+
+&lt;ul&gt;
+  &lt;li&gt;This positive &lt;b&gt;relationship&lt;/b&gt; could be &lt;b&gt;driven&lt;/b&gt; by a &lt;b&gt;third variable&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Males&lt;/b&gt; tend both to work &lt;b&gt;part time less often&lt;/b&gt; and to &lt;b&gt;earn more&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;higher&lt;/b&gt; the &lt;b&gt;hours&lt;/b&gt;, the higher the &lt;b&gt;probability to be a male&lt;/b&gt;, the higher the &lt;b&gt;expected earnings&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Let's &lt;b&gt;control&lt;/b&gt; for that in the regression&lt;/li&gt;
+&lt;/ul&gt;
+
+`$$\log(\text{Earnings}_i) = \alpha + \beta_1 \text{Hours}_i + \beta_2 \text{Hours}^2_i + \beta_3 \text{Male}_i + \varepsilon_i$$`
+
+&lt;p style = "margin-bottom:1.5cm"&gt;&lt;/p&gt;
+  
+--
+
+.pull-left[
+&lt;ul&gt;
+  &lt;li&gt;Such that Males and Females would have&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;same slope&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Different intercepts&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; \(\text{Male} = 0\) &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; \(\text{Male} = 1\) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Intercept &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\alpha\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\beta_1 + 2\beta_2\text{Hours}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Slope &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\alpha + \beta_3\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\beta_1 + 2\beta_2\text{Hours}\) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+&lt;p style = "margin-bottom:1.75cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Let's take a look&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 2. Case study
+
+#### 2.1 Controls
+
+.pull-left[
+&lt;p style = "margin-bottom:1cm"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-121-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+ 
+.pull-right[
+&lt;!-- --&gt;
+
+&lt;!-- --&gt;
+] 
+
+---
+
+### 2. Case study
+
+#### 2.1 Controls
+
+.pull-left[
+&lt;p style = "margin-bottom:1cm"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-123-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+ 
+.pull-right[
+&lt;!-- --&gt;
+
+&lt;!-- --&gt;
+] 
+
+---
+
+### 2. Case study
+
+#### 2.1 Controls
+
+ * Once again we can include a control variable using the `+` symbol
+
+
+```r
+lm(lEarnings ~ Hours + sqHours + Sex, asec)
+```
+
+
+```text
+## Coefficients:
+## (Intercept)        Hours      sqHours      SexMale  
+##   7.3356057    0.1177514   -0.0008806    0.1700972
+```
+
+--
+&lt;p style = "margin-bottom:1.5cm"&gt;&lt;/p&gt;
+
+
+```r
+lm(lEarnings ~ Hours + sqHours, asec)
+```
+
+
+```text
+## Coefficients:
+## (Intercept)        Hours      sqHours  
+##   7.3637848    0.1192609   -0.0008804
+```
+
+&lt;p style = "margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;Actually the basline coefficient was not that much inflated&lt;/center&gt;
+
+---
+
+### 2. Case study
+
+#### 2.1 Interactions
+
+&lt;ul&gt;
+  &lt;li&gt;But what if we were to allow for &lt;b&gt;different slopes?&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;The &lt;b&gt;relationship&lt;/b&gt; between hours and earnings might be &lt;b&gt;heterogeneous&lt;/b&gt; across sex/gender&lt;/li&gt;
+    &lt;li&gt;This is what &lt;b&gt;interactions&lt;/b&gt; allow to account for&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm"&gt;&lt;/p&gt;
+
+--
+
+ * We simply have to include the **product** of the two variables in the model
+
+`$$\log(\text{Earnings}_i) = \alpha + \beta_1 \text{Hours}_i + \beta_2 \text{Hours}^2_i + \beta_3 \text{Male}_i + \beta_4 \text{Hours}_i \times \text{Male}_i + \varepsilon_i$$`
+
+&lt;p style = "margin-bottom:1.5cm"&gt;&lt;/p&gt;
+  
+--
+
+.pull-left[
+&lt;ul&gt;
+  &lt;li&gt;Such that Males and Females would have&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Not only &lt;b&gt;different intercepts&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But also &lt;b&gt;different slopes&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; \(\text{Male} = 0\) &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; \(\text{Male} = 1\) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Intercept &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\alpha\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\beta_1 + 2\beta_2\text{Hours}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Slope &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\alpha + \beta_3\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\beta_1 + 2\beta_2\text{Hours} + \beta_4\) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+&lt;p style = "margin-bottom:1.75cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt;Let's take a look&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 2. Case study
+
+#### 2.1 Controls
+
+.pull-left[
+&lt;p style = "margin-bottom:1cm"&gt;&lt;/p&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-130-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+ 
+.pull-right[
+&lt;!-- --&gt;
+
+&lt;!-- --&gt;
+] 
+
+---
+
+### 2. Case study
+
+#### 2.1 Controls
+
+ * Now we can use the `*` symbol for products
+
+
+```r
+results &lt;- summary(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec))$coefficients
+```
+
+--
+
+&lt;p style = "margin-bottom:-1cm"&gt;&lt;/p&gt;
+
+
+```r
+results
+```
+
+```
+##                    Estimate   Std. Error    t value     Pr(&gt;|t|)
+## (Intercept)    7.3900468002 2.319198e-02 318.646690 0.000000e+00
+## Hours          0.1174998826 1.034522e-03 113.578950 0.000000e+00
+## sqHours       -0.0009103523 1.321706e-05 -68.877048 0.000000e+00
+## SexMale       -0.0282905673 2.753222e-02  -1.027544 3.041682e-01
+## Hours:SexMale  0.0050321134 6.767013e-04   7.436240 1.048736e-13
+```
+
+&lt;p style = "margin-top:-3cm;margin-left:21cm"&gt;What do you conclude ?&lt;/p&gt;
+
+--
+
+
+&lt;p style = "margin-bottom:2.25cm"&gt;&lt;/p&gt;
+
+.pull-left[
+
+```r
+results[5, 1] / results[2, 1]
+```
+
+```
+## [1] 0.04282654
+```
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; Not a huge difference&lt;/i&gt;&lt;/center&gt;
+]
+
+--
+
+.pull-right[
+
+```r
+results[5, 4]
+```
+
+```
+## [1] 1.048736e-13
+```
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; But a highly significant one&lt;/i&gt;&lt;/center&gt;
+]
+
+---
+
+### 3. Inference
+
+#### 3.1. t-test
+
+&lt;ul&gt;
+  &lt;li&gt;According to our previous regression, \(\hat{\beta_1}\) is significantly &lt;b&gt;different from 0&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But let's pretend that you know that this coefficient is equal to &lt;b&gt;.12 in Canada&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;How could we test whether or not our coefficient is &lt;b&gt;different from .12?&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+```r
+results
+```
+
+```
+##                    Estimate   Std. Error    t value     Pr(&gt;|t|)
+## (Intercept)    7.3900468002 2.319198e-02 318.646690 0.000000e+00
+## Hours          0.1174998826 1.034522e-03 113.578950 0.000000e+00
+## sqHours       -0.0009103523 1.321706e-05 -68.877048 0.000000e+00
+## SexMale       -0.0282905673 2.753222e-02  -1.027544 3.041682e-01
+## Hours:SexMale  0.0050321134 6.767013e-04   7.436240 1.048736e-13
+```
+
+--
+
+.pull-left[
+ * We can compute the t-stat from our results
+
+&lt;p style = "margin-bottom:-.1cm"&gt;&lt;/p&gt;
+
+`$$t = \frac{\hat{\beta} - .12}{\text{s.e.}(\hat{\beta})}$$`
+]
+
+--
+
+.pull-right[
+
+```r
+t &lt;- (results[2, 1] - .12) / results[2, 2]
+t
+```
+
+```
+## [1] -2.416689
+```
+]
+
+---
+
+### 3. Inference
+
+#### 3.1. t-test
+
+
+&lt;ul&gt;
+  &lt;li&gt;And then we need the value of the &lt;b&gt;area outside the interval&lt;/b&gt; \(\left[-t;t\right]\)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;From a &lt;b&gt;Student-t&lt;/b&gt; distribution with the correct number of &lt;b&gt;degrees of freedom&lt;/b&gt; (#obs - #parameters)&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-138-1.png" width="67%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Inference
+
+#### 3.1. t-test
+
+&lt;ul&gt;
+  &lt;li&gt;You can get the &lt;b&gt;area below&lt;/b&gt; a certain &lt;b&gt;t-value&lt;/b&gt; with the &lt;b&gt;pt()&lt;/b&gt; function&lt;/i&gt;&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+
+```r
+pt( , )
+```
+
+---
+
+### 3. Inference
+
+#### 3.1. t-test
+
+&lt;ul&gt;
+  &lt;li&gt;You can get the &lt;b&gt;area below&lt;/b&gt; a certain &lt;b&gt;t-value&lt;/b&gt; with the &lt;b&gt;pt()&lt;/b&gt; function&lt;/i&gt;&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;The first argument is the &lt;b&gt;t-value&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+
+```r
+pt(t, )
+```
+
+---
+
+### 3. Inference
+
+#### 3.1. t-test
+
+&lt;ul&gt;
+  &lt;li&gt;You can get the &lt;b&gt;area below&lt;/b&gt; a certain &lt;b&gt;t-value&lt;/b&gt; with the &lt;b&gt;pt()&lt;/b&gt; function&lt;/i&gt;&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;The first argument is the &lt;b&gt;t-value&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The second argument is the number of &lt;b&gt;degrees of freedom&lt;/b&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+
+```r
+pt(t, nrow(asec) - nrow(results))
+```
+--
+
+```
+## [1] 0.007832573
+```
+
+--
+
+ * We just have to multiply this value by 2 to obtain the p-value
+
+
+```r
+2 * pt(t, nrow(asec) - nrow(results))
+```
+
+```
+## [1] 0.01566515
+```
+
+--
+
+ * Had our t-stat been positive we would have needed to multiply 1 - `\(t\)` by 2 
+ 
+
+```r
+2 * (1 - pt(abs(t), nrow(asec)-nrow(results)))
+```
+
+```
+## [1] 0.01566515
+```
+
+
+---
+
+### 3. Inference
+
+#### 3.1. t-test
+
+ * An alternative way to car linear hypothesis
+ 
+
+```r
+library(aod)
+
+lm_results &lt;- lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec)
+
+wald.test(vcov(lm_results), coef(lm_results), 2, H0 = .12, df = nrow(asec) - nrow(results)) %&gt;% 
+  print(digits = 7)
+```
+
+```
+## Wald test:
+## ----------
+## 
+## Chi-squared test:
+## X2 = 5.840387, df = 1, P(&gt; X2) = 0.01566238
+## 
+## F test:
+## W = 5.840387, df1 = 1, df2 = 64331, P(&gt; W) = 0.01566515
+```
+
+---
+
+### 3. Inference
+
+#### 3.2. Confidence intervals
+
+
+```r
+qt
+```
+
+
+---
+
+### 4. Report and export results
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
