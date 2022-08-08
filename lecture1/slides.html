@@ -1,0 +1,3494 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Data manipulation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content=" Louis SIRUGUE" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+    <link rel="shortcut icon" href="star.png" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Data manipulation
+]
+.subtitle[
+## Lecture 1
+]
+.author[
+### <br>Louis SIRUGUE
+]
+.date[
+### M1 APE - Fall 2022
+]
+
+---
+
+
+&lt;style&gt; .left-column {width: 65%;} .right-column {width: 31%;} &lt;/style&gt;
+
+
+
+
+
+### Welcome to the course!
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;center&gt;presentation of the course&lt;/center&gt;
+
+---
+
+&lt;h3&gt;Let's delve into it!&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. The dplyr grammar&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Packages&lt;/li&gt;
+    &lt;li&gt;3.2. Basic functions&lt;/li&gt;
+    &lt;li&gt;3.3. group_by() and summarise()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. A few words on learning R&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. When it doesn't work the way you want&lt;/li&gt;
+    &lt;li&gt;4.2. Where to find help&lt;/li&gt;
+    &lt;li&gt;4.3. When it doesn't work at all&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Let's delve into it!&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 1. Getting started
+
+#### 1.1. About R
+
+ * R is a **programming language** and free software environment for **statistical computing and graphics**
+ 
+&lt;img style = "margin-left:16cm;margin-top:2.5cm;" src = "rstudio_logo.png" width = "300"/&gt;
+
+&lt;p style = "margin-bottom:-11cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+ &lt;li style = "margin-bottom:.25cm;"&gt;The R language is widely (and increasingly) used in &lt;b&gt;academic and non-academic research&lt;/b&gt; in fields like:&lt;/li&gt;
+   &lt;ul&gt;
+     &lt;li&gt;Economics&lt;/li&gt;
+     &lt;li&gt;Statistics&lt;/li&gt;
+     &lt;li&gt;Biostats&lt;/li&gt;
+   &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:.75cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+ &lt;li style = "margin-bottom:.25cm;"&gt;Things you can do with R:&lt;/li&gt;
+   &lt;ul&gt;
+     &lt;li&gt;&lt;a href="https://louissirugue.github.io/data-analysis-course/project/example.html"&gt;Reports&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://www.r-graph-gallery.com/bubble_chart_interactive_ggplotly.html"&gt;Nice plots&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://louissirugue.github.io/intro_to_R/home.html"&gt;All the material of this course&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://pubs.aeaweb.org/doi/pdfplus/10.1257/app.20200447"&gt;Academic research&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://www.kaggle.com/xavierconort"&gt;Win kaggle competitions&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://vac-lshtm.shinyapps.io/ncov_tracker/?_ga=2.29922175.1739025613.1656421238-871875772.1628005923"&gt;Interactive data visualization&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a href="https://www.data-to-art.com/"&gt;Art&lt;/a&gt;&lt;/li&gt;
+   &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "rstudio.png" width = "770"/&gt;
+&lt;/center&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "console.png" width = "300"/&gt;
+&lt;/center&gt;
+
+&amp;#10140; &lt;b&gt;The Console panel&lt;/b&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is where you &lt;b&gt;communicate with R&lt;/b&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You can write instructions after the &lt;b&gt;&gt;&lt;/b&gt;, &lt;b&gt;press enter&lt;/b&gt; and R will &lt;b&gt;execute&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;Try with &lt;b&gt;1+1:&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+1+1
+```
+
+```
+## [1] 2
+```
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "source.png" width = "300"/&gt;
+&lt;/center&gt;
+
+&amp;#10140; &lt;b&gt;The Source panel&lt;/b&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is where you &lt;b&gt;write and save your code&lt;/b&gt; (File &gt; New File &gt; R Script)&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Separate&lt;/b&gt; different commands with a &lt;b&gt;line break&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;#&lt;/b&gt; symbol allows to &lt;b&gt;comment&lt;/b&gt; your code&lt;/li&gt;
+    &lt;li&gt;Everything after &lt;b&gt;#&lt;/b&gt; will be &lt;b&gt;ignored&lt;/b&gt; by R until the next line break&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+1+1 # Do not put 2+2 on the same line, press enter to go to next line 
+2+2
+```
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "source.png" width = "300"/&gt;
+&lt;/center&gt;
+
+&amp;#10140; &lt;b&gt;The Source panel&lt;/b&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;To send the command from the source panel to the console panel:&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;b&gt;Highlight&lt;/b&gt; the lines you want to execute&lt;/li&gt;
+    &lt;li&gt;Press &lt;b&gt;crtl + enter&lt;/b&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;&lt;li&gt;If you do not highlight anything the line of code where your cursor stands will be executed&lt;/li&gt;&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;&lt;li&gt;Check the console to see the output of your code&lt;/li&gt;&lt;/ul&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "environment.png" width = "300"/&gt;
+&lt;/center&gt;
+
+&amp;#10140; &lt;b&gt;The Environment panel&lt;/b&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Data analysis requires manipulating datasets, vectors, functions, etc.&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;These &lt;b&gt;elements are stored in the environment&lt;/b&gt; panel&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+ * For instance we can assign a value to an object using `&lt;-`
+
+
+```r
+x &lt;- 1
+```
+
+--
+
+&lt;center&gt;&lt;i&gt;&lt;b&gt; &amp;#10140; You now have an object called 'x' in your environment, which takes the value 1&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "environment.png" width = "300"/&gt;
+&lt;/center&gt;
+
+&amp;#10140; &lt;b&gt;The Environment panel&lt;/b&gt;
+
+.pull-left[
+
+ * Now that the object `x` is stored in your environment, you can use it:
+
+
+```r
+x + 1
+```
+
+```
+## [1] 2
+```
+
+]
+
+--
+
+.pull-right[
+
+ * You can also modify that object at any point:
+
+
+```r
+x &lt;- x + 1
+x
+```
+
+```
+## [1] 2
+```
+
+]
+
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "plot.png" width = "300"/&gt;
+&lt;/center&gt;
+
+&amp;#10140; &lt;b&gt;The Files/Plots/... panel&lt;/b&gt;
+
+ * In this panel we'll mainly be interested in the following 4 tabs
+
+--
+&lt;ul style = "margin-top:1em;"&gt;&lt;li&gt;&lt;b&gt;Files:&lt;/b&gt; Shows your working directory&lt;/li&gt;&lt;/ul&gt;
+--
+&lt;ul style = "margin-top:1em;"&gt;&lt;li&gt;&lt;b&gt;Plots:&lt;/b&gt; Where R returns plots&lt;/li&gt;&lt;/ul&gt;
+--
+&lt;ul style = "margin-top:1em;"&gt;&lt;li&gt;&lt;b&gt;Packages:&lt;/b&gt; A library of tools that we can load if needed&lt;/li&gt;&lt;/ul&gt;
+--
+&lt;ul style = "margin-top:1em;"&gt;&lt;li&gt;&lt;b&gt;Help:&lt;/b&gt; Where to look for documentation on R functions&lt;/li&gt;&lt;/ul&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;center&gt;
+&lt;img src = "plot.png" width = "300"/&gt;
+&lt;/center&gt;   
+
+&amp;#10140; &lt;b&gt;The Files/Plots/... panel&lt;/b&gt;
+
+ *  Enter `?getwd()` in the console to see what a **help file** looks like
+ 
+---
+
+### 1. Getting started
+
+#### 1.2. The R Studio IDE
+
+&lt;img style = "margin-left:5cm;" src = "plot.png" width = "300"/&gt;
+
+&amp;#10140; &lt;b&gt;The Files/Plots/... panel&lt;/b&gt;
+
+ *  Enter `?getwd()` in the console to see what a **help file** looks like
+
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It &lt;b&gt;describes&lt;/b&gt; what the command does&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It &lt;b&gt;explains&lt;/b&gt; the different parameters of the command&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+&lt;ul&gt;&lt;ul&gt;&lt;li&gt;It &lt;b&gt;gives examples&lt;/b&gt; of how to use the command&lt;/li&gt;&lt;/ul&gt;&lt;/ul&gt;
+
+&lt;img style = "margin-top:-12.75cm;margin-left:18.5cm;" src = "help_file.png" width = "370"/&gt;
+
+---
+
+### Practice
+
+#### 1) Open a new R script (`Ctrl + Shift + N`) and write a code to create these objects:
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Objects to create&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Object name: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; a &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; b &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; c &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Assigned value: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+#### 2) Run this code and create a new object named `result` that takes the value `\(\frac{b\times c}{a} + (b-a)^c\)`
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Basic operations in R&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Operation: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Addition &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Subtraction &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Multiplication &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Division &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Exponentiation &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Parentheses &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Symbol in R: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; + &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; - &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; * &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; / &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; ^ &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; () &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+#### 3) Print `result` in your console and save your script somewhere in your computer (`Ctrl+S`)
+
+--
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 3 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+<div class="countdown" id="timer_62ef6415" style="top:0;right:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+### Solution
+
+#### 1) Open a new R script (`Ctrl + Shift + N`) and write a code to create these objects:
+
+.pull-left[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;Objects to create&lt;/caption&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Object name: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; a &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; b &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; c &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Assigned value: &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.pull-right[
+
+```r
+a &lt;- 2
+b &lt;- 4
+c &lt;- 5
+```
+]
+
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+#### 2) Run this code and create a new object named `result` that takes the value `\(\frac{b\times c}{a} + (b-a)^c\)`
+
+--
+
+
+```r
+result &lt;- b*c/a + (b-a)^c
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+#### 3) Print `result` in your console and save your script somewhere in your computer (`Ctrl + S`)
+
+--
+
+
+```r
+result
+```
+
+```
+## [1] 42
+```
+
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+ * We now know how to &lt;b&gt;use R&lt;/b&gt; as a calculator, but our goal is &lt;b&gt;to analyze data!&lt;/b&gt;
+
+--
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; Take for instance the statistics from the last season of Ligue 1 available at &lt;a href = "https://fbref.com/en/comps/13/schedule/Ligue-1-Scores-and-Fixtures"&gt;fbref.com&lt;/a&gt;&lt;/i&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;
+&lt;img src = "fbref_2022.png" width = "825"/&gt;
+&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+&lt;ul&gt;
+  &lt;li&gt;You can &lt;b&gt;download&lt;/b&gt; this dataset here or from the course webpage&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Note that the extension of the file is &lt;b&gt;.csv&lt;/b&gt; (for &lt;i&gt;&lt;b&gt;C&lt;/b&gt;omma &lt;b&gt;S&lt;/b&gt;eparated &lt;b&gt;V&lt;/b&gt;alues&lt;/i&gt;)&lt;/li&gt;
+    &lt;li&gt;Let's have a look at &lt;b&gt;first 5 lines&lt;/b&gt; of the raw csv file&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+ 
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+```text
+Wk,Day,Date,Time,Home,xG,Score,xG,Away,Attendance,Venue,Referee,Match Report,Notes
+1,Fri,2021-08-06,21:00,Monaco,2.0,1–1,0.3,Nantes,7500,Stade Louis II.,Antony Gautier,Match Report,
+1,Sat,2021-08-07,17:00,Lyon,1.4,1–1,0.8,Brest,29018,Groupama Stadium,Mikael Lesage,Match Report,
+1,Sat,2021-08-07,21:00,Troyes,0.8,1–2,1.2,Paris S-G,15248,Stade de l'Aube,Amaury Delerue,Match Report,
+1,Sun,2021-08-08,13:00,Rennes,0.6,1–1,2.0,Lens,22567,Roazhon Park,Bastien Dechepy,Match Report,
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The &lt;b&gt;.csv format&lt;/b&gt; is very common and has a very &lt;b&gt;codified structure&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can see that &lt;b&gt;each line&lt;/b&gt; corresponds to &lt;b&gt;a row&lt;/b&gt; (the first row generally contains column names)&lt;/li&gt;
+    &lt;li&gt;And for each row the &lt;b&gt;values&lt;/b&gt; of each column are &lt;b&gt;separated by commas&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;&lt;i&gt;&amp;#10140; But how to get it in our R studio environment?&lt;/i&gt;&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+.pull-left[
+&lt;ul&gt;
+  &lt;li&gt;To &lt;b&gt;import&lt;/b&gt; stuff in R we use &lt;b&gt;&lt;i&gt;read&lt;/i&gt; functions&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;They take the &lt;b&gt;file directory&lt;/b&gt; as an &lt;b&gt;input&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;And give the &lt;b&gt;file content&lt;/b&gt; as an &lt;b&gt;output&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+.pull-right[
+
+```r
+function(input)
+```
+
+```
+## [1] "output"
+```
+]
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The read function dedicated to .csv files is &lt;b&gt;read.csv()&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+fb &lt;- read.csv("C:\User\Documents\ligue1.csv")
+```
+
+--
+
+
+```
+## Error: '\U' used without hex digits in character string starting ""C:\U"
+```
+
+&lt;center&gt;Oops, slashes must be the other way around!&lt;/center&gt;
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv")
+```
+
+--
+
+
+
+&lt;center&gt;&lt;i&gt;&amp;#10140; Let's &lt;b&gt;inspect&lt;/b&gt; this new object to check that it worked&lt;/i&gt;&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+ * The first thing we can do is to use `head()` to print the **top rows**
+ 
+
+```r
+head(fb, 4)
+```
+--
+
+```
+##   Wk Day       Date  Time   Home  xG Score xG.1      Away Attendance
+## 1  1 Fri 2021-08-06 21:00 Monaco 2.0   1-1  0.3    Nantes       7500
+## 2  1 Sat 2021-08-07 17:00   Lyon 1.4   1-1  0.8     Brest      29018
+## 3  1 Sat 2021-08-07 21:00 Troyes 0.8   1-2  1.2 Paris S-G      15248
+## 4  1 Sun 2021-08-08 13:00 Rennes 0.6   1-1  2.0      Lens      22567
+##              Venue         Referee Match.Report Notes
+## 1  Stade Louis II.  Antony Gautier Match Report    NA
+## 2 Groupama Stadium   Mikael Lesage Match Report    NA
+## 3  Stade de l'Aube  Amaury Delerue Match Report    NA
+## 4     Roazhon Park Bastien Dechepy Match Report    NA
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+ * `tail()` would print the **bottom rows**
+
+ * We can also run **`View(`**`fb`**`)`** *(a new tab will pop-up in your Source panel)*
+ 
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+&lt;center&gt;
+&lt;img src = "view_fb.png" width = "1100"/&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;Seems like it worked!&lt;/b&gt;
+&lt;/center&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.3. Import and eyeball data
+
+&lt;center&gt;
+&lt;img src = "view_fb_kinda.png" width = "1100"/&gt;
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;b&gt;... or kind of worked?&lt;/b&gt;
+&lt;/center&gt;
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;That kind of &lt;b&gt;weird characters&lt;/b&gt; kicks in when there is an &lt;b&gt;encoding issue&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Thankfully, &lt;b&gt;read.csv()&lt;/b&gt; can take many &lt;b&gt;other inputs&lt;/b&gt;, including encoding!&lt;/li&gt;
+    &lt;li&gt;Usually the UTF-8 encoding is the solution to French characters&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;When you will be facing &lt;b&gt;similar issues&lt;/b&gt;, check out the arguments of read.csv() using &lt;b&gt;?read.csv&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;center&gt;
+&lt;img src = "csv_help.png" width = "800"/&gt;
+&lt;/center&gt;
+
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;From the &lt;b&gt;documentation&lt;/b&gt; you can see that functions have &lt;b&gt;many arguments&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some &lt;b&gt;without default&lt;/b&gt; values: You need to specify the argument for the function to work&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;with default&lt;/b&gt; values: If you don't specify these arguments, defaults will be used&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+--
+
+ * You don't need to write the argument names only for those written in the &lt;b&gt;correct order&lt;/b&gt;
+
+
+
+.left-column[
+.pull-left[
+
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+```r
+read.csv(file = "dt.csv")
+```
+
+
+```r
+read.csv("dt.csv")
+```
+
+]
+.pull-right[
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:.5cm"&gt;&lt;/p&gt;
+
+`$$\underset{\Longleftrightarrow}{?}$$`
+
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;From the &lt;b&gt;documentation&lt;/b&gt; you can see that functions have &lt;b&gt;many arguments&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some &lt;b&gt;without default&lt;/b&gt; values: You need to specify the argument for the function to work&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;with default&lt;/b&gt; values: If you don't specify these arguments, defaults will be used&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the &lt;b&gt;correct order&lt;/b&gt;
+
+.left-column[
+.pull-left[
+
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+```r
+read.csv(file = "dt.csv")
+```
+
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:.5cm"&gt;&lt;/p&gt;
+
+`$$\underset{\Longleftrightarrow}{?}$$`
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;From the &lt;b&gt;documentation&lt;/b&gt; you can see that functions have &lt;b&gt;many arguments&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some &lt;b&gt;without default&lt;/b&gt; values: You need to specify the argument for the function to work&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;with default&lt;/b&gt; values: If you don't specify these arguments, defaults will be used&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the &lt;b&gt;correct order&lt;/b&gt;
+
+.left-column[
+.pull-left[
+
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+```r
+read.csv(file = "dt.csv")
+```
+
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\Longleftrightarrow$$`
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\not\not\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:.5cm"&gt;&lt;/p&gt;
+
+`$$\underset{\Longleftrightarrow}{?}$$`
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", ",")
+```
+
+
+```r
+read.csv("dt.csv", T, ",")
+```
+]
+ 
+---
+
+### 1. Getting started
+
+#### 1.4. Use functions
+
+&lt;ul&gt;
+  &lt;li&gt;From the &lt;b&gt;documentation&lt;/b&gt; you can see that functions have &lt;b&gt;many arguments&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Some &lt;b&gt;without default&lt;/b&gt; values: You need to specify the argument for the function to work&lt;/li&gt;
+    &lt;li&gt;Some &lt;b&gt;with default&lt;/b&gt; values: If you don't specify these arguments, defaults will be used&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+
+```r
+read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE, comment.char = "", ...)
+```
+
+ * You don't need to write the argument names only for those written in the &lt;b&gt;correct order&lt;/b&gt;
+
+.left-column[
+.pull-left[
+
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+```r
+read.csv(file = "dt.csv")
+```
+
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+]
+.pull-right[
+`$$\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\Longleftrightarrow$$`
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\not\not\Longleftrightarrow$$`
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+`$$\Longleftrightarrow$$`
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+
+```r
+read.csv("dt.csv")
+```
+
+
+```r
+read.csv("dt.csv", sep = ",")
+```
+
+
+```r
+read.csv("dt.csv", ",")
+```
+
+
+```r
+read.csv("dt.csv", T, ",")
+```
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. The dplyr grammar&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Packages&lt;/li&gt;
+    &lt;li&gt;3.2. Basic functions&lt;/li&gt;
+    &lt;li&gt;3.3. group_by() and summarise()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. A few words on learning R&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. When it doesn't work the way you want&lt;/li&gt;
+    &lt;li&gt;4.2. Where to find help&lt;/li&gt;
+    &lt;li&gt;4.3. When it doesn't work at all&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame &lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * Now that we imported the data properly, we can check out its **`str()`ucture** in more details
+
+
+```r
+str(fb)
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * *Don't be scared of the output!*
+
+
+```r
+str(fb)
+```
+
+```
+## 'data.frame':	380 obs. of  14 variables:
+##  $ Wk          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         : chr  "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        : chr  "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        : chr  "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        : chr  "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          : num  2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       : chr  "1-1" "1-1" "1-2" "1-1" ...
+##  $ xG.1        : num  0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        : chr  "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  : int  7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       : chr  "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     : chr  "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report: chr  "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       : logi  NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * `str()` says that `fb` is a `data.frame`, and gives its numbers of **observations** (rows) and **variables** (columns)
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * It also gives the **variables names**
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          
+##  $ Day         
+##  $ Date        
+##  $ Time        
+##  $ Home        
+##  $ xG          
+##  $ Score       
+##  $ xG.1        
+##  $ Away        
+##  $ Attendance  
+##  $ Venue       
+##  $ Referee     
+##  $ Match.Report
+##  $ Notes       
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * The **first 10 values** of each variable
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          :      1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         :      "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        :      "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        :      "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        :      "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          :      2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       :      "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        :      0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        :      "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  :      7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       :      "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     :      "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report:      "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       :       NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * As well as the **class** of each variable
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         : chr  "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        : chr  "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        : chr  "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        : chr  "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          : num  2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       : chr  "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        : num  0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        : chr  "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  : int  7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       : chr  "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     : chr  "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report: chr  "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       : logi  NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.1. Data structure
+
+ * But what does the **class** correspond to?
+ 
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  ?
+##  $ Day         : chr  ?
+##  $ Date        : chr  ?
+##  $ Time        : chr  ?
+##  $ Home        : chr  ?
+##  $ xG          : num  ?
+##  $ Score       : chr  ?
+##  $ xG.1        : num  ?
+##  $ Away        : chr  ?
+##  $ Attendance  : int  ?
+##  $ Venue       : chr  ?
+##  $ Referee     : chr  ?
+##  $ Match.Report: chr  ?
+##  $ Notes       : logi  ?
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+These are simply numbers:
+
+
+```r
+class(3)
+```
+
+```
+## [1] "numeric"
+```
+
+
+```r
+class(-1.6180339)
+```
+
+```
+## [1] "numeric"
+```
+
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+Numeric variable classes include:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;int&lt;/b&gt; for round numbers&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;dbl&lt;/b&gt; for 2-decimal numbers&lt;/li&gt;
+&lt;/ul&gt;
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+These are simply numbers:
+
+
+```r
+class(3)
+```
+
+```
+## [1] "numeric"
+```
+
+
+```r
+class(-1.6180339)
+```
+
+```
+## [1] "numeric"
+```
+
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+Numeric variable classes include:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;int&lt;/b&gt; for round numbers&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;dbl&lt;/b&gt; for 2-decimal numbers&lt;/li&gt;
+&lt;/ul&gt;
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+They must be surrounded by `"`:
+
+
+```r
+class("Roazhon Park")
+```
+
+```
+## [1] "character"
+```
+
+
+```r
+class("35")
+```
+
+```
+## [1] "character"
+```
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+We also call these values:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Character strings&lt;/li&gt;
+  &lt;li&gt;Or just strings&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+.left-column[
+.pull-left[
+&lt;center&gt;&lt;b&gt;Numeric&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+These are simply numbers:
+
+
+```r
+class(3)
+```
+
+```
+## [1] "numeric"
+```
+
+
+```r
+class(-1.6180339)
+```
+
+```
+## [1] "numeric"
+```
+
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+Numeric variable classes include:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;int&lt;/b&gt; for round numbers&lt;/li&gt;
+  &lt;li&gt;&lt;b&gt;dbl&lt;/b&gt; for 2-decimal numbers&lt;/li&gt;
+&lt;/ul&gt;
+]
+.pull-right[
+&lt;center&gt;&lt;b&gt;Character&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+They must be surrounded by `"`:
+
+
+```r
+class("Roazhon Park")
+```
+
+```
+## [1] "character"
+```
+
+
+```r
+class("35")
+```
+
+```
+## [1] "character"
+```
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+We also call these values:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Character strings&lt;/li&gt;
+  &lt;li&gt;Or just strings&lt;/li&gt;
+&lt;/ul&gt;
+
+]
+]
+.right-column[
+&lt;p style="margin-bottom:-1.07cm"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;b&gt;Logical&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style="margin-bottom:1cm"&gt;&lt;/p&gt;
+
+Something either `TRUE` of `FALSE`:
+
+
+```r
+3 &gt;= 4
+```
+
+```
+## [1] FALSE
+```
+
+
+```r
+class(T)
+```
+
+```
+## [1] "logical"
+```
+&lt;p style="margin-bottom:1.25cm"&gt;&lt;/p&gt;
+
+Most common logical operators:
+&lt;p style="margin-bottom:-.5cm"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;== &gt; &lt; &lt;= &gt;=&lt;/li&gt;
+  &lt;li&gt;&amp; (and) | (or) ! (opposite)&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+&lt;center&gt;&lt;b&gt;Guess the output!&lt;/b&gt;&lt;/center&gt;
+ 
+
+```r
+as.numeric("2022")
+```
+--
+
+```
+## [1] 2022
+```
+--
+
+&lt;p style="margin-bottom:.75cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;What about this one?&lt;/b&gt;&lt;/center&gt;
+
+```r
+as.character(2022-2023)
+```
+--
+
+```
+## [1] "-1"
+```
+--
+
+&lt;p style="margin-bottom:.75cm"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;A final one:&lt;/b&gt;&lt;/center&gt;
+
+```r
+as.character(2022&gt;2023)
+```
+--
+
+```
+## [1] "FALSE"
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * To know everything:
+
+&lt;p style = "margin-bottom:.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Class conversion table:&lt;/b&gt;&lt;/center&gt;
+
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; as.numeric() &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; as.character() &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; as.logical() &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;numeric&lt;/b&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Converts numeric values &lt;br&gt; into strings of numbers &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns TRUE if != 0 &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns FALSE if 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;character&lt;/b&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Converts strings of numbers &lt;br&gt; into numeric values &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns NA if characters in the string &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns TRUE if "T" or"TRUE" &lt;br&gt; Returns FALSE if "F" or "FALSE" &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns NA otherwise &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; &lt;b&gt;logical&lt;/b&gt; &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns 1 if TRUE  &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns 0 if FALSE &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Returns "TRUE" if TRUE &lt;p style="margin-bottom:-.25cm;"&gt;&lt;/p&gt; Returns "FALSE" if FALSE &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; No effect &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;NA&lt;/b&gt; stands for &lt;i&gt;'Not Available'&lt;/i&gt;, it corresponds to a &lt;b&gt;missing value&lt;/b&gt;&lt;/center&gt;
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * Great! But there is one last mystery...
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ Day         : chr  "Fri" "Sat" "Sat" "Sun" ...
+##  $ Date        : chr  "2021-08-06" "2021-08-07" "2021-08-07" "2021-08-08" ...
+##  $ Time        : chr  "21:00" "17:00" "21:00" "13:00" ...
+##  $ Home        : chr  "Monaco" "Lyon" "Troyes" "Rennes" ...
+##  $ xG          : num  2 1.4 0.8 0.6 0.7 0.4 0.8 2.1 0.7 0.5 ...
+##  $ Score       : chr  "1–1" "1–1" "1–2" "1–1" ...
+##  $ xG.1        : num  0.3 0.8 1.2 2 3.3 0.9 0.2 1.3 1.4 2 ...
+##  $ Away        : chr  "Nantes" "Brest" "Paris S-G" "Lens" ...
+##  $ Attendance  : int  7500 29018 15248 22567 18748 23250 18030 20461 15551 13500 ...
+##  $ Venue       : chr  "Stade Louis II." "Groupama Stadium" "Stade de l'Aube" "Roazhon Park" ...
+##  $ Referee     : chr  "Antony Gautier" "Mikael Lesage" "Amaury Delerue" "Bastien Dechepy" ...
+##  $ Match.Report: chr  "Match Report" "Match Report" "Match Report" "Match Report" ...
+##  $ Notes       : logi  NA NA NA NA NA NA ...
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.2. Classes
+
+ * Are these dollar signs here for a reason?
+
+
+```r
+str(fb)
+```
+
+```text
+## 'data.frame':    380 obs. of  14 variables:
+##  $ Wk          
+##  $ Day         
+##  $ Date        
+##  $ Time        
+##  $ Home        
+##  $ xG          
+##  $ Score       
+##  $ xG.1        
+##  $ Away        
+##  $ Attendance  
+##  $ Venue       
+##  $ Referee     
+##  $ Match.Report
+##  $ Notes       
+```
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.3. Vectors
+
+ * It's actually just a reference to the fact that &lt;b&gt;`$`&lt;/b&gt; allows to &lt;b&gt;extract a variable&lt;/b&gt; from a dataset
+
+--
+
+
+
+
+```r
+fb$Wk
+```
+
+```
+##   [1]  1  1  1  1  1  1  1  1  1  1  2  2  2  2  2  2  2  2  2  2  3  3  3  3  3  3  3  3  3
+##  [30]  4  4  4  4  4  4  4  4  4  4  5  5  5  5  5  5  5  5  5  5  6  6  6  6  6  6  6  6  6
+##  [59]  6  7  7  7  7  7  7  7  7  7  7  8  8  8  8  8  8  8  8  8  8  9  9  9  9  9  9  9  9
+##  [88]  9  9 10 10 10 10 10 10 10 10 10 10 11 11 11 11 11 11 11 11 11 11  3 12 12 12 12 12 12
+## [117] 12 12 12 12 13 13 13 13 13 13 13 13 13 13 14 14 14 14 14 14 14 14 14 15 15 15 15 15 15
+## [146] 15 15 15 15 16 16 16 16 16 16 16 16 16 16 17 17 17 17 17 17 17 17 17 17 18 18 18 18 18
+## [175] 18 18 18 18 18 19 19 19 19 19 19 19 19 19 20 20 20 20 20 20 20 21 21 21 21 21 21 21 21
+## [204] 21 21 19 20 20 22 22 22 22 22 22 22 22 22 22 20 14 23 23 23 23 23 23 23 23 23 23 24 24
+## [233] 24 24 24 24 24 24 24 24 25 25 25 25 25 25 25 25 25 25 26 26 26 26 26 26 26 26 26 26 27
+## [262] 27 27 27 27 27 27 27 27 27 28 28 28 28 28 28 28 28 28 28 29 29 29 29 29 29 29 29 29 29
+## [291] 30 30 30 30 30 30 30 30 30 30 31 31 31 31 31 31 31 31 31 31 32 32 32 32 32 32 32 32 32
+## [320] 32 33 33 33 33 33 33 33 33 33 33 34 34 34 34 34 34 34 34 34 34 35 35 35 35 35 35 35 35
+## [349] 35 35 36 36 36 36 36 36 36 36 36 36 37 37 37 37 37 37 37 37 37 37 38 38 38 38 38 38 38
+## [378] 38 38 38
+```
+
+
+ 
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.3. Vectors
+
+&lt;ul&gt;
+  &lt;li&gt;We call these objects &lt;b&gt;vectors&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Vectors are basically &lt;b&gt;sequences of values that have the same class&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;R won't let you create a vector containing elements of different classes&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+--
+
+ * We make our own vectors using the **`c()`oncatenate** function
+ 
+--
+
+
+```r
+c("Hello world", 35, FALSE)
+```
+
+```
+## [1] "Hello world" "35"          "FALSE"
+```
+
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;The fact that vectors are homogeneous in class allows that &lt;b&gt;operations apply to all their elements&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+
+&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
+
+
+.pull-left[
+
+```r
+c(1, 2, 3) / 3
+```
+
+```
+## [1] 0.3333333 0.6666667 1.0000000
+```
+]
+
+--
+
+.pull-right[
+
+```r
+3 / c(1, 2, 3)
+```
+
+```
+## [1] 3.0 1.5 1.0
+```
+]
+
+---
+
+### 2. Anatomy of a `data.frame`
+
+#### 2.4. Subsetting
+
+&lt;ul&gt;
+  &lt;li&gt;But &lt;b&gt;$&lt;/b&gt; is not the only way to &lt;b&gt;extract&lt;/b&gt; a variable from a dataset&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You can also make use of the &lt;b&gt;[ ]&lt;/b&gt; subsetting operator&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+$$\text{data}[\text{row}, \:\:\text{columns}] $$
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;Inside the &lt;b&gt;brackets&lt;/b&gt;, indicate what you want to &lt;b&gt;keep using:&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Indices:&lt;/b&gt; e.g., the third column has index 3&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Logical:&lt;/b&gt; A vector of TRUE and FALSE&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;Names:&lt;/b&gt; They must be in quotation marks&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:0cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+
+ * Example:
+
+
+```r
+fb[1, c("Venue", "Attendance")]
+```
+
+```
+##             Venue Attendance
+## 1 Stade Louis II.       7500
+```
+]
+
+--
+
+.pull-right[
+
+ * Brackets also work for vectors:
+ 
+
+```r
+vec &lt;- c(3, 2, 1)
+vec[c(T, F, T)]
+```
+
+```
+## [1] 3 1
+```
+]
+
+---
+
+### Practice
+
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
+
+#### 1) Download and import the dataset if you haven't already
+
+--
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+#### 2) Combine the use of `[ ]` and `nrow()` to obtain the last value of the `Wk` variable
+
+--
+
+&lt;p style = "margin-bottom:2cm;"&gt;&lt;/p&gt;
+
+#### 3) Subset the home team, the score, and the away team for matches that occured during the last week
+
+--
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 6 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+<div class="countdown" id="timer_62ef6444" style="top:0;right:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+### Solution
+
+&lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
+
+#### 1) Download and import the dataset if you haven't already
+
+--
+
+
+```r
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+--
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+#### 2) Combine the use of `[ ]` and `nrow()` to obtain the last value of the `Wk` variable
+
+--
+
+
+```r
+last_week &lt;- fb[nrow(fb), "Wk"]
+last_week
+```
+
+```
+## [1] 38
+```
+
+
+---
+
+### Solution
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 3) Subset the home team, the score, and the away team for matches that occured during the last week
+
+--
+
+
+```r
+fb[Wk == last_week, c("Home", "Score", "Away")]
+```
+
+```
+## Error in `[.data.frame`(fb, Wk == last_week, c("Home", "Score", "Away")): object 'Wk' not found
+```
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+
+&lt;ul&gt;
+  &lt;li&gt;Oops! Seems like &lt;b&gt;R couldn't find&lt;/b&gt; the Wk variable&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;R was looking for Wk &lt;b&gt;in our environment&lt;/b&gt;&lt;/li&gt;
+    &lt;li&gt;But there is no Wk there&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We must &lt;b&gt;refer to fb&lt;/b&gt; which is in our environment&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Then we can &lt;b&gt;access Wk using the $&lt;/b&gt; symbol&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+
+
+```r
+fb[fb$Wk == 38, c("Home", "Score", "Away")]
+```
+
+]
+
+--
+
+.pull-right[
+
+```
+##              Home Score          Away
+## 371         Lille   2-2        Rennes
+## 372         Brest   2-4      Bordeaux
+## 373        Nantes   1-1 Saint-Étienne
+## 374 Clermont Foot   1-2          Lyon
+## 375        Angers   2-0   Montpellier
+## 376       Lorient   1-1        Troyes
+## 377     Paris S-G   5-0          Metz
+## 378         Reims   2-3          Nice
+## 379     Marseille   4-0    Strasbourg
+## 380          Lens   2-2        Monaco
+```
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. The dplyr grammar&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Packages&lt;/li&gt;
+    &lt;li&gt;3.2. Basic functions&lt;/li&gt;
+    &lt;li&gt;3.3. group_by() and summarise()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. A few words on learning R&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. When it doesn't work the way you want&lt;/li&gt;
+    &lt;li&gt;4.2. Where to find help&lt;/li&gt;
+    &lt;li&gt;4.3. When it doesn't work at all&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. The dplyr grammar&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Packages&lt;/li&gt;
+    &lt;li&gt;3.2. Basic functions&lt;/li&gt;
+    &lt;li&gt;3.3. group_by() and summarise()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.1. Packages
+
+&lt;ul&gt;
+  &lt;li&gt;So far we only used functions that are directly available in R&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;But there are tons of &lt;b&gt;user-created functions&lt;/b&gt; out there that can make your life so much easier&lt;/li&gt;
+    &lt;li&gt;These functions are shared in what we call &lt;b&gt;packages&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Packages are &lt;b&gt;bundles of functions&lt;/b&gt; that R users put to the disposal of other R users&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Packages are &lt;b&gt;centralized&lt;/b&gt; on the &lt;a href = "https://cran.r-project.org/"&gt;Comprehensive R Archive Network (CRAN)&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;To &lt;b&gt;download&lt;/b&gt; and install a CRAN package you can simply use &lt;b&gt;install.packages()&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;All the functions of the dplyr grammar are gatherd in the &lt;b&gt;dplyr package&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;We can download these functions and make it ready to use with the install.packages() function&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+install.packages("dplyr") # Requires and internet connection
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The tidyverse package is &lt;b&gt;now installed&lt;/b&gt; on your computer&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You won't have to do it again&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.1. Packages
+
+ * The `dplyr` pakcage is now &lt;b&gt;on your computer&lt;/b&gt;, but it is &lt;b&gt;not loaded in R&lt;/b&gt;
+
+--
+
+
+```r
+ls("package:dplyr")
+```
+
+```
+## Error in as.environment(pos): no item called "package:dplyr" on the search list
+```
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You need to use the &lt;b&gt;library()&lt;/b&gt; command to load it&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+library(dplyr)
+ls("package:dplyr")[1:5]
+```
+
+```
+## [1] "%&gt;%"        "across"     "add_count"  "add_count_" "add_row"
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;But even though the package is permanently installed, it is &lt;b&gt;loaded only for your current session&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Each time you start a &lt;b&gt;new R session&lt;/b&gt;, you'll have to load the packages you need with &lt;b&gt;library()&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.2. Basic functions
+
+
+`dplyr` is a **grammar** of data manipulation providing very **user-friendly functions** to handle the most common **data manipulation** tasks:
+
+--
+
+ * `mutate()`: add/modify variables
+ * `select()`: keep/drop variables (columns)
+ * `filter()`: keep/drop observations (rows)
+ * `arrange()`: sort rows according to the values of given variable(s)
+ * `summarise()`: aggregate the data into descriptive statistics
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;img src = "pipe.png" width = "180"/&gt;
+
+--
+
+
+&lt;p style = "margin-bottom:-5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:6cm;"&gt;
+  &lt;li&gt;A very handy &lt;b&gt;operator&lt;/b&gt; to use with the &lt;b&gt;dplyr&lt;/b&gt; grammar is the &lt;b&gt;pipe %&gt;%&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;
+
+&lt;ul style = "margin-left:6cm;"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You can basically read &lt;b&gt;a %&gt;% b()&lt;/b&gt; as &lt;i&gt;"apply function b() to object a"&lt;/i&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:-.25cm;"&gt;
+
+
+&lt;ul style = "margin-left:6cm;"&gt;
+  &lt;ul&gt;
+    &lt;li&gt;With this operator you can easily &lt;b&gt;chain the operations&lt;/b&gt; you apply to an object&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.2. Basic functions
+
+
+```r
+fb 
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+```
+
+
+```text
+##     Wk Day       Date  Time          Home  xG Score xG.1          Away Attendance  ...
+## 1    1 Fri 2021-08-06 21:00        Monaco 2.0   1–1  0.3        Nantes       7500  ...
+## 2    1 Sat 2021-08-07 17:00          Lyon 1.4   1–1  0.8         Brest      29018  ...
+## 3    1 Sat 2021-08-07 21:00        Troyes 0.8   1–2  1.2     Paris S-G      15248  ...
+## 4    1 Sun 2021-08-08 13:00        Rennes 0.6   1–1  2.0          Lens      22567  ...
+## 5    1 Sun 2021-08-08 15:00      Bordeaux 0.7   0–2  3.3 Clermont Foot      18748  ...
+## 6    1 Sun 2021-08-08 15:00    Strasbourg 0.4   0–2  0.9        Angers      23250  ...
+## 7    1 Sun 2021-08-08 15:00          Nice 0.8   0–0  0.2         Reims      18030  ...
+## 8    1 Sun 2021-08-08 15:00 Saint-Étienne 2.1   1–1  1.3       Lorient      20461  ...
+## 9    1 Sun 2021-08-08 17:00          Metz 0.7   3–3  1.4         Lille      15551  ...
+ ...  ... ...        ...   ...           ... ...   ...  ...           ...        ...  ...                      
+```
+
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.2. Basic functions
+
+
+```r
+fb %&gt;%
+  select(Home, xG, Score, xG.1, Away)               # Keep/drop certain columns
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+```
+
+
+```text
+##              Home  xG Score xG.1          Away
+## 1          Monaco 2.0   1–1  0.3        Nantes
+## 2            Lyon 1.4   1–1  0.8         Brest
+## 3          Troyes 0.8   1–2  1.2     Paris S-G
+## 4          Rennes 0.6   1–1  2.0          Lens
+## 5        Bordeaux 0.7   0–2  3.3 Clermont Foot
+## 6      Strasbourg 0.4   0–2  0.9        Angers
+## 7            Nice 0.8   0–0  0.2         Reims
+## 8   Saint-Étienne 2.1   1–1  1.3       Lorient
+## 9            Metz 0.7   3–3  1.4         Lille
+ ...             ... ...   ...  ...           ...
+```
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.2. Basic functions
+
+
+```r
+fb %&gt;%
+  select(Home, xG, Score, xG.1, Away) %&gt;%           # Keep/drop certain columns
+  mutate(home_winner = xG &gt; xG.1)                   # Create a new variable
+                                                    #
+                                                    #
+                                                    #
+                                                    #
+```
+
+
+
+```text
+##              Home  xG Score xG.1          Away home_winner
+## 1          Monaco 2.0   1–1  0.3        Nantes        TRUE
+## 2            Lyon 1.4   1–1  0.8         Brest        TRUE
+## 3          Troyes 0.8   1–2  1.2     Paris S-G       FALSE
+## 4          Rennes 0.6   1–1  2.0          Lens       FALSE
+## 5        Bordeaux 0.7   0–2  3.3 Clermont Foot       FALSE
+## 6      Strasbourg 0.4   0–2  0.9        Angers       FALSE
+## 7            Nice 0.8   0–0  0.2         Reims        TRUE
+## 8   Saint-Étienne 2.1   1–1  1.3       Lorient        TRUE
+## 9            Metz 0.7   3–3  1.4         Lille       FALSE
+ ...             ... ...   ...  ...           ...         ...
+```
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.2. Basic functions
+
+
+```r
+fb %&gt;%
+  select(Home, xG, Score, xG.1, Away) %&gt;%           # Keep/drop certain columns
+  mutate(home_winner = xG &gt; xG.1) %&gt;%               # Create a new variable
+  filter(Home == "Rennes")                          # Keep/drop certain rows 
+                                                    #
+                                                    #
+                                                    #
+```
+
+
+```text
+##      Home  xG Score xG.1          Away home_winner
+## 1  Rennes 0.6   1–1  2.0          Lens       FALSE
+## 2  Rennes 0.9   1–0  0.5        Nantes        TRUE
+## 3  Rennes 1.0   0–2  0.5         Reims        TRUE
+## 4  Rennes 2.4   6–0  0.3 Clermont Foot        TRUE
+## 5  Rennes 0.8   2–0  1.4     Paris S-G       FALSE
+## 6  Rennes 1.5   1–0  0.6    Strasbourg        TRUE
+## 7  Rennes 3.8   4–1  1.1          Lyon        TRUE
+## 8  Rennes 3.1   2–0  0.7   Montpellier        TRUE
+## 9  Rennes 0.8   1–2  0.6         Lille        TRUE
+         ... ...   ...  ...           ...         ...
+```
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.2. Basic functions
+
+
+```r
+fb %&gt;%
+  select(Home, xG, Score, xG.1, Away) %&gt;%           # Keep/drop certain columns
+  mutate(home_winner = xG &gt; xG.1) %&gt;%               # Create a new variable
+  filter(Home == "Rennes") %&gt;%                      # Keep/drop certain rows
+  arrange(-xG)                                      # Sort rows
+                                                    #
+                                                    #
+```
+
+
+```text
+##      Home  xG Score xG.1          Away home_winner
+## 1  Rennes 3.8   4–1  1.1          Lyon        TRUE
+## 2  Rennes 3.3   6–0  0.4      Bordeaux        TRUE
+## 3  Rennes 3.3   6–1  0.9          Metz        TRUE
+## 4  Rennes 3.1   2–0  0.7   Montpellier        TRUE
+## 5  Rennes 2.7   2–0  0.3         Brest        TRUE
+## 6  Rennes 2.6   4–1  0.4        Troyes        TRUE
+## 7  Rennes 2.4   6–0  0.3 Clermont Foot        TRUE
+## 8  Rennes 1.9   2–3  2.9        Monaco       FALSE
+## 9  Rennes 1.7   2–0  0.3        Angers        TRUE
+         ... ...   ...  ...           ...         ...
+```
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.2. Basic functions
+
+
+```r
+fb %&gt;%
+  select(Home, xG, Score, xG.1, Away) %&gt;%           # Keep/drop certain columns
+  mutate(home_winner = xG &gt; xG.1) %&gt;%               # Create a new variable
+  filter(Home == "Rennes") %&gt;%                      # Keep/drop certain rows
+  arrange(-xG) %&gt;%                                  # Sort rows
+  summarise(expected_wins = mean(home_winner),      # Aggregate into statistics
+            expected_goals = sum(xG))               #
+```
+
+```
+##   expected_wins expected_goals
+## 1     0.8421053           36.6
+```
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.2. Basic functions
+
+ * Here are two very **handy functions** to use within `mutate()`
+   
+  &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+--
+
+.pull-left[
+&lt;center&gt;&lt;b&gt;ifelse&lt;/b&gt;&lt;/center&gt;
+
+
+```r
+fb %&gt;%
+  select(Home, Attendance) %&gt;%  
+  mutate(att_bin = ifelse(Attendance &gt; 10000, 
+                          "Large", 
+                          "Low")
+         ) %&gt;% head()
+```
+
+```
+##         Home Attendance att_bin
+## 1     Monaco       7500     Low
+## 2       Lyon      29018   Large
+## 3     Troyes      15248   Large
+## 4     Rennes      22567   Large
+## 5   Bordeaux      18748   Large
+## 6 Strasbourg      23250   Large
+```
+]
+
+--
+
+.pull-right[
+&lt;center&gt;&lt;b&gt;case_when&lt;/b&gt;&lt;/center&gt;
+
+
+```r
+fb %&gt;%
+  select(Home, xG, xG.1, Away) %&gt;%  
+  mutate(xWin = case_when(xG &gt; xG.1 ~ "Home",
+                          xG == xG.1 ~ "Draw",
+                          xG &lt; xG.1 ~ "Away")
+         ) %&gt;% head()
+```
+
+```
+##         Home  xG xG.1          Away xWin
+## 1     Monaco 2.0  0.3        Nantes Home
+## 2       Lyon 1.4  0.8         Brest Home
+## 3     Troyes 0.8  1.2     Paris S-G Away
+## 4     Rennes 0.6  2.0          Lens Away
+## 5   Bordeaux 0.7  3.3 Clermont Foot Away
+## 6 Strasbourg 0.4  0.9        Angers Away
+```
+]
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.3. group_by() and summarise()
+
+ * With `group_by()` you can perform **computations separately** for the different **categories of a variable**
+
+--
+
+.pull-left[
+
+```r
+fb %&gt;%
+  select(Wk, Home, xG) %&gt;%
+  mutate(all.xG = mean(xG)) %&gt;%
+  head(10)
+```
+
+```
+##    Wk          Home  xG   all.xG
+## 1   1        Monaco 2.0 1.473421
+## 2   1          Lyon 1.4 1.473421
+## 3   1        Troyes 0.8 1.473421
+## 4   1        Rennes 0.6 1.473421
+## 5   1      Bordeaux 0.7 1.473421
+## 6   1    Strasbourg 0.4 1.473421
+## 7   1          Nice 0.8 1.473421
+## 8   1 Saint-Étienne 2.1 1.473421
+## 9   1          Metz 0.7 1.473421
+## 10  1   Montpellier 0.5 1.473421
+```
+]
+
+--
+
+.pull-right[
+
+```r
+fb %&gt;%
+  select(Wk, Home, xG) %&gt;%
+* group_by(Home) %&gt;%
+  mutate(home.xG = mean(xG)) %&gt;%
+  head(6)
+```
+
+```
+## # A tibble: 6 × 4
+## # Groups:   Home [6]
+##      Wk Home          xG home.xG
+##   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;
+## 1     1 Monaco       2      1.69
+## 2     1 Lyon         1.4    2.07
+## 3     1 Troyes       0.8    1.21
+## 4     1 Rennes       0.6    1.93
+## 5     1 Bordeaux     0.7    1.23
+## 6     1 Strasbourg   0.4    1.73
+```
+]
+
+---
+
+### 3. The `dplyr` grammar
+
+#### 3.3. group_by() and summarise()
+
+&lt;ul&gt;
+  &lt;li&gt;It is particularly &lt;b&gt;useful with summarise()&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;summarise keeps the grouping variable&lt;/li&gt;
+    &lt;li&gt;and compute &lt;b&gt;statistics for each category&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+.pull-left[
+
+
+```r
+fb %&gt;%
+  group_by(Wk) %&gt;%
+  summarise(n = n(),
+            tot_xG = sum(xG)+sum(xG.1),
+            avg_WG = tot_xG/n) %&gt;%
+  head(4)
+```
+
+```
+## # A tibble: 4 × 4
+##      Wk     n tot_xG avg_WG
+##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+## 1     1    10   23.4   2.34
+## 2     2    10   26.6   2.66
+## 3     3    10   25.7   2.57
+## 4     4    10   30.4   3.04
+```
+
+
+]
+
+--
+
+
+.pull-right[
+
+&lt;p style = "margin-top:-6.3em"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;mutate() \(\neq\) summarise()&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;mutate()&lt;/b&gt; takes a operation that converts:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;A vector into another vector&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;li&gt;&lt;b&gt;summarise()&lt;/b&gt; takes a operation that converts:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;A vector into a value&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+--
+
+
+.pull-right[
+
+&lt;p style = "margin-top:-15.5em"&gt;&lt;/p&gt;
+
+&lt;center&gt;&lt;b&gt;Ungrouping&lt;/b&gt;&lt;/center&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;group_by()&lt;/b&gt; applies to all subsequent operations&lt;/li&gt;
+  &lt;li&gt;To cancel its effect you must &lt;b&gt;ungroup()&lt;/b&gt; the data&lt;/li&gt;
+&lt;/ul&gt;
+
+
+```r
+fb %&gt;% 
+  group_by(Wk) %&gt;% 
+  mutate(test = mean(xG)) %&gt;% 
+* ungroup() %&gt;%
+  ...
+```
+]
+
+---
+
+### Practice
+
+#### 1) Start from the `fb` dataset and keep only the variables `Home`, `Score` and `Away`
+
+--
+
+#### 2) Use the `separate()` function from `dplyr` to split the `Score` variable into `home_score` and `away_score`
+
+
+```r
+data.frame(x = "a_b") %&gt;% 
+  separate(x, c("x", "y"), "_")
+```
+
+```
+##   x y
+## 1 a b
+```
+
+--
+
+#### 3) Convert these two variables into numeric vectors
+
+--
+
+#### 4) Create a variable named `winner` that takes the values `Home`, `Draw` and `Away` depending on the score
+
+--
+
+#### 5) Use `group_by()` and `summarise() `to compute the percentage of draws, home wins and away wins
+
+--
+
+&lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
+
+<div class="countdown" id="timer_62ef64de" style="top:0;right:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+### Solution
+
+#### 1) Start from the `fb` dataset and keep only the variables `Home`, `Score` and `Away`
+
+--
+
+
+```r
+fb %&gt;% 
+* select(Home, Score, Away) %&gt;%
+  head(2)
+```
+
+--
+
+
+```
+##     Home Score   Away
+## 1 Monaco   1-1 Nantes
+## 2   Lyon   1-1  Brest
+```
+
+--
+
+#### 2) Use the `separate()` function from `dplyr` to split the `Score` variable into `home_score` and `away_score`
+
+--
+
+
+```r
+fb %&gt;% 
+  select(Home, Score, Away) %&gt;% 
+* separate(Score, c("home_score", "away_score"), "-") %&gt;%
+  head(2)
+```
+
+--
+
+
+```
+##     Home home_score away_score   Away
+## 1 Monaco          1          1 Nantes
+## 2   Lyon          1          1  Brest
+```
+
+---
+
+### Solution
+
+#### 3) Convert these two variables into numeric vectors
+
+#### 4) Create a variable named `winner` that takes the values `Home`, `Draw` and `Away` depending on the score
+
+--
+
+
+```r
+fb %&gt;% 
+  select(Home, Score, Away) %&gt;% 
+  separate(Score, c("home_score", "away_score"), "-") %&gt;%
+* mutate(home_score = as.numeric(home_score),
+*        away_score = as.numeric(away_score),
+*        winner = case_when(home_score &lt; away_score ~ "Away",
+*                           home_score == away_score ~ "Draw",
+*                           home_score &gt; away_score ~ "Home")) %&gt;%
+  head()
+```
+
+--
+
+
+```
+##         Home home_score away_score          Away winner
+## 1     Monaco          1          1        Nantes   Draw
+## 2       Lyon          1          1         Brest   Draw
+## 3     Troyes          1          2     Paris S-G   Away
+## 4     Rennes          1          1          Lens   Draw
+## 5   Bordeaux          0          2 Clermont Foot   Away
+## 6 Strasbourg          0          2        Angers   Away
+```
+
+---
+
+### Solution
+
+#### 5) Use `group_by()` and `summarise() `to compute the percentage of draws, home wins and away wins
+
+--
+
+
+```r
+fb %&gt;% 
+  select(Home, Score, Away) %&gt;% 
+  separate(Score, c("home_score", "away_score"), "-") %&gt;%
+  mutate(home_score = as.numeric(home_score),
+         away_score = as.numeric(away_score),
+         winner = case_when(home_score &lt; away_score ~ "Away",
+                            home_score == away_score ~ "Draw",
+                            home_score &gt; away_score ~ "Home")) %&gt;%
+* group_by(winner) %&gt;%
+* summarise(pct = 100 * (n() / nrow(fb)))
+```
+
+--
+
+
+```
+## # A tibble: 3 × 2
+##   winner   pct
+##   &lt;chr&gt;  &lt;dbl&gt;
+## 1 Away    30.5
+## 2 Draw    26.8
+## 3 Home    42.6
+```
+
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. The dplyr grammar &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Packages&lt;/li&gt;
+    &lt;li&gt;3.2. Basic functions&lt;/li&gt;
+    &lt;li&gt;3.3. group_by() and summarise()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. A few words on learning R&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. When it doesn't work the way you want&lt;/li&gt;
+    &lt;li&gt;4.2. Where to find help&lt;/li&gt;
+    &lt;li&gt;4.3. When it doesn't work at all&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. The dplyr grammar &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Packages&lt;/li&gt;
+    &lt;li&gt;3.2. Basic functions&lt;/li&gt;
+    &lt;li&gt;3.3. group_by() and summarise()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. A few words on learning R&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. When it doesn't work the way you want&lt;/li&gt;
+    &lt;li&gt;4.2. Where to find help&lt;/li&gt;
+    &lt;li&gt;4.3. When it doesn't work at all&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+]
+
+---
+
+### 4. A few words on learning R
+
+#### 4.1. When it doesn't work the way you want
+
+&lt;ul&gt;
+  &lt;li&gt;When things do not work the way you want, &lt;b&gt;NAs are the usual suspects&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;For instance, this is how the mean function reacts to NAs:&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+
+```r
+mean(c(1, 2, NA))
+```
+
+```
+## [1] NA
+```
+--
+
+```r
+mean(c(1, 2, NA), na.rm = T)
+```
+
+```
+## [1] 1.5
+```
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;You should systematically &lt;b&gt;check for NAs!&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+--
+ 
+
+```r
+is.na(c(1, 2, NA))
+```
+
+```
+## [1] FALSE FALSE  TRUE
+```
+
+---
+
+### 4. A few words on learning R
+
+#### 4.1. When it doesn't work the way you want
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Don't pipe blindfolded!&lt;/b&gt;&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;Check&lt;/b&gt; that each command does what it's expected to do&lt;/li&gt;
+    &lt;li&gt;View or print your data &lt;b&gt;at each step&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+
+```r
+fb %&gt;% 
+  select(Home, Score, Away) %&gt;%
+  head(1)
+```
+
+--
+
+
+```
+##     Home Score   Away
+## 1 Monaco   1-1 Nantes
+```
+
+--
+
+
+```r
+fb %&gt;% 
+  select(Home, Score, Away) %&gt;% 
+  separate(Score, c("home_score", "away_score"), "-") %&gt;%
+  head(1)
+```
+
+--
+
+
+```
+##     Home home_score away_score   Away
+## 1 Monaco          1          1 Nantes
+```
+
+---
+
+### 4. A few words on learning R
+
+#### 4.2. Where to find help
+
+&lt;ul&gt;
+  &lt;li&gt;Often times things don't work either because:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;You don't understand&lt;/b&gt; a function's argument&lt;/li&gt;
+    &lt;li&gt;Or &lt;b&gt;you don't know&lt;/b&gt; that there exists an argument you should use&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;ul&gt;
+  &lt;li&gt;This is precisely what &lt;b&gt;help files&lt;/b&gt; are made for&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Every function has a help file, just enter &lt;b&gt;?&lt;/b&gt; and the name of your &lt;b&gt;function&lt;/b&gt; in the console&lt;/li&gt;
+    &lt;li&gt;The help file will &lt;b&gt;pop up in the Help tab&lt;/b&gt; of R studio&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+ 
+
+```r
+?paste
+```
+
+--
+
+&lt;center&gt;
+&lt;img src = "paste_help.png"/&gt;
+&lt;/center&gt;
+
+---
+
+### 4. A few words on learning R
+
+#### 4.2. Where to find help
+
+&lt;ul&gt;
+  &lt;li&gt;Search on the internet!&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You question is for sure already asked and answered on &lt;a href = "https://stackoverflow.com/"&gt;stackoverflow&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+--
+
+&lt;center&gt;
+&lt;img src = "ask_google.png" width = 750 /&gt;
+&lt;/center&gt;
+
+---
+
+### 4. A few words on learning R
+
+#### 4.3. When it doesn't work at all
+
+ * Sometimes R breaks and returns an &lt;b&gt;error&lt;/b&gt; (usually kind of cryptic)
+
+--
+
+
+```r
+read.csv("C:\Users\Documents\R")
+```
+
+```
+## Error: '\U' used without hex digits in character string starting ""C:\U"
+```
+
+--
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Look for &lt;b&gt;keywords&lt;/b&gt; that might help you understand where it comes from&lt;/li&gt;
+  &lt;li&gt;Paste in on &lt;b&gt;Google&lt;/b&gt; with the name of your command&lt;/li&gt;
+&lt;/ol&gt;
+
+--
+
+&lt;center&gt;
+&lt;img src = "error.png" width = 750 /&gt;
+&lt;/center&gt;
+
+---
+
+&lt;h3&gt;Overview&lt;/h3&gt;
+
+&lt;p style = "margin-bottom:2.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;1. Getting started &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;1.1. About R&lt;/li&gt;
+    &lt;li&gt;1.2. The R Studio IDE&lt;/li&gt;
+    &lt;li&gt;1.3. Import and eyeball data&lt;/li&gt;
+    &lt;li&gt;1.4. Use functions&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:1.5cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;2. Anatomy of a data.frame &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;2.1. Data structure&lt;/li&gt;
+    &lt;li&gt;2.2. Classes&lt;/li&gt;
+    &lt;li&gt;2.3. Vectors&lt;/li&gt;
+    &lt;li&gt;2.4. Subsetting&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+]
+
+.pull-right[
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;3. The dplyr grammar &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;3.1. Packages&lt;/li&gt;
+    &lt;li&gt;3.2. Basic functions&lt;/li&gt;
+    &lt;li&gt;3.3. group_by() and summarise()&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;
+  &lt;li&gt;&lt;b&gt;4. A few words on learning R &amp;#10004;&lt;/b&gt;&lt;/li&gt;
+  &lt;ul style = "list-style: none"&gt;
+    &lt;li&gt;4.1. When it doesn't work the way you want&lt;/li&gt;
+    &lt;li&gt;4.2. Where to find help&lt;/li&gt;
+    &lt;li&gt;4.3. When it doesn't work at all&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+ 
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul style = "margin-left:-1cm;list-style: none"&gt;&lt;li&gt;&lt;b&gt;5. Wrap up!&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;
+]
+
+---
+
+### 5. Wrap up!
+
+#### 1. Import data
+
+
+```r
+fb &lt;- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 2. Class
+
+
+```r
+is.numeric("1.6180339") # What would be the output?
+```
+
+--
+
+
+```
+## [1] FALSE
+```
+
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 3. Subsetting
+
+
+```r
+fb$Home[3]
+```
+
+```
+## [1] "Troyes"
+```
+
+---
+
+### 5. Wrap up!
+
+#### 4. Packages
+
+
+```r
+library(dplyr)
+```
+
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+#### 5. The dplyr grammar
+
+.left-column[
+&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;caption&gt;&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Function &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Meaning &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; mutate() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Modify or create a variable &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; select() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Keep a subset of variables &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; filter() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Keep a subset of observations &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; arrange() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Sort the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; group_by() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Group the data &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; summarise() &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Summarizes variables into 1 observation per group &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+--
+
+.right-column[
+&lt;img style = "margin-top:0cm; margin-left:1.5cm;" src = "pipe.png" width = "180"/&gt;
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
