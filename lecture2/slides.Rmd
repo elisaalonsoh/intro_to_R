@@ -1,0 +1,2723 @@
+---
+title: "Data visualization"
+subtitle: "Lecture 2"
+author: "<br>Louis SIRUGUE"
+date: "M1 APE - Fall 2022"
+output:
+  xaringan::moon_reader:  
+    css: 
+        - xaringan-themer.css
+        - theme.css
+    includes:
+      in_header: header.html
+    lib_dir: libs
+    nature:
+      ratio: '16:9'
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{css, echo = F, eval = F}
+body{background-color:black;filter:invert(1)}
+```
+
+```{r setup, include = FALSE}
+source(paste0(getwd(), "/../source/style.R"))
+library(countdown)
+stargazer <- stargazer::stargazer
+options(htmltools.dir.version = F)
+knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", dpi = 300, out.width = "100%")
+theme_set(theme_gray())
+scale_colour_discrete <- ggplot2::scale_colour_discrete
+```
+
+<style> .left-column {width: 65%;} .right-column {width: 30%;} </style>
+
+### Quick reminder
+
+#### 1. Import data
+
+```{r, echo = F}
+fb <- read.csv("ligue1.csv", encoding = "UTF-8")
+```
+
+```{r, eval = F}
+fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 2. Class
+
+```{r, eval = F}
+is.numeric("1.6180339") # What would be the output?
+```
+
+--
+
+```{r, echo = F}
+is.numeric("1.6180339") # What would be the output?
+```
+
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 3. Subsetting
+
+```{r}
+fb$Home[3]
+```
+
+---
+
+### Quick reminder
+
+#### 4. Packages
+
+```{r, eval = F}
+library(dplyr)
+```
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+#### 5. The dplyr grammar
+
+.left-column[
+```{r, echo = F}
+kable(tibble(Function = c("mutate()", "select()", "filter()", 
+                    "arrange()", "group_by()", "summarise()"),
+       Meaning = c("Modify or create a variable", "Keep a subset of variables", "Keep a subset of observations",
+                   "Sort the data", "Group the data", "Summarizes variables into 1 observation per group")),
+      caption = "")
+```
+]
+
+--
+
+.right-column[
+<img style = "margin-top:0cm; margin-left:1.5cm;" src = "pipe.png" width = "180"/>
+]
+
+---
+
+### Warm up practice
+
+#### 1) Import `starbucks.csv` and `View()` the data
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+#### 2) Inspect the structure of the data using `str()`
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+#### 3) Use `summarise()` to compute for each beverage category the average number of calories and the number of different declinations (there is 1 row per declination)
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observation with the highest calorie values
+
+<center><i>You can use the row_number() function within filter() to use the row numbers as any other variable</i></center>
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+<center><h3><i>You've got 10 minutes!</i></h3></center>
+
+`r countdown(minutes = 10, top = 0, right = 0)`
+
+---
+
+### Solution
+
+#### 1) Import `starbucks.csv` and `View()` the data
+
+```{r, eval = F}
+starbucks <- read.csv("C:/User/Documents/starbucks.csv")
+View(starbucks)
+```
+
+```{r, echo = F}
+starbucks <- read.csv("starbucks.csv")
+```
+
+--
+
+<center><img src = "view_starbucks.png" width = "1100"/></center>
+
+---
+
+### Solution
+
+#### 1) Import `starbucks.csv` and `View()` the data
+
+```{r, eval = F}
+starbucks <- read.csv("C:/User/Documents/starbucks.csv")
+View(starbucks)
+```
+
+```{r, echo = F}
+starbucks <- read.csv("starbucks.csv")
+```
+
+<center><img src = "view_starbucks_sep.png" width = "1100"/></center>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>We only have <b>one variable</b> in which all values are <b>separated by semicolons</b></li>
+  <ul>
+    <li>We need to set the <b>sep</b> argument of the function accordingly</li>
+  </ul>
+</ul>
+
+---
+
+### Solution
+
+#### 1) Import `starbucks.csv` and `View()` the data
+
+```{r, eval = F}
+starbucks <- read.csv("C:/User/Documents/starbucks.csv")
+View(starbucks)
+```
+
+```{r, echo = F}
+starbucks <- read.csv("starbucks.csv")
+```
+
+<center><img src = "view_starbucks_encoding.png" width = "1100"/></center>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>We only have <b>one variable</b> in which all values are <b>separated by semicolons</b></li>
+  <ul>
+    <li>We need to set the <b>sep</b> argument of the function accordingly</li>
+    <li>Like last time, we also need to set the <b>encoding</b> argument correctly</li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+*starbucks <- read.csv("C:/User/Documents/starbucks.csv", sep = ";", encoding = "UTF-8")
+```
+
+```{r, echo = F}
+starbucks <- read.csv("starbucks.csv", sep = ";", encoding = "UTF-8")
+```
+
+---
+
+### Solution
+
+#### 2) Inspect the structure of the data using `str()`
+
+```{r, eval = F}
+str(starbucks)
+```
+
+--
+
+```{r, highlight = F}
+## 'data.frame':    242 obs. of  18 variables:
+##  $ Beverage_category  : chr  "Coffee" "Coffee" "Coffee" "Coffee" ...
+##  $ Beverage           : chr  "Brewed Coffee" "Brewed Coffee" "Brewed Coffee" "Brewed Coffee" ...
+##  $ Beverage_prep      : chr  "Short" "Tall" "Grande" "Venti" ...
+##  $ Calories           : int  3 4 5 5 70 100 70 100 150 110 ...
+##  $ Total.Fat          : chr  "0.1" "0.1" "0.1" "0.1" ...
+##  $ Trans.Fat          : num  0 0 0 0 0.1 2 0.4 0.2 3 0.5 ...
+##  $ Saturated.Fat      : num  0 0 0 0 0 0.1 0 0 0.2 0 ...
+##  $ Sodium             : int  0 0 0 0 5 15 0 5 25 0 ...
+##  $ Total.Carbohydrates: int  5 10 10 10 75 85 65 120 135 105 ...
+##  $ Cholesterol        : int  0 0 0 0 10 10 6 15 15 10 ...
+##  $ Dietary.Fibre      : int  0 0 0 0 0 0 1 0 0 1 ...
+##  $ Sugars             : int  0 0 0 0 9 9 4 14 14 6 ...
+##  $ Protein            : num  0.3 0.5 1 1 6 6 5 10 10 8 ...
+##  $ Vitamin.A          : chr  "0%" "0%" "0%" "0%" ...
+##  $ Vitamin.C          : chr  "0%" "0%" "0%" "0%" ...
+##  . ...                . ...  ...  ...  ...  ...  ...   
+```
+
+---
+
+### Solution
+
+#### 3) Use `summarise()` to compute for each beverage category the average number of calories and the number of different declinations (there is 1 row per declination)
+
+```{r, eval = F}
+starbucks %>%
+  group_by(Beverage_category) %>%
+  summarise(Declinations = n(),
+            Mean_cal = mean(Calories))
+```
+
+--
+
+```{r, echo = F}
+starbucks %>%
+  group_by(Beverage_category) %>%
+  summarise(Declinations = n(),
+            Mean_cal = mean(Calories))
+```
+
+---
+
+### Solution
+
+#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observation with the highest calorie values
+
+```{r, eval = F}
+maxcal <- starbucks %>%
+  arrange(-Calories) %>%
+  select(Beverage_category, Beverage_prep, Calories) %>%
+  filter(row_number() <= 10)
+
+maxcal
+```
+
+--
+
+```{r, echo = F}
+maxcal <- starbucks %>%
+  arrange(-Calories) %>%
+  select(Beverage_category, Beverage_prep, Calories) %>%
+  filter(row_number() <= 10)
+
+maxcal
+```
+
+---
+
+<h3>Today we learn how to plot data</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Adding dimensions</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. More axes</li>
+    <li>2.2. More facets</li>
+    <li>2.3. More labels</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Types of geometry</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Points and lines</li>
+    <li>3.2. Barplots and histograms</li>
+    <li>3.3. Densities and boxplots</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. How (not) to lie with graphics</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Cumulative representations</li>
+    <li>4.2. Axis manipulations</li>
+    <li>4.3. Interpolation</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Today we learn how to plot data</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+]
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.1. Basic structure
+
+<ul>
+  <li>Let's use <b>ggplot</b> on data from the <a href = "https://wid.world/">World Inequality database</a></li>
+</ul>
+
+```{r, eval = F}
+wid <- read.csv("C:/User/Documents/wid.csv")
+```
+
+```{r, echo = F}
+wid <- read.csv("wid.csv")
+```
+
+--
+
+<p style = "margin-bottom:-1cm;"></p>
+
+```{r}
+str(wid)
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>It contains 1610 observations and 6 variables:</li>
+  <ul>
+    <li><b>continent/country/year</b>: Observation level</li>
+    <li><b>f_share</b>: Female labor income share</li>
+    <li><b>top1</b>: Top 1% income share</li>
+    <li><b>inc_head</b>: Per adult national income</li>
+  </ul>
+</ul>
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.1. Basic structure
+
+<ul>
+  <li><b>ggplot()</b> is the function that we're gonna use for all our plots</li>
+  <li>It takes the following <b>core arguments</b>:</li>
+  <ul>
+    <li><b>Data</b>: the values to plot</li>
+    <li><b>Mapping</b> (aes, for aesthetics): the structure of the plot</li>
+    <li><b>Geometry</b>: the type of plot</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:-1cm;">
+
+<center><img src = "ggplot.png" width = "150" style="margin-left:17cm; margin-top:-8cm"/></center>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li><b>Data and mapping</b> should be specified within the <b>parentheses</b></li>
+  <li><b>Geometry</b> and any <b>other element</b> should be added with a <b>+</b> sign</li>
+</ul>
+
+```{r, eval = F}
+ggplot(data, aes()) + geometry + anything_else
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+  * You can also **apply** the `ggplot()` function to your data with a **pipe**
+  
+```{r, eval = F}
+data %>% ggplot(aes()) + geometry
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.1. Basic structure
+ 
+```{r, eval = F}
+ggplot(wid)                                         # Data
+                                                    #
+```
+
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width=  "90%"}
+ggplot(wid) 
+```
+]
+
+.right-column[
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm">
+  <li>We assigned data to ggplot()</li>
+  <ul>
+    <li>But our plot is empty</li>
+  </ul>
+</ul>
+
+]
+
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.1. Basic structure
+ 
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1))            # Data & aesthetics
+                                                    #
+```
+
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width=  "90%"}
+ggplot(wid, aes(x = inc_head, y = top1)) 
+```
+]
+
+.right-column[
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm">
+  <li>We assigned data to ggplot()</li>
+  <ul>
+    <li>But our plot is empty</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm">
+  <li>We assigned variables to axes</li>
+  <ul>
+    <li>But still nothing</li>
+  </ul>
+</ul>
+
+]
+---
+
+### 1. The `ggplot()` function
+
+#### 1.1. Basic structure
+ 
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) +          # Data & aesthetics
+  geom_point()                                      # Geometry
+```
+
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width=  "90%"}
+ggplot(wid, aes(x = inc_head, y = top1)) +          # Data & aesthetics
+  geom_point()
+```
+]
+
+.right-column[
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm">
+  <li>We assigned data to ggplot()</li>
+  <ul>
+    <li>But our plot is empty</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm">
+  <li>We assigned variables to axes</li>
+  <ul>
+    <li>But still nothing</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+<ul style = "margin-left:-1cm">
+  <li>We need a geometry</li>
+  <ul>
+    <li>Points for instance</li>
+  </ul>
+</ul>
+
+]
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.2. Axes 
+
+<ul>
+  <li>Axes can be modified with <b>scale functions</b>, whose name depend on:</li>
+  <ul>
+    <li>The axis to modify</li>
+    <li>The type of variable assigned to the axis</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;">
+
+--
+
+```{r, echo = F}
+kable(tibble(Axis = c("Continuous", "Discrete"),
+             `x-axis` = c("scale_x_continuous()", "scale_x_discrete()"),
+             `y-axis` = c("scale_y_continuous()", "scale_y_discrete()")) ,
+      caption = "Basic scale functions") %>%
+  row_spec(0, align = 'c')
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;">
+
+<ul>
+  <li> The following <b>parameters</b> can be modified in these scale functions:</li>
+  <ul>
+    <li> <b>name:</b> The label of the corresponding axis </li>
+    <li> <b>limits:</b> Where the axis should start and end </li>
+    <li> <b>breaks:</b> Where to put ticks and values on the axis </li>
+  </ul>
+</ul>
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.2. Axes 
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point()                 # Basic structure
+                                                                        #
+```
+
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() 
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.2. Axes 
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +               # Basic structure
+*  scale_x_continuous(name = "Income per adult", limits = c(0, 150000))  # Scale function
+```
+
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +  
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000))
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.3. Theme()
+
+<ul>
+  <li>You can use one of the <b>default R themes</b> to easily change the layout of your plot</li>
+  <ul>
+    <li> ... + theme_<b>bw</b>()</li>
+    <li> ... + theme_<b>minimal</b>()</li>
+    <li> ... + theme_<b>dark</b>()</li>
+    <li>You can also tune the <b>font size</b> inside these functions with the <b>base_size</b> argument</li>
+  </ul>
+</ul>
+
+--
+
+```{r, echo = F, fig.width=12, fig.height=3.2, out.width="100%"}
+library(ggpubr)
+ggarrange(ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +  
+            scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+            theme_bw(base_size = 6) + ggtitle("+ theme_bw(base_size = 6)"),
+          ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +  
+            scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+            theme_minimal(base_size = 10) + ggtitle("+ theme_minimal(base_size = 10)"),
+          ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +  
+            scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+            theme_dark(base_size = 14) + ggtitle("+ theme_dark(base_size = 14)"),
+          ncol = 3)
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.3. Theme()
+
+<ul>
+  <li>You can also custom your graph using the <b>theme()</b> function</li>
+  <ul>
+    <li>It allows to <b>custom</b> virtually <b>anything</b></li>
+    <li>Enter ?theme to see the <b>endless</b> list of possible <b>arguments</b></li>
+    <li>Obviously we won't go through all of them but here are a few</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;">
+
+--
+
+```{r, eval = F}
+  # Basic structure
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() + 
+  # Axis
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+  # Theme
+  theme_minimal(base_size = 14) + 
+* theme(# Color of the background and of its border
+*       plot.background = element_rect(fill = "#DFE6EB", colour = "#DFE6EB"),
+*       # Size of the axis lines
+*       axis.line = element_line(size = rel(0.8)),
+*       # Color of the grid lines
+*       panel.grid = element_line(color = "gray85"))  
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.3. Theme()
+
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "75%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() + 
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+  theme_minimal(base_size = 14) + 
+  theme(plot.background = element_rect(fill = "#DFE6EB", colour = "#DFE6EB"),
+        axis.line = element_line(size = rel(0.8)),
+        panel.grid = element_line(color = "gray85"))
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.3. Theme()
+
+<ul>
+  <li>Geometries can also be modified</li>
+  <ul>
+    <li><b>alpha:</b> opacity from 0 to 1</li>
+    <li><b>color:</b> color of the geometry (for geometries that are filled such as bars, it will color the border)</li>
+    <li><b>fill:</b> fill color for geometries such as bars</li>
+    <li><b>size:</b> size of the geometry</li>
+    <li><b>shape:</b> change shape for geometries like points</li>
+    <li><b>linetype:</b> solid, dashed, dotted, etc., for line geometries</li>
+    <li>...</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:-1cm;">
+
+.pull-left[
+<p style = "margin-bottom:1.5cm;">
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3, 
+             color = "#6794A7",
+             alpha = .3,
+             shape = 18)  +
+  theme_minimal(base_size = 14)
+```
+
+]
+
+--
+
+.pull-right[
+```{r, echo = F, fig.height=3, fig.width=5, out.width="75%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3, 
+             color = "#6794A7",
+             alpha = .3,
+             shape = 18)  +
+  theme_minimal(base_size = 14)
+```
+]
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.4. Annotation
+
+<p style = "margin-bottom:.5cm;">
+
+--
+
+<ul>
+  <li>It is sometimes useful to <b>annotate</b> a graph so that certain things become <b>more salient</b></li>
+  <ul>
+    <li><b>Separate</b> two groups with a <b>dashed line</b></li>
+    <li>Add a few <b>words somewhere</b> for clarity</li>
+    <li><b>Circle</b> a specific group of <b>data points</b></li>
+    <li>Add <b>labels</b> to data points</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;">
+
+ * **Straight lines** can easily be added with their respective geometry
+ 
+```{r, eval=F}
++ geom_hline(yintercept = , linetype = )
+```
+ 
+```{r, eval=F}
++ geom_vline(xintercept = , linetype = )
+```
+
+--
+
+<p style = "margin-bottom:1cm;">
+
+ * And **punctual text annotations** can be added with `annotate()`
+ 
+```{r, eval=F}
++ annotate("text", x = , y = , label = )
+```
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.4. Annotation: Adding lines
+
+--
+
+.pull-left[
+```{r, fig.height=4, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 2, alpha = .3) + 
+  geom_hline(yintercept = .17)
+```
+
+<p style = "margin-bottom:1.14cm;">
+
+```{r, fig.height=4, echo = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 2, alpha = .3) + 
+  geom_hline(yintercept = .18)
+```
+]
+
+--
+
+.pull-right[
+```{r, fig.height=4}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 2, alpha = .3) + 
+  geom_vline(xintercept = 90000, 
+             linetype = "dashed")
+```
+]
+
+---
+
+### 1. The `ggplot()` function
+
+#### 1.4. Annotation: Adding text
+
+```{r, eval = F, fig.width = 4.5, fig.height = 2.5}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point(size = 2, alpha = .3) + 
+  annotate("text", x = 125000, y = .28, label = "Relevant info", size = 5)
+```
+--
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 2, alpha = .3) + 
+  annotate("text", x = 125000, y = .28, label = "Relevant info", size = 5)
+```
+
+---
+
+### 1. The `ggplot()` function
+
+<center><b>Combining everything</b></center>
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1))
+                                                                                                #
+                                                                                                #
+                                                                                                #
+                                                                                                #
+                                                                                                #
+                                                                                                #
+                                                                                                #
+```
+
+```{r, echo = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1))
+```
+
+---
+
+### 1. The `ggplot()` function
+
+<center><b>Combining everything</b></center>
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18)
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18)
+```
+
+---
+
+### 1. The `ggplot()` function
+
+<center><b>Combining everything</b></center>
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272")
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272")
+```
+
+---
+
+### 1. The `ggplot()` function
+
+<center><b>Combining everything</b></center>
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050")
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050")
+```
+
+---
+
+### 1. The `ggplot()` function
+
+<center><b>Combining everything</b></center>
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050") +
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000))
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050") +
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000))
+```
+
+---
+
+### 1. The `ggplot()` function
+
+<center><b>Combining everything</b></center>
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050") +
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+  scale_y_continuous(name = "Top 1% inc. share", limits = c(0, .35))
+                                                                                                 #
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050") +
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+  scale_y_continuous(name = "Top 1% inc. share", limits = c(0, .35))
+```
+
+---
+
+### 1. The `ggplot()` function
+
+<center><b>Combining everything</b></center>
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050") +
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+  scale_y_continuous(name = "Top 1% inc. share", limits = c(0, .35)) +
+  theme_minimal(base_size = 14)
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050") +
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+  scale_y_continuous(name = "Top 1% inc. share", limits = c(0, .35)) +
+  theme_minimal(base_size = 14)
+```
+
+---
+
+### 1. The `ggplot()` function
+
+<center><b>Combining everything</b></center>
+
+```{r, eval = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050") +
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+  scale_y_continuous(name = "Top 1% inc. share", limits = c(0, .35)) +
+  theme_minimal(base_size = 14) + 
+  theme(plot.background = element_rect(fill = "#DFE6EB", colour = "#DFE6EB")) 
+```
+
+```{r, echo = F, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + 
+  geom_point(size = 3,  color = "#6794A7", alpha = .3, shape = 18) +
+  geom_vline(xintercept = 90000, linetype = "dashed", size = 1, color = "#727272") +
+  annotate("text", x = 125000, y = .2, label = "Outliers", size = 5, color = "#505050") +
+  scale_x_continuous(name = "Income per adult", limits = c(0, 150000)) +
+  scale_y_continuous(name = "Top 1% inc. share", limits = c(0, .35)) +
+  theme_minimal(base_size = 14) + 
+  theme(plot.background = element_rect(fill = "#DFE6EB", colour = "#DFE6EB"))
+```
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Adding dimensions</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. More axes</li>
+    <li>2.2. More facets</li>
+    <li>2.3. More labels</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Types of geometry</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Points and lines</li>
+    <li>3.2. Barplots and histograms</li>
+    <li>3.3. Densities and boxplots</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. How (not) to lie with graphics</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Cumulative representations</li>
+    <li>4.2. Axis manipulations</li>
+    <li>4.3. Interpolation</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Adding dimensions</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. More axes</li>
+    <li>2.2. More facets</li>
+    <li>2.3. More labels</li>
+  </ul>
+</ul>
+
+]
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+<ul>
+  <li>In some cases you may want to <b>convey information</b> with other means than position on an axis</li>
+  <ul>
+    <li>The <b>color, size, or shape</b> of a geometry can be used to represent a <b>third variable</b>:</li>
+  </ul>
+</ul>
+
+
+--
+
+<ul>
+  <li>We can assign <b>different colors to different points</b> depending on the associated continent</li>
+  <ul>
+    <li>Continent should be assigned to the <i>"color axis"</i> in <b>aes()</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, fig.width = 16/3, fig.height = 3, out.width = "40%"}
+ggplot(wid, aes(x = inc_head, y = top1, color = continent)) + 
+  geom_point(alpha = .3) 
+```
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+ * If the variable assigned to the color axis is continuous a color gradient will be used
+ 
+--
+
+```{r, fig.width = 8, fig.height = 4.5, out.width = "55%"}
+ggplot(wid, aes(x = inc_head, y = top1, color = fshare)) + geom_point(alpha = .3)
+```
+
+---
+
+### 2. Adding dimensions
+
+#### 2.1. More axes
+
+<ul>
+  <li>Because there is no proper <i>"color axis"</i>, a <b>legend</b> is generated</li>
+  <ul>
+    <li>It can be seen as a <i>"color"</i> axis, just like the x- and y-axis</li>
+    <li>And should then be modified with a <b><i>scale</i> function</b></li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+.pull-left[
+<center><b>Discrete color variable</b></center>
+```{r, eval = F}
+plot + scale_color_manual(
+  name = "Title", values = c("red", "blue")
+)
+```
+]
+.pull-right[
+<center><b>Continuous color variable</b></center>
+```{r, eval = F}
+plot + scale_color_gradient(
+  name = "Title", low = "red", high = "blue"
+)
+```
+]
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+--
+
+<ul>
+  <li>But color is not this only <b>property</b> that can be used as a <b>dimension</b>, you can use:</li>
+  <ul>
+    <li><b>size, shape, alpha</b>, ...</li>
+    <li><b>fill, linetype</b>, ..., for relevant geometries</li>
+  </ul>
+</ul>
+
+---
+
+.pull-left[
+```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width="100%"}
+wid %>% 
+  ggplot(aes(x = inc_head, y = top1, color = continent)) + 
+  geom_point(alpha = .3) + labs(color = "Color:")
+```
+
+```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width="100%"}
+wid %>% 
+  ggplot(aes(x = inc_head, y = top1, shape = continent)) + 
+  geom_point(alpha = .3) + labs(shape = "Shape:")
+```
+]
+
+.pull-right[
+```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width="100%"}
+wid %>% 
+  ggplot(aes(x = inc_head, y = top1, size = continent)) + 
+  geom_point(alpha = .3) + labs(size = "Size:")
+```
+
+```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width="100%"}
+wid %>% 
+  ggplot(aes(x = inc_head, y = top1, alpha = continent)) + 
+  geom_point() + labs(alpha = "Opacity:")
+```
+]
+
+---
+
+### 2. Adding dimensions
+
+#### 2.2. More facets
+
+<ul>
+  <li>Another way to <b>distinguish groups</b> is to divide the plot into <b>facets</b></li>
+  <ul>
+    <li>To do so, indicate your faceting variable into the <b>facet_wrap()</b> function</li>
+  </ul>
+</ul>
+
+--
+
+ * In `facet_wrap()`, the faceting variable must be preceded by a tilde as the first argument:
+
+--
+
+```{r, eval = F}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +
+* facet_wrap(~continent)
+```
+
+--
+
+<ul>
+  <li>You can then choose the facet arrangement:</li>
+  <ul>
+    <li><b>nrow</b> to indicate the number of rows</li>
+    <li><b>ncol</b> to indicate the number of columns</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:-.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:1cm;"></p>
+<ul>
+  <li>As well as which <b>scale</b> should be:</li>
+  <ul>
+    <li><b>free:</b> adjusted separately to each facet</li>
+    <li><b>fixed:</b> common to all facets</li>
+  </ul>
+</ul>
+]
+
+.pull-right[
+```{r, echo = F}
+kable(tibble(` ` = c("y fixed", "y free"),
+             `x fixed` = c('scales = "fixed"', 'scales = "free_y"'),
+             `x free` = c('scales = "free_x"', 'scales = "free"')) ,
+      caption = "scales argument in facet_wrap()") %>%
+  row_spec(0, align = 'c')
+```
+]
+
+---
+
+### 2. Adding dimensions
+
+#### 2.2. More facets
+
+```{r, eval = F, fig.width = 8, fig.height = 4.5, out.width="60%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point(alpha = .3) +
+  facet_wrap(~continent, ncol = 3, scales = "free_x")
+```
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width="60%"}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point(alpha = .3) +
+  facet_wrap(~continent, ncol = 3, scales = "free_x")
+```
+
+---
+
+### 2. Adding dimensions
+
+#### 2.3. More labels
+
+<ul>
+  <li>The last dimension I want to mention is the <b><i>label</i> axis</b></li>
+  <ul>
+    <li>When using <b>geom_text()</b> instead of geom_point(), it will plot the corresponding <b>text instead of points</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid %>% filter(year == 2019 & continent == "Europe"), # subset so that we can see something
+```
+<p style = "margin-top:-1cm"></p>
+--
+```{r, eval = F}
+  aes(x = inc_head, y = top1, label = country)) + geom_text(alpha = .6)
+```
+
+--
+
+```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width="48%"}
+wid %>% filter(year == 2019 & continent == "Europe") %>%
+  ggplot(aes(x = inc_head, y = top1, label = country)) + geom_text(alpha = .6)
+```
+
+---
+
+### Practice
+
+#### 1) Reproduce that graph with the `starbucks` dataset
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) + 
+  geom_point(alpha = .3) + 
+  scale_color_gradient(low = "green", high = "red") +
+  theme_minimal(base_size = 14)
+```
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><h3><i>You've got 10 minutes!</i></h3></center>
+
+`r countdown(minutes = 10, top = 0, right = 0)`
+
+---
+
+### Solution
+
+```{r, eval = F}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol)) 
+                                                                                                 #
+                                                                                                 #
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol))
+```
+
+---
+
+### Solution
+
+```{r, eval = F}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol)) +
+  geom_point()
+                                                                                                 #
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol)) +
+  geom_point()
+```
+
+---
+
+### Solution
+
+```{r, eval = F}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+  geom_point()
+                                                                                                 #
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+  geom_point()
+```
+
+---
+
+### Solution
+
+```{r, eval = F}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+  geom_point(alpha = .3) + 
+  scale_color_gradient(low = "green", high = "red")
+                                                                                                 #
+```
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+  geom_point(alpha = .3) + 
+  scale_color_gradient(low = "green", high = "red")
+```
+
+---
+
+### Solution
+
+```{r, eval = F}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+  geom_point(alpha = .3) + 
+  scale_color_gradient(low = "green", high = "red") +
+  theme_minimal(base_size = 14)
+```
+
+```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+  geom_point(alpha = .3) + 
+  scale_color_gradient(low = "green", high = "red") +
+  theme_minimal(base_size = 14)
+```
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Adding dimensions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. More axes</li>
+    <li>2.2. More facets</li>
+    <li>2.3. More labels</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Types of geometry</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Points and lines</li>
+    <li>3.2. Barplots and histograms</li>
+    <li>3.3. Densities and boxplots</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. How (not) to lie with graphics</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Cumulative representations</li>
+    <li>4.2. Axis manipulations</li>
+    <li>4.3. Interpolation</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Adding dimensions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. More axes</li>
+    <li>2.2. More facets</li>
+    <li>2.3. More labels</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Types of geometry</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Points and lines</li>
+    <li>3.2. Barplots and histograms</li>
+    <li>3.3. Densities and boxplots</li>
+  </ul>
+</ul>
+]
+
+---
+
+### 3. Types of geometry
+
+#### 3.1. Points and lines
+
+<ul>
+  <li>So far we only represented scatterplots, but <b>many other geometries</b> can be used</li>
+  <ul>
+    <li>For instance, <b>lines</b> are particularly suited for <b>evolutions</b> over time</li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid %>% filter(country == "USA"), aes(x = year, y = top1)) + 
+  geom_point() + geom_line()
+```
+
+--
+
+```{r, echo = F, fig.width = 6, fig.height = 3.5, out.width="48%"}
+ggplot(wid %>% filter(country == "USA"), aes(x = year, y = top1)) + 
+  geom_point() + geom_line()
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.2. Barplots and histograms
+
+<ul>
+  <li><b>Barplots</b> however are great for categorical \(x\) variables and continuous \(y\) variables</li>
+  <ul>
+    <li>Setting the <b>stat</b> argument to <b>"identity"</b> allows to display the corresponding <b>y value</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid %>% filter(continent == "South America" & year == 2019), 
+       aes(x = country, y = top1)) + geom_bar(stat = "identity")
+```
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="63%"}
+ggplot(wid %>% filter(continent == "South America" & year == 2019), 
+       aes(x = country, y = top1)) + geom_bar(stat = "identity")
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.2. Barplots and histograms
+
+<ul>
+  <li>Note that you can <b>reorder the bars</b> according to their y value using the reorder() function</li>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid %>% filter(continent == "South America" & year == 2019), 
+       aes(x = reorder(country, top1), y = top1)) + geom_bar(stat = "identity")
+```
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="68%"}
+ggplot(wid %>% filter(continent == "South America" & year == 2019), 
+       aes(x = reorder(country, top1), y = top1)) + geom_bar(stat = "identity")
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.2. Barplots and histograms
+
+<ul>
+  <li>You can also set stat to <b>"count"</b> to plot the <b>number of observations</b> per category</li>
+  <ul>
+    <li>In that case, no variable should be assigned to the y axis</li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid, aes(x = continent)) + geom_bar(stat = "count")
+```
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="68%"}
+ggplot(wid, aes(x = continent)) + geom_bar(stat = "count")
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.2. Barplots and histograms
+
+<ul>
+  <li>Finally, histograms can be used to describe the distribution of a continuous variable</li>
+  <ul>
+    <li>You can tune the bin width with <b>binwidth</b> or the number of bins with <b>bins</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid %>% filter(year == 2019), aes(x = fshare)) + 
+  geom_histogram(bins = 20, color = "white", fill = "steelblue")
+```
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="63%"}
+ggplot(wid %>% filter(year == 2019), aes(x = fshare)) + 
+  geom_histogram(bins = 20, color = "white", fill = "steelblue")
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+<ul>
+  <li>As you may remember from last class, the <b>continuous</b> equivalent of the histogram is the <b>density</b></li>
+  <ul>
+    <li>Similarly you can tune the <b>bandwidth</b> with the <b>bw</b> argument <i>(don't do it)</i></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid %>% filter(year == 2019), aes(x = fshare)) + 
+    geom_density(color = "white", fill = "steelblue")
+```
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="63%"}
+ggplot(wid %>% filter(year == 2019), aes(x = fshare)) + 
+    geom_density(color = "white", fill = "steelblue")
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+<ul>
+  <li>A handy geometry to plot <b>densities</b> for different <b>groups</b> is the <b>violin</b></li>
+  <ul>
+    <li>Note that the <b>grouping variable</b> should be assigned to the <b>\(x\) axis</b></i></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid %>% filter(year == 2019), aes(x = continent, y = fshare)) + 
+    geom_violin(color = "white", fill = "steelblue") 
+```
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="63%"}
+ggplot(wid %>% filter(year == 2019), aes(x = continent, y = fshare)) + 
+    geom_violin(color = "white", fill = "steelblue") 
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+<ul>
+  <li><b>Violins</b> are particularly interesting when <b>combined with boxplots</b></li>
+  <ul>
+    <li>When overlaying these geometries, make sure to tune the <b>width and opacity</b> appropriately</li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+ggplot(wid %>% filter(year == 2019), aes(x = continent, y = fshare)) + 
+    geom_violin(fill = "steelblue", alpha = .4) + geom_boxplot(width = .1, alpha = .4)
+```
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="63%"}
+ggplot(wid %>% filter(year == 2019), aes(x = continent, y = fshare)) + 
+    geom_violin(fill = "steelblue", alpha = .4) + geom_boxplot(width = .1, alpha = .4)
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+<ul>
+  <li>This is how <b>boxplots</b> are constructed:</li>
+</ul>
+
+--
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="90%"}
+theme_set(theme_Rcourse())
+scale_colour_discrete <- function(...) {
+  scale_colour_manual(..., values = color_hex)
+}
+den <- tibble(x = rnorm(5000, 0, 1))
+
+ggarrange(ggplot(den, aes(x = x)) + 
+            # Median
+            geom_segment(aes(x = median(x), xend = median(x), y = 0, yend = 1), size = 2) +
+            annotate("text", x = median(den$x), y = 1.25, label = "Median", size = 4.5) + 
+            scale_x_continuous(limits = c(min(den$x), max(den$x))) +
+            scale_y_continuous(limits = c(0, 1.5)) +
+            theme(axis.title = element_blank(),
+                  axis.text = element_blank(),
+                  axis.line = element_blank(),
+                  axis.ticks = element_blank()),
+          ggplot(den, aes(x = x)) + 
+            geom_density(color = "#014D64", fill = "#6794A7", alpha = .8, bw = .4) +
+            scale_x_continuous(limits = c(min(den$x), max(den$x))) +
+            theme(axis.title = element_blank(),
+                  axis.text = element_blank(),
+                  axis.line = element_blank(),
+                  axis.ticks = element_blank()),
+          nrow = 2)
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+<ul>
+  <li>This is how <b>boxplots</b> are constructed:</li>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="90%"}
+ggarrange(ggplot(den, aes(x = x)) + 
+            # Median
+            geom_segment(aes(x = median(x), xend = median(x), y = 0, yend = 1), size = 2) +
+            annotate("text", x = median(den$x), y = 1.25, label = "Median", size = 4.5) + 
+            # Quantiles
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 1/4), y = 0, yend = 1)) +
+            geom_segment(aes(x = quantile(x, 3/4), xend = quantile(x, 3/4), y = 0, yend = 1)) +
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 3/4), y = 0, yend = 0)) +
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 3/4), y = 1, yend = 1)) +
+            annotate("text", x =  quantile(den$x, 1/4), y = 1.25, label = "Q1", size = 4.5) + 
+            annotate("text", x =  quantile(den$x, 3/4), y = 1.25, label = "Q3", size = 4.5) + 
+            scale_x_continuous(limits = c(min(den$x), max(den$x))) +
+            scale_y_continuous(limits = c(0, 1.5)) +
+            theme(axis.title = element_blank(),
+                  axis.text = element_blank(),
+                  axis.line = element_blank(),
+                  axis.ticks = element_blank()),
+          ggplot(den, aes(x = x)) + 
+            geom_density(color = "#014D64", fill = "#6794A7", alpha = .8, bw = .4) +
+            scale_x_continuous(limits = c(min(den$x), max(den$x))) +
+            theme(axis.title = element_blank(),
+                  axis.text = element_blank(),
+                  axis.line = element_blank(),
+                  axis.ticks = element_blank()),
+          nrow = 2)
+```
+
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+<ul>
+  <li>This is how <b>boxplots</b> are constructed:</li>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="90%"}
+ggarrange(ggplot(den, aes(x = x)) + 
+            # Median
+            geom_segment(aes(x = median(x), xend = median(x), y = 0, yend = 1), size = 2) +
+            annotate("text", x = median(den$x), y = 1.25, label = "Median", size = 4.5) + 
+            # Quantiles
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 1/4), y = 0, yend = 1)) +
+            geom_segment(aes(x = quantile(x, 3/4), xend = quantile(x, 3/4), y = 0, yend = 1)) +
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 3/4), y = 0, yend = 0)) +
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 3/4), y = 1, yend = 1)) +
+            annotate("text", x =  quantile(den$x, 1/4), y = 1.25, label = "Q1", size = 4.5) + 
+            annotate("text", x =  quantile(den$x, 3/4), y = 1.25, label = "Q3", size = 4.5) + 
+            # 3IQR
+            geom_segment(aes(x = quantile(x, 3/4), xend = quantile(x, 3/4) + 1.5*IQR(x), y = .5, yend = .5)) +
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 1/4) - 1.5*IQR(x), y = .5, yend = .5)) +
+            annotate("text", x = quantile(den$x, 1/4) - 1.5*IQR(den$x), y = 1, label = "Q1\n-\n1.5*IQR", size = 4.5) + 
+            annotate("text", x = quantile(den$x, 3/4) + 1.5*IQR(den$x), y = 1, label = "Q3\n+\n1.5*IQR", size = 4.5) + 
+            scale_x_continuous(limits = c(min(den$x), max(den$x))) +
+            scale_y_continuous(limits = c(0, 1.5)) +
+            theme(axis.title = element_blank(),
+                  axis.text = element_blank(),
+                  axis.line = element_blank(),
+                  axis.ticks = element_blank()),
+          ggplot(den, aes(x = x)) + 
+            geom_density(color = "#014D64", fill = "#6794A7", alpha = .8, bw = .4) +
+            scale_x_continuous(limits = c(min(den$x), max(den$x))) +
+            theme(axis.title = element_blank(),
+                  axis.text = element_blank(),
+                  axis.line = element_blank(),
+                  axis.ticks = element_blank()),
+          nrow = 2)
+```
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+<ul>
+  <li>This is how <b>boxplots</b> are constructed:</li>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height = 3.5, out.width="90%"}
+ggarrange(ggplot(den, aes(x = x)) + 
+            # Median
+            geom_segment(aes(x = median(x), xend = median(x), y = 0, yend = 1), size = 2) +
+            annotate("text", x = median(den$x), y = 1.25, label = "Median", size = 4.5) + 
+            # Quantiles
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 1/4), y = 0, yend = 1)) +
+            geom_segment(aes(x = quantile(x, 3/4), xend = quantile(x, 3/4), y = 0, yend = 1)) +
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 3/4), y = 0, yend = 0)) +
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 3/4), y = 1, yend = 1)) +
+            annotate("text", x =  quantile(den$x, 1/4), y = 1.25, label = "Q1", size = 4.5) + 
+            annotate("text", x =  quantile(den$x, 3/4), y = 1.25, label = "Q3", size = 4.5) + 
+            # 3IQR
+            geom_segment(aes(x = quantile(x, 3/4), xend = quantile(x, 3/4) + 1.5*IQR(x), y = .5, yend = .5)) +
+            geom_segment(aes(x = quantile(x, 1/4), xend = quantile(x, 1/4) - 1.5*IQR(x), y = .5, yend = .5)) +
+            annotate("text", x = quantile(den$x, 1/4) - 1.5*IQR(den$x), y = 1, label = "Q1\n-\n1.5*IQR", size = 4.5) + 
+            annotate("text", x = quantile(den$x, 3/4) + 1.5*IQR(den$x), y = 1, label = "Q3\n+\n1.5*IQR", size = 4.5) + 
+            # Outliers
+            geom_point(data = den %>% filter(x < quantile(x, 1/4) - 1.5*IQR(x) |x > quantile(x, 3/4) + 1.5*IQR(x)),
+                         aes(x = x, y = .5)) +
+            annotate("text", x = min(den$x) + .075, y = 1, label = "Outliers", size = 4.5, angle = 90) + 
+            annotate("text", x = max(den$x) - .075, y = 1, label = "Outliers", size = 4.5, angle = 90) + 
+            scale_x_continuous(limits = c(min(den$x), max(den$x))) +
+            scale_y_continuous(limits = c(0, 1.5)) +
+            theme(axis.title = element_blank(),
+                  axis.text = element_blank(),
+                  axis.line = element_blank(),
+                  axis.ticks = element_blank()),
+          ggplot(den, aes(x = x)) + 
+            geom_density(color = "#014D64", fill = "#6794A7", alpha = .8, bw = .4) +
+            scale_x_continuous(limits = c(min(den$x), max(den$x))) +
+            theme(axis.title = element_blank(),
+                  axis.text = element_blank(),
+                  axis.line = element_blank(),
+                  axis.ticks = element_blank()),
+          nrow = 2)
+
+```
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Adding dimensions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. More axes</li>
+    <li>2.2. More facets</li>
+    <li>2.3. More labels</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Types of geometry &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Points and lines</li>
+    <li>3.2. Barplots and histograms</li>
+    <li>3.3. Densities and boxplots</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. How (not) to lie with graphics</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Cumulative representations</li>
+    <li>4.2. Axis manipulations</li>
+    <li>4.3. Interpolation</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
+]
+
+---
+
+<h3>Overview</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Adding dimensions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. More axes</li>
+    <li>2.2. More facets</li>
+    <li>2.3. More labels</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Types of geometry &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Points and lines</li>
+    <li>3.2. Barplots and histograms</li>
+    <li>3.3. Densities and boxplots</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. How (not) to lie with graphics</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Cumulative representations</li>
+    <li>4.2. Axis manipulations</li>
+    <li>4.3. Interpolation</li>
+  </ul>
+</ul>
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.1. Cumulative representations
+
+<p style = "margin-bottom:1cm;"></p>
+
+.left-column[
+<center><img src = "trump.png" width = "720"/></center>
+]
+ 
+.right-column[
+<p style = "margin-bottom:2cm;"></p>
+<center>Donald Trump during his daily coronavirus task force briefing on April 6, 2020</center>
+<p style = "margin-bottom:1.5cm;"></p>
+<b>The legend indicates:</b> <i>''>1,790,000 tests completed through April 5''</i>
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.1. Cumulative representations
+
+<p style = "margin-bottom:1cm;"></p>
+
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height=5, out.width = '100%'}
+trump <- read.csv("data-atVjV.csv") %>%
+  pivot_longer(-Date, names_to = "Dates", values_to = "tests") %>%
+  pivot_wider(values_from = "tests", names_from = "Date") %>%
+  mutate(order = row_number()) %>%
+  filter(order <= 32)
+
+ggplot(trump, aes(x = reorder(Dates, order), y = `Cumulative tests`)) +
+  geom_bar(stat = 'identity', color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  xlab("") + scale_y_continuous("", limits = c(0, 1800000)) + 
+  theme(axis.text.x = element_text(angle = 90))
+```
+]
+
+.right-column[
+<p style = "margin-bottom:2cm;"></p>
+<center><b>Let's take a closer look</b></center>
+  
+<p style = "margin-bottom:1.5cm;"></p>
+<center><i>''>1,790,000 tests completed through April 5''</i></center>
+  
+<p style = "margin-bottom:1.5cm;"></p>
+<center>Isn't there something tricky here?</center>
+]
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.1. Cumulative representations
+
+<p style = "margin-bottom:1cm;"></p>
+
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height=5, out.width = '100%'}
+ggplot(trump, aes(x = reorder(Dates, order), y = `Daily tests`)) +
+  geom_bar(stat = 'identity', color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  xlab("") + scale_y_continuous(name = "", limits = c(0, 1800000)) + 
+  theme(axis.text.x = element_text(angle = 90))
+```
+]
+
+.right-column[
+<p style = "margin-bottom:1.25cm;"></p>
+<center><i>They plotted the <b>cumulative</b> number tests!</i></center>
+
+<p style = "margin-bottom:1.5cm;"></p>
+<ul><li>This make it <b>looks</b> like an <b>exponential</b> progression</li></ul>
+  
+<p style = "margin-bottom:1cm;"></p>
+<ul><li>While the daily number of tests <b>actually did not increase that exponentially</b></li></ul>
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height=5, out.width = '100%'}
+library(scales)
+ggplot(tibble(Year = 2015:2021, Something = seq(9455, 9467, 2)),
+       aes(x = Year, y = Something)) +
+  geom_bar(stat = 'identity', color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(limits = c(9450, 9470), oob = rescale_none) +
+  scale_x_continuous(breaks = 2015:2021)
+```
+]
+
+.right-column[
+<p style = "margin-bottom:4cm;"></p>
+<center><i><b>What about that increase?</b></i></center>
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+.left-column[
+```{r, echo = F, fig.width = 8, fig.height=5, out.width = '100%'}
+library(scales)
+ggplot(tibble(Year = 2015:2021, Something = seq(9455, 9467, 2)),
+       aes(x = Year, y = Something)) +
+  geom_bar(stat = 'identity', color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  scale_y_continuous(limits = c(0, 9470)) +
+  scale_x_continuous(breaks = 2015:2021)
+```
+]
+
+.right-column[
+<p style = "margin-bottom:3cm;"></p>
+<i><b>Same data</b>, but starting <b>from 0</b></i>
+  
+<p style = "margin-bottom:1.5cm;"></p>
+&#10140; <b>Zooming</b> or unzooming on a graph can be very <b>misleading</b>
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+<center><img src = "foxnews.png" width = "600"/></center>
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+.pull-left[
+```{r, echo = F, fig.width = 6, fig.height=5, out.width = '90%'}
+ggplot(tibble(x = c("Now", "Jan 1, 2013"), 
+              y = c(35, 39.6),
+              order = 1:2,
+              lab = c("35%", "39.6%")),
+       aes(x = reorder(x, order), y = y, label = lab)) +
+  geom_bar(stat = 'identity', color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  geom_text(vjust = -.8, size = 5) + 
+  scale_y_continuous(name = "Top tax rate (%)", limits = c(34, 42), oob = rescale_none)  +
+  xlab("")
+```
+<center><i><b>Misleading</b></i></center>
+]
+
+--
+
+.pull-right[
+```{r, echo = F, fig.width = 6, fig.height=5, out.width = '90%'}
+ggplot(tibble(x = c("Now", "Jan 1, 2013"), 
+              y = c(35, 39.6),
+              order = 1:2,
+              lab = c("35%", "39.6%")),
+       aes(x = reorder(x, order), y = y, label = lab)) +
+  geom_bar(stat = 'identity', color = "#014D64", fill = "#6794A7", alpha = .8) + 
+  geom_text(vjust = -.8, size = 5) + 
+  scale_y_continuous(name = "Top tax rate (%)", limits = c(0, 42), oob = rescale_none)  +
+  xlab("")
+```
+<center><i><b>Not misleading</b></i></center>
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+ * But in this case which is the most adequate representation?
+
+.pull-left[
+```{r, echo = F, fig.width = 4.8, fig.height=4, out.width = '100%'}
+temp_data <- tibble(x = 1875:2021, 
+              y = runif(147, 56.5, 57.5) + (1:147/200) + (1:147/175)^2.5,
+              z = y - 5 - runif(147, 0, 1))
+ggplot(temp_data, aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") +
+  scale_y_continuous("Temperature", limits = c(55, 60))
+```
+]
+
+.pull-right[
+```{r, echo = F, fig.width = 4.8, fig.height=4, out.width = '100%'}
+ggplot(temp_data, aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") +
+  scale_y_continuous("Temperature", limits = c(0, 110))
+```
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+ * There is no universal rule, but always <b>pay attention to axes and scales</b>
+
+.pull-left[
+
+<p style = "margin-bottom:-1cm;"></p>
+
+```{r, echo = F, fig.width = 6, fig.height=3, out.width = '95%'}
+ggplot(temp_data, aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") +
+  scale_y_continuous("Temperature", limits = c(56.5, 58.8))
+```
+<p style = "margin-bottom:-1.25cm;"></p>
+```{r, echo = F, fig.width = 6, fig.height=3, out.width = '95%'}
+ggplot(temp_data, aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") +
+  scale_y_continuous("Temperature", limits = c(0, 110))
+```
+]
+
+.pull-right[
+
+<p style = "margin-bottom:-1cm;"></p>
+
+```{r, echo = F, fig.width = 6, fig.height=3, out.width = '95%'}
+ggplot(temp_data, aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") +
+  scale_y_continuous("Temperature", limits = c(56.5, 58.8)) +
+  scale_x_continuous(limits = c(1700, 2500))
+```
+<p style = "margin-bottom:-1.25cm;"></p>
+```{r, echo = F, fig.width = 6, fig.height=3, out.width = '95%'}
+ggplot(temp_data, aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") +
+  scale_y_continuous("Temperature", limits = c(55, 60))
+```
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+<ul>
+  <li>&#9888; <i>Be very careful with double axes</i> &#9888;</li>
+  <ul>
+    <li>You can make a them tell basically everything</li>
+  </ul>
+</ul>
+
+
+```{r, echo = F, fig.width = 12, fig.height = 5, out.width="90%"}
+ddat <- tibble(x = rep(1:13, 2),
+               y = c(0, 1, 4, 15, 20, 17, 15, 20, 16, 21, 22, 14, 15, 
+                     4, 2, 3, 5, 7, 6, 10, 12, 12.5, 14, 15, 12, 13),
+               z = rep(c("Light", "Dark"), each = 13))
+
+ggarrange(ggplot(ddat, aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light")) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot() + theme(axis.line = element_blank()), 
+          ggplot() + theme(axis.line = element_blank()), 
+          ggplot() + theme(axis.line = element_blank()),
+          ncol = 2, nrow = 2)
+```
+
+--
+
+<p style = "margin-top:-11.265cm"></p>
+
+```{r, echo = F, fig.width = 12, fig.height = 5, out.width="90%"}
+ddat <- tibble(x = rep(1:13, 2),
+               y = c(0, 1, 4, 15, 20, 17, 15, 20, 16, 21, 22, 14, 15, 
+                     4, 2, 3, 5, 7, 6, 10, 12, 12.5, 14, 15, 12, 13),
+               z = rep(c("Light", "Dark"), each = 13))
+
+ggarrange(ggplot(ddat, aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light")) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot(ddat %>% mutate(y = ifelse(z == "Dark", (y /10) + 10, y)), aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light"), 
+                               limits = c(0, 25), breaks = seq(0, 25, 5), labels = seq(0, 250, 50) - 100) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot() + theme(axis.line = element_blank()), 
+          ggplot() + theme(axis.line = element_blank()),
+          ncol = 2, nrow = 2)
+```
+
+--
+
+<p style = "margin-top:-11.265cm"></p>
+
+```{r, echo = F, fig.width = 12, fig.height = 5, out.width="90%"}
+ddat <- tibble(x = rep(1:13, 2),
+               y = c(0, 1, 4, 15, 20, 17, 15, 20, 16, 21, 22, 14, 15, 
+                     4, 2, 3, 5, 7, 6, 10, 12, 12.5, 14, 15, 12, 13),
+               z = rep(c("Light", "Dark"), each = 13))
+
+ggarrange(ggplot(ddat, aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light")) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot(ddat %>% mutate(y = ifelse(z == "Dark", (y /10) + 10, y)), aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light"), 
+                               limits = c(0, 25), breaks = seq(0, 25, 5), labels = seq(0, 250, 50) - 100) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot(ddat %>% mutate(y = ifelse(z == "Dark", y*10, y)), aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light"), 
+                               limits = c(0, 250), breaks = seq(0, 250, 50), labels = seq(0, 25, 5)) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot() + theme(axis.line = element_blank()),
+          ncol = 2, nrow = 2)
+```
+
+--
+
+<p style = "margin-top:-11.265cm"></p>
+
+```{r, echo = F, fig.width = 12, fig.height = 5, out.width="90%"}
+ddat <- tibble(x = rep(1:13, 2),
+               y = c(0, 1, 4, 15, 20, 17, 15, 20, 16, 21, 22, 14, 15, 
+                     4, 2, 3, 5, 7, 6, 10, 12, 12.5, 14, 15, 12, 13),
+               z = rep(c("Light", "Dark"), each = 13))
+
+ggarrange(ggplot(ddat, aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light")) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot(ddat %>% mutate(y = ifelse(z == "Dark", (y /10) + 10, y)), aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light"), 
+                               limits = c(0, 25), breaks = seq(0, 25, 5), labels = seq(0, 250, 50) - 100) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot(ddat %>% mutate(y = ifelse(z == "Dark", y*10, y)), aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light"), 
+                               limits = c(0, 250), breaks = seq(0, 250, 50), labels = seq(0, 25, 5)) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ggplot(ddat %>% mutate(y = ifelse(z == "Dark", y + 50, y)), aes(x = x, y = y, color = z)) +
+            geom_line(size = 1, show.legend = F) +
+            scale_y_continuous(name = "Dark", sec.axis = sec_axis(~., name = "Light"), 
+                               limits = c(-100, 100), breaks = seq(-100, 100, 50), labels = seq(-150, 50, 50)) +
+            xlab("Time") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()),
+          ncol = 2, nrow = 2)
+```
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.3. Interpolation
+
+ * Here is the **previous graph** on the tax increase using a **line geometry**
+ 
+.pull-left[
+```{r, echo = F, fig.width = 4.8, fig.height=4, out.width = '100%'}
+ggplot(tibble(x = c("Now", "Jan 1, 2013"), 
+              y = c(35, 39.6),
+              order = 1:2),
+       aes(x = order, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + 
+  scale_y_continuous(name = "Top tax rate (%)", limits = c(0, 42))  +
+ scale_x_continuous(name = "", breaks = 1:2, labels = c("Now", "Jan 1, 2013"), 
+                    limits = c(.9, 2.1))
+```
+]
+
+--
+
+.pull-right[
+<p style = "margin-bottom:3cm;"></p>
+<center>This line has <b>infinitely many</b> points</center>
+
+<p style = "margin-bottom:2cm;"></p>
+<center>But <b>only two</b> of them are <b>correct</b></center>
+]
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.3. Interpolation
+
+<ul>
+  <li>This figure also has <b>finitely many</b> values but feels more natural</li>
+  <ul>
+    <li>This is because values are <b>sufficiently close</b> to each other to be <b>considered</b> as <b>continuous</b></li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 6, fig.height=4, out.width = '60%'}
+ggplot(temp_data, aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") +
+  scale_y_continuous("Temperature", limits = c(55, 60))
+```
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.3. Interpolation
+
+<ul>
+  <li>There is no rule either on when <b>lines</b> should be used or not</li>
+  <ul>
+    <li>But the <b>observation level</b> should be <b>clear</b> on the graph</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+.pull-left[
+```{r, echo = F, fig.width = 6, fig.height=4, out.width = '100%'}
+ggplot(tibble(x = seq(1910, 1960, 10),
+              y = c(4, 5, 5.5, 5.75, 6.25, 7.25)),
+       aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") + 
+  scale_y_continuous(name = "", limits = c(0, 10))
+```
+
+]
+
+.pull-right[
+```{r, echo = F, fig.width = 6, fig.height=4, out.width = '100%'}
+ggplot(tibble(x = seq(1910, 1960, 10),
+              y = c(4, 5, 5.5, 5.75, 6.25, 7.25)),
+       aes(x = x, y = y)) +
+  geom_line(color = "#6794A7", alpha = .8) + xlab("") + 
+  geom_point(color = "#6794A7", alpha = .8) +
+  scale_y_continuous(name = "", limits = c(0, 10))
+```
+]
+
+---
+<h3>Overview</h3>
+
+<p style = "margin-bottom:2.5cm;"></p>
+
+.pull-left[
+<p style = "margin-bottom:.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>1. The ggplot() function &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>1.1. Basic structure</li>
+    <li>1.2. Axes</li>
+    <li>1.3. Theme</li>
+    <li>1.4. Annotation</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.75cm;"></p>
+
+<ul style = "margin-left:1.5cm;list-style: none">
+  <li><b>2. Adding dimensions &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>2.1. More axes</li>
+    <li>2.2. More facets</li>
+    <li>2.3. More labels</li>
+  </ul>
+</ul>
+
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. Types of geometry &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Points and lines</li>
+    <li>3.2. Barplots and histograms</li>
+    <li>3.3. Densities and boxplots</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. How (not) to lie with graphics &#10004;</b></li>
+  <ul style = "list-style: none">
+    <li>4.1. Cumulative representations</li>
+    <li>4.2. Axis manipulations</li>
+    <li>4.3. Interpolation</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
+]
+
+---
+
+### 5. Wrap up!
+
+<p style = "margin-bottom:2cm;">
+
+<center><h4> The 3 core components of the ggplot() function </h4></center>
+
+--
+
+```{r, echo = F}
+kable(tibble(Component = c("Data", "Mapping", "Geometry"),
+             Contribution = c("Underlying values", "Axis assignment", "Type of plot"),
+             Implementation = c("ggplot(data, | data %>% ggplot(.,", 
+                                "aes(x = V1, y = V2, ...))",
+                                "+ geom_point() + geom_line() + ...")), 
+      caption = "",
+      align = "lcc")
+```
+
+<p style = "margin-bottom:2cm;">
+
+--
+
+ * Any **other element** should be added with a **`+` sign**
+
+--
+
+```{r, eval = F}
+ggplot(data, aes(x = V1, y = V2)) + 
+  geom_point() + geom_line() +
+  anything_else()
+```
+
+---
+
+### 5. Wrap up!
+
+.pull-left[
+<p style = "margin-bottom:1.75cm;">
+<center><h4> Main customization tools </h4></center>
+```{r, echo = F}
+kable(tibble(`Item to customize` = c("Axes", "Baseline theme", "Annotations", "Theme"),
+             `Main functions` = c("scale_[x/y]_[continuous/discrete]", 
+                                  "theme_[void/minimal/.../dark]()", 
+                                  "geom_[[h/v]line/text](), annotate()",
+                                  "theme(axis.[line/ticks].[x/y] = ...,")), 
+      caption = "", align = "ll")
+```
+]
+
+--
+
+.pull-right[
+<center><h4> Main types of geometry </h4></center>
+```{r, echo = F}
+kable(tibble(Geometry = c("Bar plot", "Histogram", "Area", "Line", 
+                          "Density", "Boxplot", "Violin", "Scatter plot"),
+             Function = c("geom_bar()", "geom_histogram()", "geom_area()", 
+                          "geom_line()", "geom_density()", "geom_boxplot()",
+                          "geom_violin()", "geom_point()")), caption = "", align = "lc") 
+```
+]
+
+---
+
+### 5. Wrap up!
+
+.pull-left[
+
+<center><h4> Main types of aesthetics </h4></center>
+
+```{r, echo = F}
+kable(tibble(Argument = c("alpha", "color", "fill", "size", "shape", "linetype"),
+             Meaning = c("opacity from 0 to 1",
+                         "color of the geometry", 
+                         "fill color of the geometry", 
+                         "size of the geometry", 
+                         "shape for geometries like points", 
+                         "solid, dashed, dotted, etc.")), caption = "")
+```
+]
+
+--
+
+.pull-right[
+
+<p style = "margin-bottom:3.25cm;"></p>
+
+<ul>
+  <li>If specified <b>in the geometry</b></li>
+  <ul>
+    <li>It will apply uniformly to every <b>all the geometry</b></li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>If assigned to a variable <b>in aes</b></li>
+  <ul>
+    <li>it will <b>vary with the variable</b> according to a scale documented in legend</li>
+  </ul>
+</ul>
+]
+
+<br>
+
+--
+
+```{r, eval = F}
+ggplot(data, aes(x = V1, y = V2, size = V3)) + 
+  geom_point(color = "steelblue", alpha = .6)
+```
+
+
