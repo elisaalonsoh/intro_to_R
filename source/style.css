@@ -49,9 +49,12 @@ ul.nav li a {color: #014D64}
 ul.nav li a:hover {background-color: #EBF0F3; color: #014D64; border-color: #EBF0F3;}
 ul.nav li.active a {color: #014D64 !important; border-color: #EBF0F3 !important; background-color: #EBF0F3 !important;}
 ul.nav li.active a:hover {color: #014D64; background-color: #EBF0F3; border-color: #EBF0F3;}
-/* Navbar styling */
-/******************/
+
+/* Other */
+/********/
 blockquote {border-left: solid 5px #EBF0F3; padding-left: 1em;}
+.column {float: left; width: 47%;}
+.row:after {content: ""; display: table; clear: both;}
 
 /* Custom html tags for convenience */
 /************************************/
