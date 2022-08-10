@@ -463,8 +463,8 @@ str(ggcurve)
 <ul>
   <li>For <b>22 countries</b> we have the following variables</li>
   <ul>
-    <li><b>ige:</b> The intergenerational income elasticity, the higher the more child income is close to parent income</li>
-    <li><b>gini:</b> The Gini coefficient of income inequality, the higher the more income is concentrated</li>
+    <li><b>ige:</b> The intergenerational income elasticity, the higher the closer child income to parent income</li>
+    <li><b>gini:</b> The Gini coefficient of income inequality, the higher the more concentrated the income</li>
   </ul>
 </ul>
  
@@ -985,7 +985,7 @@ ggmodel
 
 #### 1.1. On continuous variables
 
- * All these elements are then easily accessible with the `$` operator 
+ * All these elements are then easily accessible using the `$` operator 
 
 ```{r}
 str(ggmodel, give.attr = F)
@@ -1806,7 +1806,7 @@ lm(top1 ~ year, wid %>% mutate(year = as.factor(year)))
 <ul>
   <li>Another option to include categorical variables is to <b><i>one hot encode</i></b> the data</li>
   <ul>
-    <li>It simply mean <b>converting</b> the discrete variables into dummies such that <b>everything</b> is <b>numeric</b></li>
+    <li>It simply means <b>converting</b> the discrete variables into dummies such that <b>everything</b> is <b>numeric</b></li>
   </ul>
 </ul>
 
@@ -2305,7 +2305,7 @@ asec <- asec %>%
          sqHours = Hours^2)
 ```
 
-```{r, echo = F}
+```{r, echo = F, eval = showplotly}
 asec_plotly <- asec_plotly %>%
   mutate(lEarnings = log(Earnings),
          sqHours = Hours^2)
@@ -2381,9 +2381,8 @@ $$\log(\text{Earnings}_i) = \alpha + \beta_1 \text{Hours}_i + \beta_2 \text{Hour
 .pull-right[
 ```{r, echo = F}
 kable(tibble(` ` = c("Intercept", "Slope"),
-       `\\(\\text{Male} = 0\\)` = c("\\(\\alpha\\)", "\\(\\alpha + \\beta_3\\)"),
-       `\\(\\text{Male} = 1\\)` = c("\\(\\beta_1 + 2\\beta_2\\text{Hours}\\)", 
-                                    "\\(\\beta_1 + 2\\beta_2\\text{Hours}\\)")), 
+       `\\(\\text{Male} = 0\\)` = c("\\(\\alpha\\)", "\\(\\beta_1 + 2\\beta_2\\text{Hours}\\)"),
+       `\\(\\text{Male} = 1\\)` = c("\\(\\alpha + \\beta_3\\)", "\\(\\beta_1 + 2\\beta_2\\text{Hours}\\)")), 
       caption = "", align = "lcc")
 ```
 ]
@@ -2520,7 +2519,7 @@ lm(lEarnings ~ Hours + sqHours, asec)
 
 <p style = "margin-bottom:1.25cm"></p>
 
-<center><i>Actually the basline coefficient was not that much inflated</i></center>
+<center><i>Actually the baseline coefficient was not that inflated</i></center>
 
 ---
 
@@ -2561,9 +2560,8 @@ $$\log(\text{Earnings}_i) = \alpha + \beta_1 \text{Hours}_i + \beta_2 \text{Hour
 .pull-right[
 ```{r, echo = F}
 kable(tibble(` ` = c("Intercept", "Slope"),
-       `\\(\\text{Male} = 0\\)` = c("\\(\\alpha\\)", "\\(\\alpha + \\beta_3\\)"),
-       `\\(\\text{Male} = 1\\)` = c("\\(\\beta_1 + 2\\beta_2\\text{Hours}\\)", 
-                                    "\\(\\beta_1 + 2\\beta_2\\text{Hours} + \\beta_4\\)")), 
+       `\\(\\text{Male} = 0\\)` = c("\\(\\alpha\\)", "\\(\\beta_1 + 2\\beta_2\\text{Hours}\\)"),
+       `\\(\\text{Male} = 1\\)` = c("\\(\\alpha + \\beta_3\\)", "\\(\\beta_1 + 2\\beta_2\\text{Hours} + \\beta_4\\)")), 
       caption = "", align = "lcc")
 ```
 ]
@@ -2654,7 +2652,7 @@ results
 results[5, 1] / results[2, 1]
 ```
 
-<center><i>&#10140; Not a huge difference</i></center>
+<center><i>&#10140; A 4% difference</i></center>
 ]
 
 --
@@ -2664,7 +2662,7 @@ results[5, 1] / results[2, 1]
 results[5, 4]
 ```
 
-<center><i>&#10140; But a highly significant one</i></center>
+<center><i>&#10140; Which is highly significant</i></center>
 ]
 
 ---
@@ -2968,7 +2966,7 @@ linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), )
   <li>A very handy function for hypothesis testing is <b>linearHypothesis()</b> from the <b>car</b> package</li>
   <ul>
     <li>The first argument is the <b>model</b></li>
-    <li>The second argument is the <b>hypothesis/ese</b></li>
+    <li>The second argument is the <b>hypothesis/es</b></li>
   </ul>
 </ul>
  
@@ -3365,7 +3363,7 @@ results[2, 1] + (results[2, 2] * t003)
 
 --
 
-<center><img src = "table.png" width = "550" href = "https://economics.mit.edu/files/7782"/></center>
+<center><a href = "https://economics.mit.edu/files/7782"><img src = "table.png" width = "550"/></a></center>
 
 ---
 
@@ -3374,7 +3372,7 @@ results[2, 1] + (results[2, 2] * t003)
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allow to create such tables.</li>
+  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables.</li>
   <ul>
     <li></li>
     <li></li>
@@ -3404,7 +3402,7 @@ outreg <- huxreg()
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allow to create such tables. Main arguments include:</li>
+  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
     <li></li>
@@ -3434,10 +3432,10 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allow to create such tables. Main arguments include:</li>
+  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
-    <li>Which <b>uncertainty statisti</b>c to display (std.error, p.value, conf.low, conf.high)</li>
+    <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
     <li></li>
     <li></li>
     <li></li>
@@ -3464,10 +3462,10 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allow to create such tables. Main arguments include:</li>
+  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
-    <li>Which <b>uncertainty statisti</b>c to display (std.error, p.value, conf.low, conf.high)</li>
+    <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
     <li>Where to <b>place</b> the uncertainty statistic (below, same, right)</li>
     <li></li>
     <li></li>
@@ -3494,10 +3492,10 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allow to create such tables. Main arguments include:</li>
+  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
-    <li>Which <b>uncertainty statisti</b>c to display (std.error, p.value, conf.low, conf.high)</li>
+    <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
     <li>Where to <b>place</b> the uncertainty statistic (below, same, right)</li>
     <li>Which <b>general statistics</b> to display (adj.r.squared, df, ...)</li>
     <li></li>
@@ -3524,10 +3522,10 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allow to create such tables. Main arguments include:</li>
+  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
-    <li>Which <b>uncertainty statisti</b>c to display (std.error, p.value, conf.low, conf.high)</li>
+    <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
     <li>Where to <b>place</b> the uncertainty statistic (below, same, right)</li>
     <li>Which <b>general statistics</b> to display (adj.r.squared, df, ...)</li>
     <li>The desired <b>significance symbology</b></li>
@@ -3554,10 +3552,10 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allow to create such tables. Main arguments include:</li>
+  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
-    <li>Which <b>uncertainty statisti</b>c to display (std.error, p.value, conf.low, conf.high)</li>
+    <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
     <li>Where to <b>place</b> the uncertainty statistic (below, same, right)</li>
     <li>Which <b>general statistics</b> to display (adj.r.squared, df, ...)</li>
     <li>The desired <b>significance symbology</b></li>
@@ -3654,6 +3652,245 @@ huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 .pull-right[
 <center><img src = "docx_output.png" width = "600"/></center>
 ]
+
+---
+
+### Practice
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce this table:
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F, highlight = F}
+##                         Dependent variable: Log annual earnings           
+##                            (1)         (2)          (3)          (4)      
+##                       ────────────────────────────────────────────────────
+##   Hours worked          0.051 ***   0.119 ***    0.118 ***    0.117 ***   
+##                          (0.000)     (0.000)      (0.000)      (0.000)    
+##   (Hours worked)²                   -0.001 ***   -0.001 ***   -0.001 ***  
+##                                      (0.000)      (0.000)      (0.000)    
+##   Male                                           0.170 ***      -0.028    
+##                                                   (0.000)      (0.304)    
+##   Hours worked x Male                                         0.005 ***   
+##                                                                (0.000)    
+##   Constant              8.604 ***   7.364 ***    7.336 ***    7.390 ***   
+##                          (0.000)     (0.000)      (0.000)      (0.000)    
+##                       ────────────────────────────────────────────────────
+##   N                       64336       64336        64336        64336     
+##   R2                      0.268       0.319        0.325        0.326     
+## ──────────────────────────────────────────────────────────────────────────
+##   Significance: *** p < 0.01; ** p < 0.05; * p < 0.1               
+```
+
+--
+
+`r countdown(minutes = 10, top = 0, right = 0)`
+
+---
+
+### Solution
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F}
+huxreg(lm(lEarnings ~ Hours, asec),
+       lm(lEarnings ~ Hours + sqHours, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec))
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
+
+---
+
+### Solution
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F}
+huxreg(lm(lEarnings ~ Hours, asec),
+       lm(lEarnings ~ Hours + sqHours, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
+       error_format = "({p.value})",
+       error_pos = "below")
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
+
+---
+
+### Solution
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F}
+huxreg(lm(lEarnings ~ Hours, asec),
+       lm(lEarnings ~ Hours + sqHours, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
+       error_format = "({p.value})",
+       error_pos = "below",
+       statistics = c(N = "nobs", R2 = "r.squared"))
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+```
+
+---
+
+### Solution
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F}
+huxreg(lm(lEarnings ~ Hours, asec),
+       lm(lEarnings ~ Hours + sqHours, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
+       error_format = "({p.value})",
+       error_pos = "below",
+       statistics = c(N = "nobs", R2 = "r.squared"), 
+       stars = c(`***` = 0.01, `**` = 0.05, `*` = 0.1),
+       note = "Significance: {stars}")
+#
+#
+#
+#
+#
+#
+#
+#
+```
+
+---
+
+### Solution
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F}
+huxreg(lm(lEarnings ~ Hours, asec),
+       lm(lEarnings ~ Hours + sqHours, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
+       error_format = "({p.value})",
+       error_pos = "below",
+       statistics = c(N = "nobs", R2 = "r.squared"), 
+       stars = c(`***` = 0.01, `**` = 0.05, `*` = 0.1),
+       note = "Significance: {stars}",
+       align = "c")
+#
+#
+#
+#
+#
+#
+#
+```
+
+---
+
+### Solution
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F}
+huxreg(lm(lEarnings ~ Hours, asec),
+       lm(lEarnings ~ Hours + sqHours, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
+       error_format = "({p.value})",
+       error_pos = "below",
+       statistics = c(N = "nobs", R2 = "r.squared"), 
+       stars = c(`***` = 0.01, `**` = 0.05, `*` = 0.1),
+       note = "Significance: {stars}",
+       align = "c",
+       coefs = c("Hours worked" = "Hours",
+                 "(Hours worked)²" = "sqHours",
+                 "Male" = "SexMale",
+                 "Hours worked x Male" = "Hours:SexMale",
+                 "Constant" = "(Intercept)"))
+#
+#
+```
+
+---
+
+### Solution
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F}
+huxreg(lm(lEarnings ~ Hours, asec),
+       lm(lEarnings ~ Hours + sqHours, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
+       error_format = "({p.value})",
+       error_pos = "below",
+       statistics = c(N = "nobs", R2 = "r.squared"), 
+       stars = c(`***` = 0.01, `**` = 0.05, `*` = 0.1),
+       note = "Significance: {stars}",
+       align = "c",
+       coefs = c("Hours worked" = "Hours",
+                 "(Hours worked)²" = "sqHours",
+                 "Male" = "SexMale",
+                 "Hours worked x Male" = "Hours:SexMale",
+                 "Constant" = "(Intercept)")) %>%
+    insert_row(c("", rep("Dependent variable: Log annual earnings", 4)), after = 0)
+#
+```
+
+---
+
+### Solution
+
+#### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
+<p style = "margin-bottom:1cm;"></p>
+```{r, eval = F}
+huxreg(lm(lEarnings ~ Hours, asec),
+       lm(lEarnings ~ Hours + sqHours, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex, asec),
+       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
+       error_format = "({p.value})",
+       error_pos = "below",
+       statistics = c(N = "nobs", R2 = "r.squared"), 
+       stars = c(`***` = 0.01, `**` = 0.05, `*` = 0.1),
+       note = "Significance: {stars}",
+       align = "c",
+       coefs = c("Hours worked" = "Hours",
+                 "(Hours worked)²" = "sqHours",
+                 "Male" = "SexMale",
+                 "Hours worked x Male" = "Hours:SexMale",
+                 "Constant" = "(Intercept)")) %>%
+    insert_row(c("", rep("Dependent variable: Log annual earnings", 4)), after = 0) %>%
+    merge_cells(1, 2:5)
+```
 
 ---
 
@@ -3945,7 +4182,7 @@ summary(lm(formula = ige ~ gini, data = ggcurve))
 ```
 
 .left-column[
-<p style = "margin-bottom:-.53cm;"></p>
+<p style = "margin-bottom:-.75cm;"></p>
  
 ```{r, eval = F, highlight = F}
 ## 
