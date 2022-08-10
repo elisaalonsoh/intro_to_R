@@ -126,7 +126,7 @@ kable(tibble(Function = c("mutate()", "select()", "filter()",
 
 --
 
-#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observation with the highest calorie values
+#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observations with the highest calorie values
 
 <center><i>You can use the row_number() function within filter() to use the row numbers as any other variable</i></center>
 <p style = "margin-bottom:1.5cm;"></p>
@@ -277,7 +277,7 @@ starbucks %>%
 
 ### Solution
 
-#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observation with the highest calorie values
+#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observations with the highest calorie values
 
 ```{r, eval = F}
 maxcal <- starbucks %>%
@@ -583,10 +583,54 @@ ggplot(wid, aes(x = inc_head, y = top1)) +          # Data & aesthetics
 
 ### 1. The `ggplot()` function
 
+#### 1.1. Basic structure
+
+<ul>
+  <li>You can the save the plot using the <b>ggsave()</b> function</li>
+  <ul>
+    <li>You just need to specify the <b>output destination</b> and it will <b>save</b> what is in your <b>plot panel</b></li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+--
+
+```{r, eval = F}
+ggsave("C:/User/Documents/wid.png")
+```
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>You can also <b>modify</b> the following options, which take the <b>parameters of your plot</b> panel if unspecified:</li>
+  <ul>
+    <li><b>plot:</b> ggplot object</li>
+    <li><b>width:</b> width of the plot</li>
+    <li><b>height:</b> height of the plot</li>
+    <li><b>unit:</b> unit of the plot size ("in", "cm", "mm", "px")</li>
+    <li><b>dpi:</b> pixel density, default to 300px/in</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+```{r, eval = F}
+ggsave("wid.png", plot = last_plot(), width = 16, height = 9, unit = "cm", dpi = 900)
+```
+
+---
+
+### 1. The `ggplot()` function
+
 #### 1.2. Axes 
 
 <ul>
-  <li>Axes can be modified with <b>scale functions</b>, whose name depend on:</li>
+  <li>Axes can be modified with <b>scale functions</b>, whose names depend on:</li>
   <ul>
     <li>The axis to modify</li>
     <li>The type of variable assigned to the axis</li>
@@ -1169,9 +1213,9 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
 #### 2.1. More axes
 
 <ul>
-  <li>In some cases you may want to <b>convey information</b> with other means than position on an axis</li>
+  <li>In some cases you may want to <b>convey information</b> using other means than position on an axis</li>
   <ul>
-    <li>The <b>color, size, or shape</b> of a geometry can be used to represent a <b>third variable</b>:</li>
+    <li>The <b>color, size, or shape</b> of a geometry can be used to represent a <b>third variable</b></li>
   </ul>
 </ul>
 
@@ -1198,7 +1242,7 @@ ggplot(wid, aes(x = inc_head, y = top1, color = continent)) +
 
 #### 2.1. More axes
 
- * If the variable assigned to the color axis is continuous a color gradient will be used
+ * If the variable assigned to the color axis is continuous, a color gradient will be used
  
 --
 
@@ -1246,7 +1290,7 @@ plot + scale_color_gradient(
 --
 
 <ul>
-  <li>But color is not this only <b>property</b> that can be used as a <b>dimension</b>, you can use:</li>
+  <li>But color is not the only <b>property</b> that can be used as a <b>dimension</b>, you can use:</li>
   <ul>
     <li><b>size, shape, alpha</b>, ...</li>
     <li><b>fill, linetype</b>, ..., for relevant geometries</li>
@@ -1395,7 +1439,7 @@ wid %>% filter(year == 2019 & continent == "Europe") %>%
 
 ### Practice
 
-#### 1) Reproduce that graph with the `starbucks` dataset
+#### 1) Reproduce this graph with the `starbucks` dataset
 
 ```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
 ggplot(starbucks, 
@@ -2202,7 +2246,7 @@ ggplot(tibble(Year = 2015:2021, Something = seq(9455, 9467, 2)),
 
 .right-column[
 <p style = "margin-bottom:4cm;"></p>
-<center><i><b>What about that increase?</b></i></center>
+<center><i><b>What about this increase?</b></i></center>
 ]
 
 ---
@@ -2355,7 +2399,7 @@ ggplot(temp_data, aes(x = x, y = y)) +
 <ul>
   <li>&#9888; <i>Be very careful with double axes</i> &#9888;</li>
   <ul>
-    <li>You can make a them tell basically everything</li>
+    <li>You can make them tell basically everything</li>
   </ul>
 </ul>
 
@@ -2464,6 +2508,24 @@ ggarrange(ggplot(ddat, aes(x = x, y = y, color = z)) +
 
 ### 4. How (not) to lie with graphics
 
+#### 4.2. Axis manipulations
+
+<ul>
+  <li>Be careful with <b>free scales</b> in <b>facet_wrap()</b> as well</li>
+  <ul>
+    <li>It can make things <b>look more homogeneous</b> than they actually are</li>
+  </ul>
+</ul>
+
+```{r, echo = F, fig.width = 8, fig.height=5, out.width = '60%'}
+ggplot(wid, aes(x = inc_head, y = top1)) + geom_point(alpha = .3) +
+  facet_wrap(~continent, ncol = 3, scales = "free_x")
+```
+
+---
+
+### 4. How (not) to lie with graphics
+
 #### 4.3. Interpolation
 
  * Here is the **previous graph** on the tax increase using a **line geometry**
@@ -2498,13 +2560,13 @@ ggplot(tibble(x = c("Now", "Jan 1, 2013"),
 #### 4.3. Interpolation
 
 <ul>
-  <li>This figure also has <b>finitely many</b> values but feels more natural</li>
+  <li>This figure also has <b>finitely many actual data points</b> but feels more natural</li>
   <ul>
     <li>This is because values are <b>sufficiently close</b> to each other to be <b>considered</b> as <b>continuous</b></li>
   </ul>
 </ul>
 
-```{r, echo = F, fig.width = 6, fig.height=4, out.width = '60%'}
+```{r, echo = F, fig.width = 6, fig.height=3.8, out.width = '60%'}
 ggplot(temp_data, aes(x = x, y = y)) +
   geom_line(color = "#6794A7", alpha = .8) + xlab("") +
   scale_y_continuous("Temperature", limits = c(55, 60))
@@ -2706,7 +2768,7 @@ kable(tibble(Argument = c("alpha", "color", "fill", "size", "shape", "linetype")
 <ul>
   <li>If assigned to a variable <b>in aes</b></li>
   <ul>
-    <li>it will <b>vary with the variable</b> according to a scale documented in legend</li>
+    <li>It will <b>vary with the variable</b> according to a scale documented in legend</li>
   </ul>
 </ul>
 ]

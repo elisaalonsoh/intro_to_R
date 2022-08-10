@@ -164,7 +164,7 @@ library(dplyr)
 
 --
 
-#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observation with the highest calorie values
+#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observations with the highest calorie values
 
 &lt;center&gt;&lt;i&gt;You can use the row_number() function within filter() to use the row numbers as any other variable&lt;/i&gt;&lt;/center&gt;
 &lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
@@ -173,7 +173,7 @@ library(dplyr)
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62ef6569" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62f3be07" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -325,7 +325,7 @@ starbucks %&gt;%
 
 ### Solution
 
-#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observation with the highest calorie values
+#### 4) Create a subset of the data called `maxcal` containing the variables `Beverage_category`, `Beverage_prep`, and `Calories`, for the 10 observations with the highest calorie values
 
 
 ```r
@@ -646,10 +646,56 @@ ggplot(wid, aes(x = inc_head, y = top1)) +          # Data &amp; aesthetics
 
 ### 1. The `ggplot()` function
 
+#### 1.1. Basic structure
+
+&lt;ul&gt;
+  &lt;li&gt;You can the save the plot using the &lt;b&gt;ggsave()&lt;/b&gt; function&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;You just need to specify the &lt;b&gt;output destination&lt;/b&gt; and it will &lt;b&gt;save&lt;/b&gt; what is in your &lt;b&gt;plot panel&lt;/b&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+--
+
+
+```r
+ggsave("C:/User/Documents/wid.png")
+```
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can also &lt;b&gt;modify&lt;/b&gt; the following options, which take the &lt;b&gt;parameters of your plot&lt;/b&gt; panel if unspecified:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;b&gt;plot:&lt;/b&gt; ggplot object&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;width:&lt;/b&gt; width of the plot&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;height:&lt;/b&gt; height of the plot&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;unit:&lt;/b&gt; unit of the plot size ("in", "cm", "mm", "px")&lt;/li&gt;
+    &lt;li&gt;&lt;b&gt;dpi:&lt;/b&gt; pixel density, default to 300px/in&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+--
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+
+```r
+ggsave("wid.png", plot = last_plot(), width = 16, height = 9, unit = "cm", dpi = 900)
+```
+
+---
+
+### 1. The `ggplot()` function
+
 #### 1.2. Axes 
 
 &lt;ul&gt;
-  &lt;li&gt;Axes can be modified with &lt;b&gt;scale functions&lt;/b&gt;, whose name depend on:&lt;/li&gt;
+  &lt;li&gt;Axes can be modified with &lt;b&gt;scale functions&lt;/b&gt;, whose names depend on:&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;The axis to modify&lt;/li&gt;
     &lt;li&gt;The type of variable assigned to the axis&lt;/li&gt;
@@ -708,7 +754,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point()                 # Basic 
                                                                         #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-36-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -722,7 +768,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +               # Basic 
 *  scale_x_continuous(name = "Income per adult", limits = c(0, 150000))  # Scale function
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-38-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-40-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -742,7 +788,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +               # Basic 
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-39-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-41-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -785,7 +831,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +
 
 #### 1.3. Theme()
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-41-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-43-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -827,7 +873,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
 --
 
 .pull-right[
-&lt;img src="slides_files/figure-html/unnamed-chunk-43-1.png" width="75%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-45-1.png" width="75%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -895,7 +941,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
 
 &lt;p style = "margin-bottom:1.14cm;"&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-48-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-50-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
@@ -909,7 +955,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
              linetype = "dashed")
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-49-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-51-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -924,7 +970,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point(size = 2, alpha = .3) +
   annotate("text", x = 125000, y = .28, label = "Relevant info", size = 5)
 ```
 --
-&lt;img src="slides_files/figure-html/unnamed-chunk-51-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-53-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -944,7 +990,7 @@ ggplot(wid, aes(x = inc_head, y = top1))
                                                                                                 #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-53-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-55-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -964,7 +1010,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
                                                                                                  #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-55-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-57-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -984,7 +1030,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
                                                                                                  #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-57-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-59-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1004,7 +1050,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
                                                                                                  #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-59-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-61-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1024,7 +1070,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
                                                                                                  #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-61-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-63-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1044,7 +1090,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
                                                                                                  #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-63-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-65-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1064,7 +1110,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
                                                                                                  #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-65-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-67-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1084,7 +1130,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
   theme(plot.background = element_rect(fill = "#DFE6EB", colour = "#DFE6EB")) 
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-67-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-69-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1184,9 +1230,9 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
 #### 2.1. More axes
 
 &lt;ul&gt;
-  &lt;li&gt;In some cases you may want to &lt;b&gt;convey information&lt;/b&gt; with other means than position on an axis&lt;/li&gt;
+  &lt;li&gt;In some cases you may want to &lt;b&gt;convey information&lt;/b&gt; using other means than position on an axis&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;The &lt;b&gt;color, size, or shape&lt;/b&gt; of a geometry can be used to represent a &lt;b&gt;third variable&lt;/b&gt;:&lt;/li&gt;
+    &lt;li&gt;The &lt;b&gt;color, size, or shape&lt;/b&gt; of a geometry can be used to represent a &lt;b&gt;third variable&lt;/b&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
@@ -1208,7 +1254,7 @@ ggplot(wid, aes(x = inc_head, y = top1, color = continent)) +
   geom_point(alpha = .3) 
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-68-1.png" width="40%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-70-1.png" width="40%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1216,7 +1262,7 @@ ggplot(wid, aes(x = inc_head, y = top1, color = continent)) +
 
 #### 2.1. More axes
 
- * If the variable assigned to the color axis is continuous a color gradient will be used
+ * If the variable assigned to the color axis is continuous, a color gradient will be used
  
 --
 
@@ -1225,7 +1271,7 @@ ggplot(wid, aes(x = inc_head, y = top1, color = continent)) +
 ggplot(wid, aes(x = inc_head, y = top1, color = fshare)) + geom_point(alpha = .3)
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-69-1.png" width="55%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-71-1.png" width="55%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1269,7 +1315,7 @@ plot + scale_color_gradient(
 --
 
 &lt;ul&gt;
-  &lt;li&gt;But color is not this only &lt;b&gt;property&lt;/b&gt; that can be used as a &lt;b&gt;dimension&lt;/b&gt;, you can use:&lt;/li&gt;
+  &lt;li&gt;But color is not the only &lt;b&gt;property&lt;/b&gt; that can be used as a &lt;b&gt;dimension&lt;/b&gt;, you can use:&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;&lt;b&gt;size, shape, alpha&lt;/b&gt;, ...&lt;/li&gt;
     &lt;li&gt;&lt;b&gt;fill, linetype&lt;/b&gt;, ..., for relevant geometries&lt;/li&gt;
@@ -1279,15 +1325,15 @@ plot + scale_color_gradient(
 ---
 
 .pull-left[
-&lt;img src="slides_files/figure-html/unnamed-chunk-72-1.png" width="100%" style="display: block; margin: auto;" /&gt;
-
-&lt;img src="slides_files/figure-html/unnamed-chunk-73-1.png" width="100%" style="display: block; margin: auto;" /&gt;
-]
-
-.pull-right[
 &lt;img src="slides_files/figure-html/unnamed-chunk-74-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-75-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="slides_files/figure-html/unnamed-chunk-76-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-77-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -1379,7 +1425,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point(alpha = .3) +
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-79-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-81-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1409,15 +1455,15 @@ ggplot(wid %&gt;% filter(year == 2019 &amp; continent == "Europe"), # subset so 
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-82-1.png" width="48%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-84-1.png" width="48%" style="display: block; margin: auto;" /&gt;
 
 ---
 
 ### Practice
 
-#### 1) Reproduce that graph with the `starbucks` dataset
+#### 1) Reproduce this graph with the `starbucks` dataset
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-83-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-85-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -1425,7 +1471,7 @@ ggplot(wid %&gt;% filter(year == 2019 &amp; continent == "Europe"), # subset so 
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62ef6599" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62f3bac3" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1442,21 +1488,6 @@ ggplot(starbucks,
                                                                                                  #
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-85-1.png" width="70%" style="display: block; margin: auto;" /&gt;
-
----
-
-### Solution
-
-
-```r
-ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol)) +
-  geom_point()
-                                                                                                 #
-                                                                                                 #
-```
-
 &lt;img src="slides_files/figure-html/unnamed-chunk-87-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
@@ -1466,7 +1497,7 @@ ggplot(starbucks,
 
 ```r
 ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+       aes(x = Calories, y = Cholesterol)) +
   geom_point()
                                                                                                  #
                                                                                                  #
@@ -1482,8 +1513,8 @@ ggplot(starbucks,
 ```r
 ggplot(starbucks, 
        aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
-  geom_point(alpha = .3) + 
-  scale_color_gradient(low = "green", high = "red")
+  geom_point()
+                                                                                                 #
                                                                                                  #
 ```
 
@@ -1498,11 +1529,26 @@ ggplot(starbucks,
 ggplot(starbucks, 
        aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
   geom_point(alpha = .3) + 
+  scale_color_gradient(low = "green", high = "red")
+                                                                                                 #
+```
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-93-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Solution
+
+
+```r
+ggplot(starbucks, 
+       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+  geom_point(alpha = .3) + 
   scale_color_gradient(low = "green", high = "red") +
   theme_minimal(base_size = 14)
 ```
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-93-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-95-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1630,7 +1676,7 @@ ggplot(wid %&gt;% filter(country == "USA"), aes(x = year, y = top1)) +
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-95-1.png" width="48%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-97-1.png" width="48%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1655,7 +1701,7 @@ ggplot(wid %&gt;% filter(continent == "South America" &amp; year == 2019),
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-97-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-99-1.png" width="63%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1677,7 +1723,7 @@ ggplot(wid %&gt;% filter(continent == "South America" &amp; year == 2019),
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-99-1.png" width="68%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-101-1.png" width="68%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1701,7 +1747,7 @@ ggplot(wid, aes(x = continent)) + geom_bar(stat = "count")
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-101-1.png" width="68%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-103-1.png" width="68%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1726,7 +1772,7 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = fshare)) +
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-103-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-105-1.png" width="63%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1751,7 +1797,7 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = fshare)) +
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-105-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-107-1.png" width="63%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1776,7 +1822,7 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-107-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-109-1.png" width="63%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1801,7 +1847,7 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 
 --
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-109-1.png" width="63%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-111-1.png" width="63%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1814,31 +1860,6 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 &lt;/ul&gt;
 
 --
-
-&lt;img src="slides_files/figure-html/unnamed-chunk-110-1.png" width="90%" style="display: block; margin: auto;" /&gt;
-
----
-
-### 3. Types of geometry
-
-#### 3.3. Densities and boxplots
-
-&lt;ul&gt;
-  &lt;li&gt;This is how &lt;b&gt;boxplots&lt;/b&gt; are constructed:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;img src="slides_files/figure-html/unnamed-chunk-111-1.png" width="90%" style="display: block; margin: auto;" /&gt;
-
-
----
-
-### 3. Types of geometry
-
-#### 3.3. Densities and boxplots
-
-&lt;ul&gt;
-  &lt;li&gt;This is how &lt;b&gt;boxplots&lt;/b&gt; are constructed:&lt;/li&gt;
-&lt;/ul&gt;
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-112-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 
@@ -1853,6 +1874,31 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 &lt;/ul&gt;
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-113-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;This is how &lt;b&gt;boxplots&lt;/b&gt; are constructed:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-114-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 3. Types of geometry
+
+#### 3.3. Densities and boxplots
+
+&lt;ul&gt;
+  &lt;li&gt;This is how &lt;b&gt;boxplots&lt;/b&gt; are constructed:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-115-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1996,7 +2042,7 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
 .left-column[
-&lt;img src="slides_files/figure-html/unnamed-chunk-114-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-116-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .right-column[
@@ -2018,7 +2064,7 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 
 .left-column[
-&lt;img src="slides_files/figure-html/unnamed-chunk-115-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-117-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .right-column[
@@ -2039,12 +2085,12 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 #### 4.2. Axis manipulations
 
 .left-column[
-&lt;img src="slides_files/figure-html/unnamed-chunk-116-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-118-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .right-column[
 &lt;p style = "margin-bottom:4cm;"&gt;&lt;/p&gt;
-&lt;center&gt;&lt;i&gt;&lt;b&gt;What about that increase?&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
+&lt;center&gt;&lt;i&gt;&lt;b&gt;What about this increase?&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
 ]
 
 ---
@@ -2054,7 +2100,7 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 #### 4.2. Axis manipulations
 
 .left-column[
-&lt;img src="slides_files/figure-html/unnamed-chunk-117-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-119-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .right-column[
@@ -2080,14 +2126,14 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 #### 4.2. Axis manipulations
 
 .pull-left[
-&lt;img src="slides_files/figure-html/unnamed-chunk-118-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-120-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 &lt;center&gt;&lt;i&gt;&lt;b&gt;Misleading&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
 ]
 
 --
 
 .pull-right[
-&lt;img src="slides_files/figure-html/unnamed-chunk-119-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-121-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 &lt;center&gt;&lt;i&gt;&lt;b&gt;Not misleading&lt;/b&gt;&lt;/i&gt;&lt;/center&gt;
 ]
 
@@ -2100,11 +2146,11 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
  * But in this case which is the most adequate representation?
 
 .pull-left[
-&lt;img src="slides_files/figure-html/unnamed-chunk-120-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-122-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
-&lt;img src="slides_files/figure-html/unnamed-chunk-121-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-123-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -2119,18 +2165,18 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 
 &lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-122-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-124-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 &lt;p style = "margin-bottom:-1.25cm;"&gt;&lt;/p&gt;
-&lt;img src="slides_files/figure-html/unnamed-chunk-123-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-125-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 ]
 
 .pull-right[
 
 &lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-124-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-126-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 &lt;p style = "margin-bottom:-1.25cm;"&gt;&lt;/p&gt;
-&lt;img src="slides_files/figure-html/unnamed-chunk-125-1.png" width="95%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-127-1.png" width="95%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -2142,22 +2188,10 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 &lt;ul&gt;
   &lt;li&gt;&amp;#9888; &lt;i&gt;Be very careful with double axes&lt;/i&gt; &amp;#9888;&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;You can make a them tell basically everything&lt;/li&gt;
+    &lt;li&gt;You can make them tell basically everything&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-
-&lt;img src="slides_files/figure-html/unnamed-chunk-126-1.png" width="90%" style="display: block; margin: auto;" /&gt;
-
---
-
-&lt;p style = "margin-top:-11.265cm"&gt;&lt;/p&gt;
-
-&lt;img src="slides_files/figure-html/unnamed-chunk-127-1.png" width="90%" style="display: block; margin: auto;" /&gt;
-
---
-
-&lt;p style = "margin-top:-11.265cm"&gt;&lt;/p&gt;
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-128-1.png" width="90%" style="display: block; margin: auto;" /&gt;
 
@@ -2166,6 +2200,33 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 &lt;p style = "margin-top:-11.265cm"&gt;&lt;/p&gt;
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-129-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&lt;p style = "margin-top:-11.265cm"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-130-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+--
+
+&lt;p style = "margin-top:-11.265cm"&gt;&lt;/p&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-131-1.png" width="90%" style="display: block; margin: auto;" /&gt;
+
+---
+
+### 4. How (not) to lie with graphics
+
+#### 4.2. Axis manipulations
+
+&lt;ul&gt;
+  &lt;li&gt;Be careful with &lt;b&gt;free scales&lt;/b&gt; in &lt;b&gt;facet_wrap()&lt;/b&gt; as well&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;It can make things &lt;b&gt;look more homogeneous&lt;/b&gt; than they actually are&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;img src="slides_files/figure-html/unnamed-chunk-132-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -2176,7 +2237,7 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
  * Here is the **previous graph** on the tax increase using a **line geometry**
  
 .pull-left[
-&lt;img src="slides_files/figure-html/unnamed-chunk-130-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-133-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 --
@@ -2196,13 +2257,13 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 #### 4.3. Interpolation
 
 &lt;ul&gt;
-  &lt;li&gt;This figure also has &lt;b&gt;finitely many&lt;/b&gt; values but feels more natural&lt;/li&gt;
+  &lt;li&gt;This figure also has &lt;b&gt;finitely many actual data points&lt;/b&gt; but feels more natural&lt;/li&gt;
   &lt;ul&gt;
     &lt;li&gt;This is because values are &lt;b&gt;sufficiently close&lt;/b&gt; to each other to be &lt;b&gt;considered&lt;/b&gt; as &lt;b&gt;continuous&lt;/b&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 
-&lt;img src="slides_files/figure-html/unnamed-chunk-131-1.png" width="60%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-134-1.png" width="60%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -2220,12 +2281,12 @@ ggplot(wid %&gt;% filter(year == 2019), aes(x = continent, y = fshare)) +
 &lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
 
 .pull-left[
-&lt;img src="slides_files/figure-html/unnamed-chunk-132-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-135-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 
 ]
 
 .pull-right[
-&lt;img src="slides_files/figure-html/unnamed-chunk-133-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slides_files/figure-html/unnamed-chunk-136-1.png" width="100%" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -2487,7 +2548,7 @@ ggplot(data, aes(x = V1, y = V2)) +
 &lt;ul&gt;
   &lt;li&gt;If assigned to a variable &lt;b&gt;in aes&lt;/b&gt;&lt;/li&gt;
   &lt;ul&gt;
-    &lt;li&gt;it will &lt;b&gt;vary with the variable&lt;/b&gt; according to a scale documented in legend&lt;/li&gt;
+    &lt;li&gt;It will &lt;b&gt;vary with the variable&lt;/b&gt; according to a scale documented in legend&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/ul&gt;
 ]
