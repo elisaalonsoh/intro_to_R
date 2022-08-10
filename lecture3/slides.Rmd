@@ -132,7 +132,7 @@ kable(tibble(Argument = c("alpha", "color", "fill", "size", "shape", "linetype")
 <ul>
   <li>If assigned to a variable <b>in aes</b></li>
   <ul>
-    <li>it will <b>vary with the variable</b> according to a scale documented in legend</li>
+    <li>It will <b>vary with the variable</b> according to a scale documented in legend</li>
   </ul>
 </ul>
 ]
@@ -151,7 +151,7 @@ ggplot(data, aes(x = V1, y = V2, size = V3)) +
 ### Warm up practice
 
 <ul>
-  <li>Today we're going to use the <a href = "https://www.insee.fr/fr/statistiques/2540004?sommaire=4767262"><b><i>"Fichier des prénom"</i></b></a></li>
+  <li>Today we're going to use the <a href = "https://www.insee.fr/fr/statistiques/2540004?sommaire=4767262"><b><i>"Fichier des prénoms"</i></b></a></li>
   <ul>
     <li>This is where the INSEE reports the <b>birth count</b> associated with <b>each first name in France</b></li>
     <li>It is <b>virtually exhaustive from 1946</b>, when the INSEE was founded</li>
@@ -205,7 +205,7 @@ str(names)
 
 --
 
-#### 4) Plot the evolution of the number of birth over time using a line geometry
+#### 4) Plot the evolution of the number of births over time using a line geometry
 
 <p style = "margin-bottom:2.5cm;"></p>
 
@@ -287,7 +287,7 @@ names %>%
 
 ### Solution
 
-#### 4) Plot the evolution of the number of birth over time using a line geometry
+#### 4) Plot the evolution of the number of births over time using a line geometry
 
 --
 
@@ -450,7 +450,7 @@ names %>%
 <p style = "margin-bottom:2.5cm;">
 
 <ol>
-  <li>Fill up the information and select <b>HTML</b></li>
+  <li>Fill out the information and select <b>HTML</b></li>
   <li style = "margin-top:7cm;">Click on <b>OK</b></li>
 </ol>
 ]
@@ -648,10 +648,10 @@ kable(tibble(Option = c("eval", "echo", "warning", "error", "message",
   <ul>
     <li>Italics</li>
     <li>Bold</li>
-    <li>hyperlinks</li>
-    <li>headers</li>
-    <li>block quote</li>
-    <li>un/ordered lists</li>
+    <li>Hyperlinks</li>
+    <li>Headers</li>
+    <li>Block quotes</li>
+    <li>Un/ordered lists</li>
     <li>...</li>
   </ul>
 </ul>
@@ -842,7 +842,7 @@ Horizontal rule:
 
 #### 1.5. Run and knit your code
 
- * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/>
+ * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/> (`ctrl + shift + k`)
  
 --
 
@@ -854,7 +854,7 @@ Horizontal rule:
 
 #### 1.5. Run and knit your code
 
- * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/>
+ * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/> (`ctrl + shift + k`)
 
 <center><img src = "comparison_2.png" width = "900"/></center>
 
@@ -968,7 +968,7 @@ Horizontal rule:
 --
 
 <ul>
-  <li>Imagine that you forgot to filter an irrelevant group of observations at the beginning</li>
+  <li>Imagine that you forgot to filter out an irrelevant group of observations at the beginning</li>
   <ul>
     <li>If you simply filter your data at the beginning in a code chunk</li>
     <li>All your tables and figures will <b>update automatically</b></li>
@@ -1218,7 +1218,7 @@ output:
 --
 
 <ul>
-  <li>When using themes from downloaded packages, how to set the theme can be slightly different</li>
+  <li>When using themes from downloaded packages, the way you set the theme can be slightly different</li>
   <ul>
     <li>Check the online documentation</li>
   </ul>
@@ -1412,7 +1412,7 @@ name LOUIS in 2021. This statistic is written in **inline code** such that it up
 <ul>
   <li>It may sometimes be useful to produce <b>separate html reports for differents groups</b> in your data</li>
   <ul>
-    <li>Coutry/state-specific reports</li>
+    <li>Country/state-specific reports</li>
     <li>Here, different report for different first names</li>
   </ul>
 </ul>
@@ -1549,7 +1549,7 @@ render(
 #### 2.4. Report parameters
 
 <ul>
-  <li>To <b>avoid copy-pasting</b> that command for each name we want a report on, we must <b>use a loop</b></li>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
 </ul>
 
 --
@@ -1586,7 +1586,7 @@ for ( in ) {
 #### 2.4. Report parameters
 
 <ul>
-  <li>To <b>avoid copy-pasting</b> that command for each name we want a report on, we must <b>use a loop</b></li>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
   <ol>
     <li>First we should name the object that will successively take the value of each first name</li>
     <li></li>
@@ -1618,7 +1618,7 @@ for (i in ) {
 #### 2.4. Report parameters
 
 <ul>
-  <li>To <b>avoid copy-pasting</b> that command for each name we want a report on, we must <b>use a loop</b></li>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
   <ol>
     <li>First we should name the object that will successively take the value of each first name</li>
     <li>Then indicate which values this object must successively take</li>
@@ -1650,7 +1650,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 #### 2.4. Report parameters
 
 <ul>
-  <li>To <b>avoid copy-pasting</b> that command for each name we want a report on, we must <b>use a loop</b></li>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
   <ol>
     <li>First we should name the object that will successively take the value of each first name</li>
     <li>Then indicate which values this object must successively take</li>
@@ -1680,7 +1680,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 #### 2.4. Report parameters
 
 <ul>
-  <li>To <b>avoid copy-pasting</b> that command for each name we want a report on, we must <b>use a loop</b></li>
+  <li>To <b>avoid copy-pasting</b> this command for each name we want a report on, we must <b>use a loop</b></li>
   <ol>
     <li>First we should name the object that will successively take the value of each first name</li>
     <li>Then indicate which values this object must successively take</li>
@@ -1835,7 +1835,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
 
 --
 
- * We're not gonna learn how to make $\LaTeX$ documents, but just how to make equations 
+ * We're not gonna learn how to make $\LaTeX$ documents ([do it in 30mn](https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes)), but just how to make equations
  
 $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 
@@ -2062,7 +2062,7 @@ $\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$
 <p style = "margin-bottom:1cm;"> 
 
 <ul>
-  <li>You can also surround a LaTeX input with <b>two $</b></li>
+  <li>You can also surround a LaTeX input with <b>two $</b> on each side</li>
   <ul>
     <li>It puts the equation at the <b>center of a new line</b></li>
     <li>And gives <b>more vertical space</b> to the equation</li>
@@ -2074,7 +2074,7 @@ $\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$
 <p style = "margin-bottom:1cm;"> 
 
 <ul>
-  <li>To surround a LaTeX input with two $ is usually good for:</li>
+  <li>Surrounding a LaTeX input with two $ is usually good for:</li>
   <ul>
     <li>Large equations</li>
     <li>Equations that should be emphasized</li>
@@ -2110,9 +2110,9 @@ $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 #### 3.3. Large equations
 
 <ul>
-  <li>Sometimes you do not want to <b>consecutive lines</b> of equations to be centered</li>
+  <li>Sometimes you do not want two <b>consecutive lines</b> of equations to be centered</li>
   <ul>
-    <li>You may want to <b>align</b> them based on <b>common part</b> within the equations</li>
+    <li>You may want to <b>align</b> them based on a <b>common part</b> within the equations</li>
   </ul>
 </ul>
 
