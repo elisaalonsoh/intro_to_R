@@ -249,7 +249,7 @@ Sys.setenv(LANG = "en")
   <li>To send the command from the source panel to the console panel:</li>
   <ol>
     <li><b>Highlight</b> the lines you want to execute</li>
-    <li>Press <b>crtl + enter</b></li>
+    <li>Press <b>ctrl + enter</b></li>
   </ol>
 </ul>
 
@@ -1476,7 +1476,7 @@ as.character(2022>2023)
 
 <center><b>Class conversion table:</b></center>
 
-```{r, echo = F}
+```{r, echo = F, eval = F}
 tibble(` ` = c("<b>numeric</b>", 
                "<b>character</b>", 
                "<b>logical</b>"),
@@ -1489,6 +1489,22 @@ tibble(` ` = c("<b>numeric</b>",
        `as.logical()` = c('Returns TRUE if != 0 <p style = "margin-bottom:-.25cm;"></p> Returns FALSE if 0', 
                           'Returns TRUE if "T" or"TRUE" <br> Returns FALSE if "F" or "FALSE" <p style = "margin-bottom:-.25cm;"></p> Returns NA otherwise', 
                           "No effect")) %>%
+  kable(., caption = "", align = 'lccc', escape = F)
+```
+
+```{r, echo = F}
+tibble(` ` = c("<b>as.numeric()</b>", 
+               "<b>as.character()</b>", 
+               "<b>as.logical</b>()"),
+       `numeric` = c("No effect", 
+                     "Converts numeric values <br> into strings of numbers",
+                     'Returns TRUE if != 0 <p style = "margin-bottom:-.25cm;"></p> Returns FALSE if 0'),
+       `character` = c('Converts strings of numbers <br> into numeric values <p style = "margin-bottom:-.25cm;"></p> Returns NA if characters in the string',
+                       "No effect", 
+                       'Returns TRUE if "T" or"TRUE" <br> Returns FALSE if "F" or "FALSE" <p style = "margin-bottom:-.25cm;"></p> Returns NA otherwise'),
+       `logical` = c('Returns 1 if TRUE  <p style = "margin-bottom:-.25cm;"></p> Returns 0 if FALSE',
+                     'Returns "TRUE" if TRUE <p style = "margin-bottom:-.25cm;"></p> Returns "FALSE" if FALSE',
+                     "No effect")) %>%
   kable(., caption = "", align = 'lccc', escape = F)
 ```
 
@@ -1921,7 +1937,7 @@ fb[fb$Wk == 38, c("Home", "Score", "Away")]
 <p style = "margin-bottom:1cm;"></p>
 
 <ul>
-  <li>Packages are <b>bundles of functions</b> that R users put to the disposal of other R users</li>
+  <li>Packages are <b>bundles of functions</b> that R users put at the disposal of other R users</li>
   <ul>
     <li>Packages are <b>centralized</b> on the <a href = "https://cran.r-project.org/">Comprehensive R Archive Network (CRAN)</a></li>
     <li>To <b>download</b> and install a CRAN package you can simply use <b>install.packages()</b></li>
@@ -1933,16 +1949,16 @@ fb[fb$Wk == 38, c("Home", "Score", "Away")]
 <p style = "margin-bottom:1cm;"></p>
 
 <ul>
-  <li>All the functions of the dplyr grammar are gatherd in the <b>dplyr package</b></li>
+  <li>All the functions of the dplyr grammar are gathered in the <b>dplyr package</b></li>
   <ul>
-    <li>We can download these functions and make it ready to use with the install.packages() function</li>
+    <li>We can download these functions and make them ready to use with the install.packages() function</li>
   </ul>
 </ul>
 
 --
 
 ```{r, eval = F}
-install.packages("dplyr") # Requires and internet connection
+install.packages("dplyr") # Requires an internet connection
 ```
 
 --
@@ -2719,10 +2735,10 @@ fb %>%
 #### 4.2. Where to find help
 
 <ul>
-  <li>Often times things don't work either because:</li>
+  <li>Oftentimes things don't work either because:</li>
   <ul>
     <li><b>You don't understand</b> a function's argument</li>
-    <li>Or <b>you don't know</b> that there exists an argument you should use</li>
+    <li>Or <b>you don't know</b> that there exists an argument that you should use</li>
   </ul>
 </ul>
 
@@ -2759,7 +2775,7 @@ fb %>%
 <ul>
   <li>Search on the internet!</li>
   <ul>
-    <li>You question is for sure already asked and answered on <a href = "https://stackoverflow.com/">stackoverflow</a></li>
+    <li>Your question is for sure already asked and answered on <a href = "https://stackoverflow.com/">stackoverflow</a></li>
   </ul>
 </ul>
  
