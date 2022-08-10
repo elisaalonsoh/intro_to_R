@@ -67,7 +67,7 @@ astre <- ifelse(dark_theme, "sun", "moon")
 
 ````{=html}
 ```{r, echo=FALSE, results='asis'}
-writeLines(paste0('<div class = "share-box" style ="margin-top:-13em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/metrics_on_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
+writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/metrics_on_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
 xfun::file_string('astre.html')
 ```
 ````
@@ -257,7 +257,7 @@ slides <- tibble(x = NA_character_, type = NA_character_,
                  link = NA_character_, bullet = NA_character_,
                  last = NA_character_, n = NA) %>% na.omit()
 
-for (i in 1:length(roman)) {
+for (i in (1:length(roman))+2) {
   
     lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
     
@@ -276,7 +276,7 @@ for (i in 1:length(roman)) {
     }    
     
     slides <- slides %>%
-      bind_rows(tibble(x = paste(roman[i], gsub('title: \"|\"', "", lecture$x[2])),
+      bind_rows(tibble(x = paste(roman[i - 2], gsub('title: \"|\"', "", lecture$x[2])),
                        type = "title",
                        link = paste0(root, "lecture", i, "/slides.html#1"),
                        bullet = "detail",
@@ -362,10 +362,6 @@ xfun::file_string('toc2.html')
 ````
 </div>
 </div>
-
-### Cheatsheets
-
-
 
 ### References
 
