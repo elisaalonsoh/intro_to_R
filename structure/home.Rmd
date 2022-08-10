@@ -67,7 +67,7 @@ astre <- ifelse(dark_theme, "sun", "moon")
 
 ````{=html}
 ```{r, echo=FALSE, results='asis'}
-writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/metrics_on_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
+writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/intro_to_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
 xfun::file_string('astre.html')
 ```
 ````
