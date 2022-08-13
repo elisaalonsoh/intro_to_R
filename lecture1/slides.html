@@ -41,8 +41,80 @@ class: center, middle, inverse, title-slide
 
 ### Welcome to the course!
 
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
-&lt;center&gt;presentation of the course&lt;/center&gt;
+--
+
+&lt;p style = "margin-bottom:1.5cm;"&gt;&lt;/p&gt;
+
+.pull-left[
+
+&lt;center&gt;&lt;b&gt;About me&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;PhD student at the Paris School of Economics&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I work primarily on:&lt;/li&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Intergenerational (income) mobility&lt;/li&gt;
+    &lt;li&gt;Residential segregation&lt;/li&gt;
+    &lt;li&gt;Discrimination&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;I do empirical research, so I use Econometrics and (R) programming on a daily basis&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p style = "margin-bottom:1.25cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can reach me at &lt;a href="mailto:louis.sirugue@psemail.eu"&gt;louis.sirugue@psemail.eu&lt;/a&gt; for any question or comment about the course&lt;/li&gt;
+&lt;/ul&gt;
+]
+
+--
+
+.pull-right[
+
+&lt;center&gt;&lt;b&gt;About the course&lt;/b&gt;&lt;/center&gt;
+
+&lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;b&gt;Objective:&lt;/b&gt; Learning R programming to carry out your empirical homeworks and research projects&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;4 \(\times\) 2 hours:&lt;/li&gt;
+  &lt;ol&gt;
+    &lt;li&gt;Data manipulation&lt;/li&gt;
+    &lt;li&gt;Data visualization&lt;/li&gt;
+    &lt;li&gt;R Markdown &amp; LaTeX&lt;/li&gt;
+    &lt;li&gt;Econometrics in R&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/ul&gt;
+
+&lt;ul&gt;
+ &lt;li&gt;Lectures 1 to 3 are about learning R&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p style = "margin-bottom:.63cm;"&gt;&lt;/p&gt;
+&lt;center&gt;&lt;i&gt;1-month break for you to follow the first lectures/tutorials in Econometrics I&lt;/i&gt;&lt;/center&gt; 
+&lt;p style = "margin-bottom:.63cm;"&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+ &lt;li&gt;Lectures 4 is about Econometrics using R&lt;/li&gt;
+&lt;/ul&gt;
+
+]
 
 ---
 
@@ -396,11 +468,13 @@ x
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### 1) Open a new R script (`Ctrl + Shift + N`) and write a code to create these objects:
 
-&lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+&lt;table&gt;
 &lt;caption&gt;Objects to create&lt;/caption&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
@@ -410,10 +484,10 @@ x
    &lt;td style="text-align:center;"&gt; c &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Assigned value: &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #014D64 !important;"&gt; Assigned value: &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 5 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -437,13 +511,13 @@ x
    &lt;td style="text-align:center;"&gt; Parentheses &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Symbol in R: &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; + &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; - &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; * &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; / &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; ^ &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; () &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #014D64 !important;"&gt; Symbol in R: &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; + &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; - &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; * &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; / &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; ^ &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; () &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -460,11 +534,13 @@ x
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 3 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62f3bb05" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62f75234" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -481,10 +557,10 @@ x
    &lt;td style="text-align:center;"&gt; c &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Assigned value: &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
-   &lt;td style="text-align:center;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:left;background-color: #014D64 !important;"&gt; Assigned value: &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;background-color: #014D64 !important;"&gt; 5 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1947,6 +2023,8 @@ vec[c(T, F, T)]
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 &lt;p style = "margin-bottom:3cm;"&gt;&lt;/p&gt;
@@ -1971,11 +2049,13 @@ vec[c(T, F, T)]
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 6 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62f3ba86" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62f75212" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -2010,6 +2090,8 @@ last_week
 
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -2729,6 +2811,8 @@ fb %&gt;%
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### 1) Start from the `fb` dataset and keep only the variables `Home`, `Score` and `Away`
@@ -2764,11 +2848,13 @@ data.frame(x = "a_b") %&gt;%
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62f3ba98" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62f75265" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -2817,6 +2903,8 @@ fb %&gt;%
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### 3) Convert these two variables into numeric vectors
@@ -2852,6 +2940,8 @@ fb %&gt;%
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -3461,6 +3551,43 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<style>
+.logo {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 0;
+ width: 10px;
+  height: 10px;
+  background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #c7c4c4, 
+              -4px -4px 6px #E7EDF0;
+}
+.logo:active {
+  box-shadow: inset 4px 4px 6px #c7c4c4, 
+              inset -4px -4px 6px #E7EDF0
+}
+
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"><a href = "https://louissirugue.github.io/intro_to_R/home.html"><p style = "margin-left:-.55cm;margin-top:-.55cm;width:53px"> <img src = "../source/home2.png"> </p> </a></div>';
+  });
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {

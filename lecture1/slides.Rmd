@@ -3,6 +3,8 @@ title: "Data manipulation"
 subtitle: "Lecture 1"
 author: "<br>Louis SIRUGUE"
 date: "M1 APE - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -22,7 +25,7 @@ editor_options:
 
 <style> .left-column {width: 65%;} .right-column {width: 31%;} </style>
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -46,8 +49,80 @@ Sys.setenv(LANG = "en")
 
 ### Welcome to the course!
 
-<br><br><br><br><br><br>
-<center>presentation of the course</center>
+--
+
+<p style = "margin-bottom:1.5cm;"></p>
+
+.pull-left[
+
+<center><b>About me</b></center>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>PhD student at the Paris School of Economics</li>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>I work primarily on:</li>
+  <ul>
+    <li>Intergenerational (income) mobility</li>
+    <li>Residential segregation</li>
+    <li>Discrimination</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>I do empirical research, so I use Econometrics and (R) programming on a daily basis</li>
+</ul>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li>You can reach me at <a href="mailto:louis.sirugue@psemail.eu">louis.sirugue@psemail.eu</a> for any question or comment about the course</li>
+</ul>
+]
+
+--
+
+.pull-right[
+
+<center><b>About the course</b></center>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li><b>Objective:</b> Learning R programming to carry out your empirical homeworks and research projects</li>
+</ul>
+
+<ul>
+  <li>4 \(\times\) 2 hours:</li>
+  <ol>
+    <li>Data manipulation</li>
+    <li>Data visualization</li>
+    <li>R Markdown & LaTeX</li>
+    <li>Econometrics in R</li>
+  </ol>
+</ul>
+
+<ul>
+ <li>Lectures 1 to 3 are about learning R</li>
+</ul>
+
+
+<p style = "margin-bottom:.63cm;"></p>
+<center><i>1-month break for you to follow the first lectures/tutorials in Econometrics I</i></center> 
+<p style = "margin-bottom:.63cm;"></p>
+
+<ul>
+ <li>Lectures 4 is about Econometrics using R</li>
+</ul>
+
+]
 
 ---
 
@@ -384,6 +459,8 @@ x
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### 1) Open a new R script (`Ctrl + Shift + N`) and write a code to create these objects:
@@ -393,7 +470,8 @@ tibble(a = c("Object name:", "Assigned value:"),
        b = c("a", 2), 
        c = c("b", 4), 
        d = c("c", 5)) %>%
-  kable(col.names = NULL, align = "lccc", caption = "Objects to create") 
+   knitr::kable(col.names = NULL, align = "lccc", caption = "Objects to create")  %>% 
+ row_spec(2, background = "#014D64")
 ```
 
 --
@@ -410,7 +488,8 @@ tibble(a = c("Operation:", "Symbol in R:"),
        e = c("Division", "/"), 
        f = c("Exponentiation", "^"),
        g = c("Parentheses", "()")) %>%
-  kable(col.names = NULL, align = "lcccccc", caption = "Basic operations in R")
+  kable(col.names = NULL, align = "lcccccc", caption = "Basic operations in R") %>% 
+ row_spec(2, background = "#014D64")
 ```
 
 --
@@ -425,9 +504,11 @@ tibble(a = c("Operation:", "Symbol in R:"),
 
 <center><h3><i>You've got 3 minutes!</i></h3></center>
 
-`r countdown(minutes = 3, top = 0, right = 0)`
+`r countdown(minutes = 3, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -439,7 +520,8 @@ tibble(a = c("Object name:", "Assigned value:"),
        b = c("a", 2), 
        c = c("b", 4), 
        d = c("c", 5)) %>%
-  kable(col.names = NULL, align = "lccc", caption = "Objects to create") 
+  kable(col.names = NULL, align = "lccc", caption = "Objects to create")  %>% 
+ row_spec(2, background = "#014D64")
 ```
 ]
 
@@ -1707,6 +1789,8 @@ vec[c(T, F, T)]
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 <p style = "margin-bottom:3cm;"></p>
@@ -1731,9 +1815,11 @@ vec[c(T, F, T)]
 
 <center><h3><i>You've got 6 minutes!</i></h3></center>
 
-`r countdown(minutes = 6, top = 0, right = 0)`
+`r countdown(minutes = 6, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1762,6 +1848,8 @@ last_week
 
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -2381,6 +2469,8 @@ fb %>%
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### 1) Start from the `fb` dataset and keep only the variables `Home`, `Score` and `Away`
@@ -2410,9 +2500,11 @@ data.frame(x = "a_b") %>%
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
-`r countdown(minutes = 10, top = 0, right = 0)`
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -2458,6 +2550,8 @@ fb %>%
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### 3) Convert these two variables into numeric vectors
@@ -2493,6 +2587,8 @@ fb %>%
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
