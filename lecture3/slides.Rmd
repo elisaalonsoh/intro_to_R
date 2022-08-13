@@ -3,6 +3,8 @@ title: "R Markdown & LaTeX"
 subtitle: "Lecture 3"
 author: "<br>Louis SIRUGUE"
 date: "M1 APE - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -148,6 +151,8 @@ ggplot(data, aes(x = V1, y = V2, size = V3)) +
 
 ---
 
+class: inverse, hide-logo
+
 ### Warm up practice
 
 <ul>
@@ -183,6 +188,8 @@ str(names)
 
 ---
 
+class: inverse, hide-logo
+
 ### Warm up practice
 
 <p style = "margin-bottom:2cm;"></p>
@@ -213,9 +220,11 @@ str(names)
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
-`r countdown(minutes = 10, top = 0, right = 0)`
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -256,6 +265,8 @@ names %>%
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### 3) Summarise your data into the total number of births per year
@@ -284,6 +295,8 @@ names %>%
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1315,6 +1328,8 @@ output:
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 .pull-left[
@@ -1334,7 +1349,7 @@ output:
 <p style = "margin-bottom:2cm;"></p>
 <center><h3><i>You've got 15 minutes!</i></h3></center>
 
-`r countdown(minutes = 15, bottom = 1, left = 0, style = "margin-left:5.65cm;")`
+`r countdown(minutes = 15, bottom = 1, left = 0, style = "margin-left:5.65cm;", play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ]
 
@@ -1344,6 +1359,8 @@ output:
 ]
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1373,6 +1390,8 @@ It should be run only once in the console.
 ````
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1479,7 +1498,7 @@ updates automatically.
 <center><i><b>&#10140; Let's knit our .Rmd with different values of that parameter!</b></i></center>
 
 ---
-
+class: hide-logo
 .pull-left[
 <p style = "margin-bottom:-.9cm;"></p>
 <center><img src = "louis.png" height = "677" width = "auto"/></center>
@@ -1491,7 +1510,7 @@ updates automatically.
 ]
 
 ---
-
+class: hide-logo
 .pull-left[
 <p style = "margin-bottom:-.9cm;"></p>
 <center><img src = "pauline.png" height = "677" width = "auto"/></center>
@@ -2195,6 +2214,8 @@ $$\text{Mean}(x)=\frac{1}{N}\sum_{i=1}^N x_i$$
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 <p style = "margin-bottom:3cm;"></p>
@@ -2216,9 +2237,11 @@ $\hat{Y_i}$ denote the fitted values of the model.
 <p style = "margin-bottom:3cm;"></p>
 <center><h3><i>You've got 3 minutes!</i></h3></center>
 
-`r countdown(minutes = 3, top = 0, right = 0)`
+`r countdown(minutes = 3, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
