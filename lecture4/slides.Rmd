@@ -3,6 +3,8 @@ title: "Econometrics in R"
 subtitle: "Lecture 4"
 author: "<br>Louis SIRUGUE"
 date: "M1 APE - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -22,7 +25,7 @@ editor_options:
 
 <style> .left-column {width: 65%;} .right-column {width: 31%;} </style>
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -357,7 +360,10 @@ ggplot(starbucks, aes(x = Calories, y = Cholesterol,
 .right-column[
 ]
 
-<img src = "starbucks.png" width = "399" style = "margin-top:-15cm !important;margin-left:18.6cm;margin-bottom:1.08cm"/>
+<div  style = "position:absolute!important;top:0px!important:left:0px;">
+<p style = "margin-bottom:.5cm;"></p>
+<img src = "starbucks.png" width = "399" style = "margin-left:18.6cm;"/>
+</div>
 
 ---
 
@@ -1071,6 +1077,8 @@ ggplot(ggcurve, aes(x = gini, y = ige)) +
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice 
 
 <center><i><b>Check that lm() works fine by computing the \(R^2\) manually</b></i></center>
@@ -1103,9 +1111,11 @@ $$R^2 = 1 - \frac{\sum(y_i-\hat{y_i})^2}{\sum(y_i-\bar{y_i})^2}$$
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
-`r countdown(minutes = 10, top = 0, right = 0)`
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1138,6 +1148,8 @@ ggcurve %>%
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 ```{r, eval = F}
@@ -1168,6 +1180,8 @@ ggcurve %>%
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1200,6 +1214,8 @@ ggcurve %>%
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 ```{r, eval = F}
@@ -1230,6 +1246,8 @@ ggcurve %>%
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1738,6 +1756,8 @@ individuals * 2
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 <p style = "margin-bottom:1.5cm;"></p>
 
@@ -1759,9 +1779,11 @@ individuals * 2
 
 <center><h3><i>You've got 5 minutes!</i></h3></center>
 
-`r countdown(minutes = 5, top = 0, right = 0)`
+`r countdown(minutes = 5, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 <p style = "margin-bottom:1.5cm;"></p>
@@ -1785,6 +1807,8 @@ lm(top1 ~ year, wid)
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 <p style = "margin-bottom:1.5cm;"></p>
@@ -3655,6 +3679,8 @@ huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce this table:
@@ -3682,9 +3708,11 @@ huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 
 --
 
-`r countdown(minutes = 10, top = 0, right = 0)`
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -3712,6 +3740,8 @@ huxreg(lm(lEarnings ~ Hours, asec),
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
@@ -3737,6 +3767,8 @@ huxreg(lm(lEarnings ~ Hours, asec),
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -3764,6 +3796,8 @@ huxreg(lm(lEarnings ~ Hours, asec),
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
@@ -3789,6 +3823,8 @@ huxreg(lm(lEarnings ~ Hours, asec),
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -3816,6 +3852,8 @@ huxreg(lm(lEarnings ~ Hours, asec),
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
@@ -3842,6 +3880,8 @@ huxreg(lm(lEarnings ~ Hours, asec),
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### Use the functions `huxreg()`, `insert_row()`, and `merge_cells()` to reproduce the table
@@ -3867,6 +3907,8 @@ huxreg(lm(lEarnings ~ Hours, asec),
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
