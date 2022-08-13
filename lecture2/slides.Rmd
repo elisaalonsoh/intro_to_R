@@ -3,6 +3,8 @@ title: "Data visualization"
 subtitle: "Lecture 2"
 author: "<br>Louis SIRUGUE"
 date: "M1 APE - Fall 2022"
+params:
+  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -10,6 +12,7 @@ output:
         - theme.css
     includes:
       in_header: header.html
+      after_body: insert-logo.html
     lib_dir: libs
     nature:
       ratio: '16:9'
@@ -20,7 +23,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{css, echo = F, eval = F}
+```{css, echo = F, eval = params$dark}
 body{background-color:black;filter:invert(1)}
 ```
 
@@ -109,6 +112,8 @@ kable(tibble(Function = c("mutate()", "select()", "filter()",
 
 ---
 
+class: inverse, hide-logo
+
 ### Warm up practice
 
 #### 1) Import `starbucks.csv` and `View()` the data
@@ -135,9 +140,11 @@ kable(tibble(Function = c("mutate()", "select()", "filter()",
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
-`r countdown(minutes = 10, top = 0, right = 0)`
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -157,6 +164,8 @@ starbucks <- read.csv("starbucks.csv")
 <center><img src = "view_starbucks.png" width = "1100"/></center>
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -183,6 +192,8 @@ starbucks <- read.csv("starbucks.csv")
 </ul>
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -221,6 +232,8 @@ starbucks <- read.csv("starbucks.csv", sep = ";", encoding = "UTF-8")
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### 2) Inspect the structure of the data using `str()`
@@ -253,6 +266,8 @@ str(starbucks)
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### 3) Use `summarise()` to compute for each beverage category the average number of calories and the number of different declinations (there is 1 row per declination)
@@ -274,6 +289,8 @@ starbucks %>%
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1232,8 +1249,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
 --
 
 ```{r, fig.width = 16/3, fig.height = 3, out.width = "40%"}
-ggplot(wid, aes(x = inc_head, y = top1, color = continent)) + 
-  geom_point(alpha = .3) 
+ggplot(wid, aes(x = inc_head, y = top1, color = continent)) + geom_point(alpha = .3) 
 ```
 
 ---
@@ -1363,8 +1379,6 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +
 
 --
 
-<p style = "margin-bottom:-.5cm;"></p>
-
 .pull-left[
 <p style = "margin-bottom:1cm;"></p>
 <ul>
@@ -1377,6 +1391,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +
 ]
 
 .pull-right[
+<p style = "margin-bottom:-1cm;"></p>
 ```{r, echo = F}
 kable(tibble(` ` = c("y fixed", "y free"),
              `x fixed` = c('scales = "fixed"', 'scales = "free_y"'),
@@ -1437,6 +1452,8 @@ wid %>% filter(year == 2019 & continent == "Europe") %>%
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### 1) Reproduce this graph with the `starbucks` dataset
@@ -1455,9 +1472,11 @@ ggplot(starbucks,
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
-`r countdown(minutes = 10, top = 0, right = 0)`
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1476,6 +1495,8 @@ ggplot(starbucks,
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 ```{r, eval = F}
@@ -1494,6 +1515,8 @@ ggplot(starbucks,
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 ```{r, eval = F}
@@ -1511,6 +1534,8 @@ ggplot(starbucks,
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1530,6 +1555,8 @@ ggplot(starbucks,
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 

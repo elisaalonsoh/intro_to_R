@@ -147,6 +147,8 @@ library(dplyr)
 
 ---
 
+class: inverse, hide-logo
+
 ### Warm up practice
 
 #### 1) Import `starbucks.csv` and `View()` the data
@@ -173,11 +175,13 @@ library(dplyr)
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62f3be07" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62f6d94b" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -196,6 +200,8 @@ View(starbucks)
 &lt;center&gt;&lt;img src = "view_starbucks.png" width = "1100"/&gt;&lt;/center&gt;
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -221,6 +227,8 @@ View(starbucks)
 &lt;/ul&gt;
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -257,6 +265,8 @@ View(starbucks)
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### 2) Inspect the structure of the data using `str()`
@@ -291,6 +301,8 @@ str(starbucks)
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 #### 3) Use `summarise()` to compute for each beverage category the average number of calories and the number of different declinations (there is 1 row per declination)
@@ -322,6 +334,8 @@ starbucks %&gt;%
 ```
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1250,8 +1264,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +
 
 
 ```r
-ggplot(wid, aes(x = inc_head, y = top1, color = continent)) + 
-  geom_point(alpha = .3) 
+ggplot(wid, aes(x = inc_head, y = top1, color = continent)) + geom_point(alpha = .3) 
 ```
 
 &lt;img src="slides_files/figure-html/unnamed-chunk-70-1.png" width="40%" style="display: block; margin: auto;" /&gt;
@@ -1373,8 +1386,6 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +
 
 --
 
-&lt;p style = "margin-bottom:-.5cm;"&gt;&lt;/p&gt;
-
 .pull-left[
 &lt;p style = "margin-bottom:1cm;"&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -1387,6 +1398,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) + geom_point() +
 ]
 
 .pull-right[
+&lt;p style = "margin-bottom:-1cm;"&gt;&lt;/p&gt;
 &lt;table class="table table-hover table-condensed" style="width: auto !important; margin-left: auto; margin-right: auto;"&gt;
 &lt;caption&gt;scales argument in facet_wrap()&lt;/caption&gt;
  &lt;thead&gt;
@@ -1459,6 +1471,8 @@ ggplot(wid %&gt;% filter(year == 2019 &amp; continent == "Europe"), # subset so 
 
 ---
 
+class: inverse, hide-logo
+
 ### Practice
 
 #### 1) Reproduce this graph with the `starbucks` dataset
@@ -1471,11 +1485,13 @@ ggplot(wid %&gt;% filter(year == 2019 &amp; continent == "Europe"), # subset so 
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62f3bac3" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62f6d9da" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1492,6 +1508,8 @@ ggplot(starbucks,
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 
@@ -1506,6 +1524,8 @@ ggplot(starbucks,
 &lt;img src="slides_files/figure-html/unnamed-chunk-89-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -1522,6 +1542,8 @@ ggplot(starbucks,
 
 ---
 
+class: inverse, hide-logo
+
 ### Solution
 
 
@@ -1536,6 +1558,8 @@ ggplot(starbucks,
 &lt;img src="slides_files/figure-html/unnamed-chunk-93-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ---
+
+class: inverse, hide-logo
 
 ### Solution
 
@@ -2668,6 +2692,43 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<style>
+.logo {
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 0;
+ width: 10px;
+  height: 10px;
+  background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #c7c4c4, 
+              -4px -4px 6px #E7EDF0;
+}
+.logo:active {
+  box-shadow: inset 4px 4px 6px #c7c4c4, 
+              inset -4px -4px 6px #E7EDF0
+}
+
+</style>
+
+<script>
+document
+  .querySelectorAll(
+    '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+    // ':not(.inverse)' +
+    ':not(.hide-logo)'
+  )
+  .forEach(el => {
+    el.innerHTML += '<div class="logo"><a href = "https://louissirugue.github.io/intro_to_R/home.html"><p style = "margin-left:-.55cm;margin-top:-.55cm;width:53px"> <img src = "../source/home2.png"> </p> </a></div>';
+  });
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {
