@@ -1,0 +1,26 @@
+---
+title: "Render course"
+output: html_document
+date: "2022-08-12"
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r }
+library(rmarkdown)
+root <- getwd()
+
+for (dk in c("", "_dark")) {
+  for (j in 1:4) {
+    render(input = paste0(root, "/lecture", j, "/slides.Rmd"),
+           params = list(dark = dk != ""),
+           output_options = list(includes = list(after_body = paste0("insert-logo", dk, ".html"))), 
+           output_file = paste0(root, "/lecture", j, "/slides", dk, ".html"))
+  } 
+  render(input = paste0(root, "/structure/home.Rmd"),
+         params = list(dark = dk != ""), 
+         output_file = paste0(root, "/home", dk, ".html"))
+}
+
+```
+

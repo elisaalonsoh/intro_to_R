@@ -1,7 +1,9 @@
 ---
-title: 'Introduction to <img src = "rstudio_logo.png" width = "40"> Programming'
+title: 'Introduction to <img src = "rstudio_logo.png" alt = "R" width = "40"> Programming'
 author: "PSE - M1 APE"
 date: "Louis Sirugue"
+params:
+  dark: false
 output: 
   html_document:
     theme: cosmo
@@ -12,17 +14,13 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r, echo = F}
-dark_theme <- F
-```
-
 ```{r setup, include = F}
 knitr::opts_chunk$set(echo = F, message = F, warning = F)
 lapply(c("tidyverse", "kableExtra"), library, character.only = T)
 root <- "https://louissirugue.github.io/intro_to_R/"
 ```
 
-```{css, echo = F, eval = !dark_theme}
+```{css, echo = F, eval = !params$dark}
 .share-box {
   width: 40px;
   height: 40px;
@@ -40,7 +38,7 @@ root <- "https://louissirugue.github.io/intro_to_R/"
 }
 ```
 
-```{css, echo = F, eval = dark_theme}
+```{css, echo = F, eval = params$dark}
 body{background-color:#201914;filter:invert(1)}
 
 .share-box {
@@ -61,13 +59,13 @@ body{background-color:#201914;filter:invert(1)}
 ```
 
 ```{r, echo = F}
-dark <- ifelse(dark_theme, "_dark", "")
-astre <- ifelse(dark_theme, "sun", "moon")
+dark <- ifelse(params$dark, "_dark", "")
+astre <- ifelse(params$dark, "sun", "moon")
 ```
 
 ````{=html}
 ```{r, echo=FALSE, results='asis'}
-writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/intro_to_R/home', ifelse(dark_theme, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
+writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/intro_to_R/home', ifelse(params$dark, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "', astre, '.png"> </p> </a></div>'), 'astre.html')
 xfun::file_string('astre.html')
 ```
 ````
@@ -192,7 +190,7 @@ for (i in 1:length(roman)) {
                   ungroup() %>%
                   mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
                          link = paste0(root, "lecture", i, "/slides", 
-                                       ifelse(dark_theme, "_dark", ""), ".html#", slide),
+                                       ifelse(params$dark, "_dark", ""), ".html#", slide),
                          last = ifelse(row_number() == n(), "title", last)) %>%
                   select(x, type, link, bullet, last, n))
 }
@@ -305,7 +303,7 @@ for (i in (1:length(roman))+2) {
                   ungroup() %>%
                   mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
                          link = paste0(root, "lecture", i, "/slides", 
-                                       ifelse(dark_theme, "_dark", ""), ".html#", slide),
+                                       ifelse(params$dark, "_dark", ""), ".html#", slide),
                          last = ifelse(row_number() == n(), "title", last)) %>%
                   select(x, type, link, bullet, last, n))
 }
@@ -362,6 +360,16 @@ xfun::file_string('toc2.html')
 ````
 </div>
 </div>
+
+### Cheatsheets
+
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/rstudio.pdf"><img style = "margin-left:7cm;margin-top:2.3cm;" src = "../cheatsheets/rstudio.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/baser.pdf"><img style = "margin-left:-1.45cm;margin-top:-2.3cm;" src = "../cheatsheets/baser.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/readr.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;"  src = "../cheatsheets/readr.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/dplyr.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/dplyr.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/ggplot.pdf"><img  style = "margin-top:2.3cm;margin-left:-1.45cm;"src = "../cheatsheets/ggplot.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/rmarkdown.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/rmarkdown.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/latex.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/latex.png" width = "100"/></a>
 
 ### References
 
