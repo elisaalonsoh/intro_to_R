@@ -4,6 +4,7 @@ author: "PSE - M1 APE"
 date: "Louis Sirugue"
 params:
   dark: false
+  update_functions: false
 output: 
   html_document:
     theme: cosmo
@@ -133,7 +134,7 @@ kable(s1, col.names = NULL, align = "llccccc", escape = F) %>%
 ### Contents
 
 <div class="row">
-<div class="column">
+<div class="column" style = "margin-left:2cm;">
 
 ```{r, include = F}
 roman <- c("I.", "II.")
@@ -247,7 +248,7 @@ xfun::file_string('toc.html')
 ````
 </div>
 
-<div class="column">
+<div class="column" style = "margin-left:-2cm;">
 ```{r, include = F}
 roman <- c("III.", "IV.")
 
@@ -348,7 +349,7 @@ for (i in 1:nrow(slides)) {
     }
   
   # Close level 1
-  if (slides$last[i] == "title") {htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>')}
+  if (slides$last[i] == "title") {htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p><br>')}
 }
 writeLines(htmlcode, "toc2.html")
 ```
@@ -361,6 +362,8 @@ xfun::file_string('toc2.html')
 </div>
 </div>
 
+<p style = "margin-bottom:-1.5em;"></p>
+
 ### Cheatsheets
 
 <a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/rstudio.pdf"><img style = "margin-left:7cm;margin-top:2.3cm;" src = "../cheatsheets/rstudio.png" width = "100"/></a>
@@ -370,6 +373,69 @@ xfun::file_string('toc2.html')
 <a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/ggplot.pdf"><img  style = "margin-top:2.3cm;margin-left:-1.45cm;"src = "../cheatsheets/ggplot.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/rmarkdown.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/rmarkdown.png" width = "100"/></a>
 <a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/latex.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/latex.png" width = "100"/></a>
+
+### Functions glossary
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, echo = F, eval = params$update_functions, results = "hide"}
+library(readxl)
+
+functions <- read_xlsx("functions.xlsx")
+
+# Get the last R documentation version of each package
+packages <- functions %>% select(package) %>% unique()
+version <- lapply(packages$package, function(a) {
+  return(gsub('^.*versionsArray":\\["|".*$', '', 
+              paste(readLines(paste0('https://www.rdocumentation.org/packages/',  a)), collapse = "")))
+})
+
+# Get the alias of each function
+lapply(packages$package, require, character.only = TRUE)
+alias <- lapply(functions$`function`, function(a) {
+  hf <- as.character(help(a))
+  keep <- grepl(paste0(functions %>% filter(`function` == a) %>% pull(package), "/help"), hf)
+  return(gsub("^.*/", "", hf[keep]))
+})
+
+# Form URL
+functions <- functions %>%
+  left_join(packages %>% mutate(version = unlist(as.character(version)))) %>%
+  mutate(alias = unlist(alias)) %>%
+  # Manual modifications
+  mutate(alias = ifelse(`function` %in% c("n", "log", "scale_x_discrete", 
+                                          "element_rect", "element_line", "rel"), 
+                        `function`, alias),
+         alias = ifelse(`function` == "scale_y_discrete", "scale_x_discrete", alias),
+         alias = ifelse(`function` == "scale_color_manual", "scale_colour_manual", alias),
+         alias = ifelse(`function` == "scale_color_gradient", "scale_colour_gradient", alias),
+         alias = ifelse(alias == "reorder.factor", "reorder.default", alias),
+         version = ifelse(`function` %in% c("scale_color_manual", "geom_text", "geom_histogram"), 
+                          "0.9.1", version),
+         version = ifelse(`function` %in% c("element_rect", "element_line", "rel"), 
+                          "2.1.0", version))%>%
+  filter(`function` != "rename") %>%
+  # Now form urls
+  mutate(doc = paste0("https://www.rdocumentation.org/packages/", package, 
+                      "/versions/", version, 
+                      "/topics/", alias))
+
+write.csv(functions, "processed_functions.csv", row.names = F)
+```
+
+
+```{r, echo = F}
+library(DT)
+datatable(read.csv("processed_functions.csv") %>% 
+              mutate(doc = paste0('<a href = "', doc, '">', alias, '</a>'),
+                     lecture = paste("Lecture", lecture)) %>%
+              rename(`function` = function., documentation = doc) %>%
+              select(lecture, `function`, package, documentation), 
+          escape = F, rownames = F, options = list(pageLength = 5), 
+          class = list(stripe = FALSE)) %>% 
+  formatStyle(c("lecture", "function", "package", "documentation"), 
+              backgroundColor = "#DFE6EB")
+```
 
 ### References
 
