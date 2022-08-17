@@ -4,7 +4,6 @@
     <title>Data manipulation</title>
     <meta charset="utf-8" />
     <meta name="author" content=" Louis SIRUGUE" />
-    <script src="libs/header-attrs/header-attrs.js"></script>
     <script src="libs/kePrint/kePrint.js"></script>
     <link href="libs/lightable/lightable.css" rel="stylesheet" />
     <link href="libs/countdown/countdown.css" rel="stylesheet" />
@@ -17,18 +16,10 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-.title[
 # Data manipulation
-]
-.subtitle[
 ## Lecture 1
-]
-.author[
 ### <br>Louis SIRUGUE
-]
-.date[
 ### M1 APE - Fall 2022
-]
 
 ---
 
@@ -534,7 +525,7 @@ class: inverse, hide-logo
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 3 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62f75234" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62fceee2" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">03</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -2049,7 +2040,7 @@ class: inverse, hide-logo
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 6 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62f75212" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62fceeb7" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">06</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -2710,7 +2701,7 @@ fb %&gt;%
 ```
 
 ```
-## # A tibble: 6 × 4
+## # A tibble: 6 x 4
 ## # Groups:   Home [6]
 ##      Wk Home          xG home.xG
 ##   &lt;int&gt; &lt;chr&gt;      &lt;dbl&gt;   &lt;dbl&gt;
@@ -2752,7 +2743,7 @@ fb %&gt;%
 ```
 
 ```
-## # A tibble: 4 × 4
+## # A tibble: 4 x 4
 ##      Wk     n tot_xG avg_WG
 ##   &lt;int&gt; &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
 ## 1     1    10   23.4   2.34
@@ -2819,7 +2810,7 @@ class: inverse, hide-logo
 
 --
 
-#### 2) Use the `separate()` function from `dplyr` to split the `Score` variable into `home_score` and `away_score`
+#### 2) Use the `separate()` function from `tidyr` to split the `Score` variable into `home_score` and `away_score`
 
 
 ```r
@@ -2848,7 +2839,7 @@ data.frame(x = "a_b") %&gt;%
 
 &lt;center&gt;&lt;h3&gt;&lt;i&gt;You've got 10 minutes!&lt;/i&gt;&lt;/h3&gt;&lt;/center&gt;
 
-<div class="countdown" id="timer_62f75265" style="top:0;right:0;" data-warnwhen="0">
+<div class="countdown" id="timer_62fcee53" style="top:0;right:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -2880,7 +2871,7 @@ fb %&gt;%
 
 --
 
-#### 2) Use the `separate()` function from `dplyr` to split the `Score` variable into `home_score` and `away_score`
+#### 2) Use the `separate()` function from `tidyr` to split the `Score` variable into `home_score` and `away_score`
 
 --
 
@@ -2967,7 +2958,7 @@ fb %&gt;%
 
 
 ```
-## # A tibble: 3 × 2
+## # A tibble: 3 x 2
 ##   winner   pct
 ##   &lt;chr&gt;  &lt;dbl&gt;
 ## 1 Away    30.5
@@ -3495,19 +3486,6 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
-// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
-// screen reader (see PR #262)
-(function(d) {
-  let res = {};
-  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
-    const t = tr.querySelector('td:nth-child(2)').innerText;
-    tr.querySelectorAll('td:first-child .key').forEach(key => {
-      const k = key.innerText;
-      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
-    });
-  });
-  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
-})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable
