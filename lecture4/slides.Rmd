@@ -1038,14 +1038,14 @@ ggmodel$coefficients[, "Pr(>|t|)"]
  * We can also easily **plot** the **distribution** of our **residuals** 
  
 ```{r, eval = F}
-ggplot(tibble(x = ggmodel$residuals), aes(x = x)) +
+ggplot(data.frame(x = ggmodel$residuals), aes(x = x)) +
   geom_density() + geom_vline(xintercept = 0, linetype = "dashed")
 ```
 
 --
  
 ```{r, echo = F, fig.width = 8, fig.height = 4.25, out.width = "60%"}
-ggplot(tibble(x = ggmodel$residuals), aes(x = x)) +
+ggplot(data.frame(x = ggmodel$residuals), aes(x = x)) +
   geom_density(fill = "#6794A7", color = "#014D64", alpha = .6) + 
   geom_vline(xintercept = 0, linetype = "dashed", color = "#014D64") +
   theme(axis.title.x = element_blank())
