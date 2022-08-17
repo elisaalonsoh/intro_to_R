@@ -442,7 +442,7 @@ str(wid)
 #### 1.1. Basic structure
 
 <ul>
-  <li><b>ggplot()</b> is the function that we're gonna use for all our plots</li>
+  <li><b>ggplot()</b> from ggplot2 is what we're gonna use for all our plots</li>
   <li>It takes the following <b>core arguments</b>:</li>
   <ul>
     <li><b>Data</b>: the values to plot</li>
