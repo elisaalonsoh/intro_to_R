@@ -29,7 +29,6 @@ body{background-color:black;filter:invert(1)}
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../source/style.R"))
-library(countdown)
 stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
 options(htmltools.dir.version = F)
@@ -126,7 +125,7 @@ kable(tibble(Argument = c("alpha", "color", "fill", "size", "shape", "linetype")
 <ul>
   <li>If specified <b>in the geometry</b></li>
   <ul>
-    <li>It will apply uniformly to every <b>all the geometry</b></li>
+    <li>It will apply uniformly to <b>all the geometry</b></li>
   </ul>
 </ul>
  
@@ -220,7 +219,7 @@ class: inverse, hide-logo
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
-`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 
@@ -323,7 +322,15 @@ names %>%
   mutate(annais = as.numeric(annais)) %>%
   group_by(annais) %>%
   summarise(n = sum(nombre)) %>%
-  ggplot(aes(x = annais, y = n)) + geom_line()
+  ggplot(aes(x = annais, y = n)) + 
+  geom_line(color = "#dfe6eb") +
+  theme(plot.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.background = element_rect(color = "#014d64", fill = "#014d64"),
+        panel.grid = element_blank(),
+        axis.title = element_text(color = "#dfe6eb"),
+        axis.text = element_text(color = "#dfe6eb"),
+        axis.line = element_line(color = "#dfe6eb"),
+        axis.ticks = element_line(color = "#dfe6eb"))
 ```
 
 
@@ -1349,7 +1356,7 @@ class: inverse, hide-logo
 <p style = "margin-bottom:2cm;"></p>
 <center><h3><i>You've got 15 minutes!</i></h3></center>
 
-`r countdown(minutes = 15, bottom = 1, left = 0, style = "margin-left:5.65cm;", play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
+`r countdown(minutes = 15, bottom = 1, left = 0, style = "margin-left:5.65cm;", play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ]
 
@@ -1471,7 +1478,7 @@ output:
 
 #### 2.4. Report parameters
 
- * You simply have to call that object in you code chunks or inline code when needed
+ * You simply have to call that object in your code chunks or inline code when needed
  
 --
 
@@ -2237,7 +2244,7 @@ $\hat{Y_i}$ denote the fitted values of the model.
 <p style = "margin-bottom:3cm;"></p>
 <center><h3><i>You've got 3 minutes!</i></h3></center>
 
-`r countdown(minutes = 3, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
+`r countdown(minutes = 3, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 
