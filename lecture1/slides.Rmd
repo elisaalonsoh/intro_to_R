@@ -32,12 +32,7 @@ body{background-color:black;filter:invert(1)}
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../source/style.R"))
 
-
-#devtools::install_github("gadenbuie/countdown")
-library(countdown)
-
 detach("package:dplyr", unload=TRUE)
-
 
 stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
@@ -504,7 +499,7 @@ tibble(a = c("Operation:", "Symbol in R:"),
 
 <center><h3><i>You've got 3 minutes!</i></h3></center>
 
-`r countdown(minutes = 3, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
+`r countdown(minutes = 3, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 
@@ -1815,7 +1810,7 @@ class: inverse, hide-logo
 
 <center><h3><i>You've got 6 minutes!</i></h3></center>
 
-`r countdown(minutes = 6, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
+`r countdown(minutes = 6, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 
@@ -2066,7 +2061,7 @@ install.packages("dplyr") # Requires an internet connection
 
 #### 3.1. Packages
 
- * The `dplyr` pakcage is now <b>on your computer</b>, but it is <b>not loaded in R</b>
+ * The `dplyr` package is now <b>on your computer</b>, but it is <b>not loaded in R</b>
 
 --
 
@@ -2403,7 +2398,7 @@ fb %>%
   <li>It is particularly <b>useful with summarise()</b></li>
   <ul>
     <li>summarise keeps the grouping variable</li>
-    <li>and compute <b>statistics for each category</b></li>
+    <li>and computes <b>statistics for each category</b></li>
   </ul>
 </ul>
 
@@ -2433,11 +2428,11 @@ fb %>%
 <center><b>mutate() \(\neq\) summarise()</b></center>
 
 <ul>
-  <li><b>mutate()</b> takes a operation that converts:</li>
+  <li><b>mutate()</b> takes an operation that converts:</li>
   <ul>
     <li><b>A vector into another vector</b></li>
   </ul>
-  <li><b>summarise()</b> takes a operation that converts:</li>
+  <li><b>summarise()</b> takes an operation that converts:</li>
   <ul>
     <li><b>A vector into a value</b></li>
   </ul>
@@ -2500,7 +2495,7 @@ data.frame(x = "a_b") %>%
 
 <center><h3><i>You've got 10 minutes!</i></h3></center>
 
-`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB")`
+`r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
 ---
 
