@@ -538,15 +538,14 @@ names %>%
 
 * It should be specified at the **very beginning** of the document and surrounded by **three dashes** like so:
 
-```{r, eval = F}
+````markdown
 ---
 title: "My First Markdown Report"
 author: "Louis Sirugue"
 date: "24/09/2021"
 output: html_document
 ---
-```
-
+````
 ---
 
 ### 1. Basic principles
@@ -1222,7 +1221,7 @@ datatable(mtcars, options = list(pageLength = 5))
 
 <p style = "margin-bottom:1cm;">
  
-```{r, eval = F}
+````markdown
 ---
 title: "My First Markdown Report"
 author: "Louis Sirugue"
@@ -1231,7 +1230,7 @@ output:
   html_document:
     theme: cosmo
 ---
-```
+````
 
 <p style = "margin-bottom:1cm;">
 
@@ -1439,7 +1438,7 @@ name LOUIS in 2021. This statistic is written in **inline code** such that it up
   <li>It may sometimes be useful to produce <b>separate html reports for differents groups</b> in your data</li>
   <ul>
     <li>Country/state-specific reports</li>
-    <li>Here, different report for different first names</li>
+    <li>Here, a different report for each first name</li>
   </ul>
 </ul>
 
@@ -1837,7 +1836,7 @@ for (i in c("LOUIS", "DIDER", "PAULINE", "CAMILLE")) {
   <li>But LaTeX is not a <i>"what you see is what you get"</i> system</li>
   <ul>
     <li>In Microsoft Word or Google doc, you work directly on the "output document"</li>
-    <li><b>LateX</b> works more like R Markdown: <b>Edit</b> your text <b>in a script using commands and symbols</b></li> 
+    <li><b>LaTeX</b> works more like R Markdown: <b>Edit</b> your text <b>in a script using commands and symbols</b></li> 
   </ul>
 </ul>
 
@@ -1869,7 +1868,7 @@ $$\overline{x}=\frac{1}{N}\sum_{i=1}^N x_i$$
 
 ### 3. LaTeX for equations
 
-#### 3.1. What is LaTeX?
+#### 3.2. LaTeX syntax
 
  * To include a **LaTeX equation** in R Markdown, you simply have to surround it with the **`$` sign**:
  
