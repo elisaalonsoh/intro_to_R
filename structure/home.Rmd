@@ -147,20 +147,6 @@ for (i in 1:length(roman)) {
   
     lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
     
-    if (i == 3) {
-      fourticks <- lecture %>%
-        mutate(row = row_number()) %>%
-        filter(grepl("^````", x)) %>%
-        mutate(x = rep(1:(nrow(.)/2), each = 2),
-               group = ifelse(row_number() %% 2, "start", "stop")) %>%
-        pivot_wider(names_from = "group", values_from = "row")
-      
-      for (j in 1:nrow(fourticks)) {
-        lecture <- lecture %>%
-          filter(!row_number() %in% fourticks$start[j]:fourticks$stop[j])
-      }
-    }    
-    
     slides <- slides %>%
       bind_rows(tibble(x = paste(roman[i], gsub('title: \"|\"', "", lecture$x[2])),
                        type = "title",
@@ -260,7 +246,6 @@ for (i in (1:length(roman))+2) {
   
     lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
     
-    if (i == 3) {
       fourticks <- lecture %>%
         mutate(row = row_number()) %>%
         filter(grepl("^````", x)) %>%
@@ -268,11 +253,10 @@ for (i in (1:length(roman))+2) {
                group = ifelse(row_number() %% 2, "start", "stop")) %>%
         pivot_wider(names_from = "group", values_from = "row")
       
-      for (j in 1:nrow(fourticks)) {
+      for (j in nrow(fourticks):1) {
         lecture <- lecture %>%
           filter(!row_number() %in% fourticks$start[j]:fourticks$stop[j])
       }
-    }    
     
     slides <- slides %>%
       bind_rows(tibble(x = paste(roman[i - 2], gsub('title: \"|\"', "", lecture$x[2])),
