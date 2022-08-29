@@ -1396,7 +1396,8 @@ kable(tibble(` ` = c("y fixed", "y free"),
              `x fixed` = c('scales = "fixed"', 'scales = "free_y"'),
              `x free` = c('scales = "free_x"', 'scales = "free"')) ,
       caption = "scales argument in facet_wrap()") %>%
-  row_spec(0, align = 'c')
+  row_spec(0, align = 'c') %>%
+  column_spec(1, bold = T)
 ```
 ]
 
@@ -1815,7 +1816,7 @@ ggplot(wid %>% filter(year == 2019), aes(x = fshare)) +
 #### 3.3. Densities and boxplots
 
 <ul>
-  <li>As you may remember from last class, the <b>continuous</b> equivalent of the histogram is the <b>density</b></li>
+  <li>The <b>continuous</b> equivalent of the histogram is the <b>density</b></li>
   <ul>
     <li>Similarly you can tune the <b>bandwidth</b> with the <b>bw</b> argument <i>(don't do it)</i></li>
   </ul>
