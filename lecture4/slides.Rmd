@@ -1629,7 +1629,12 @@ plot_ly(asec_plotly, x = ~White, y = ~Other, z = ~`Log Earnings`) %>%
 
 #### 1.3. On categorical variables
 
- * Once again the **constant** is the **average** $y$ and the **slopes** are the relative **differences in means**
+<ul>
+  <li>Once again the <b>constant</b> is the <b>average</b> \(y\) for the reference category</li>
+  <ul>
+    <li>And the <b>slopes</b> are the relative <b>differences in means</b></li>
+  </ul>
+</ul>
 
 .pull-left[
 ```{r}
@@ -1650,8 +1655,6 @@ asec %>%
 ]
 
 --
-
-<p style = "margin-bottom:1cm;"></p>
 
 <ul>
   <li>Note that R always sorts <b>character</b> variables by <b>alphabetical order</b></li>
@@ -2427,18 +2430,14 @@ coefs <- summary(lm(log(Earnings) ~ Hours + Hours2 + Sex, asec %>% mutate(Hours2
 ggplot(asec %>% mutate(fit = (Hours * coefs[2, 1]) + (Hours^2 * coefs[3, 1]) + coefs[1, 1],
                        fit = ifelse(Sex == "Male", fit + coefs[4, 1], fit)), 
        aes(x = Hours, y = log(Earnings), color = Sex)) +
-  geom_point(alpha = .1) # + 
-  #geom_line(aes(y = fit))
-  
-  asec <- asec %>%
-  mutate(Male = as.numeric(Sex == "Male"),
-         color = ifelse(Male, "#6794A7", "#00A2D9"))
+  geom_point(alpha = .1) + 
+  geom_line(aes(y = fit))
 ```
 ]
  
 .pull-right[
 <!-- -->
-```{r, echo = F, fig.width = 7, fig.height = 1.5, out.width= '100%', fig.align="left", eval = showplotly}
+```{r, echo = F, fig.width = 6, fig.height = 1.5, out.width= '100%', eval = showplotly}
 asec_plotly <- asec_plotly %>%
   mutate(Male = as.numeric(Sex == "Male"),
          color = ifelse(Male, "#6794A7", "#00A2D9"))
@@ -2454,40 +2453,6 @@ petal_lm_surface <- expand.grid(Hours = axis_x, Male = axis_y, KEEP.OUT.ATTRS = 
 petal_lm_surface$lEarnings <- predict.lm(petal_lm, newdata = petal_lm_surface)
 petal_lm_surface <- acast(petal_lm_surface, Male ~ Hours, value.var = "lEarnings") #y ~ x
 
-plot_ly(asec_plotly, x = ~Hours, y = ~Male, z = ~lEarnings) %>% 
-  add_markers(size = 5, opacity = .2, color = ~color, colors = c("#6794A7", "#00A2D9"), showlegend=F) %>%
-  layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
-         aspectratio = list(x = 2, y = 1, z = .5),
-         scene = list(xaxis = list(title = 'Hours'),
-                      yaxis = list(title = 'Male'),
-                      zaxis = list(title = 'lEarnings'),
-                      camera = list(eye = list(x = 0, y = -2, z = 0)))) %>% 
-  style(hoverinfo = 'skip')
-```
-<!-- -->
-] 
-
----
-
-### 2. Case study
-
-#### 2.3. Control variables
-
-.pull-left[
-<p style = "margin-bottom:1cm"></p>
-```{r, echo = F, fig.width = 8, fig.height = 5.5, out.width=  "100%", eval = showasecplot}
-coefs <- summary(lm(log(Earnings) ~ Hours + Hours2 + Sex, asec %>% mutate(Hours2 = Hours * Hours)))$coefficients
-ggplot(asec %>% mutate(fit = (Hours * coefs[2, 1]) + (Hours^2 * coefs[3, 1]) + coefs[1, 1],
-                       fit = ifelse(Sex == "Male", fit + coefs[4, 1], fit)), 
-       aes(x = Hours, y = log(Earnings), color = Sex)) +
-  geom_point(alpha = .1) + 
-  geom_line(aes(y = fit))
-```
-]
- 
-.pull-right[
-<!-- -->
-```{r, echo = F, fig.width = 6, fig.height = 1.5, out.width= '100%', eval = showplotly}
 plot_ly(asec_plotly, x = ~Hours, y = ~Male, z = ~lEarnings) %>% 
   add_markers(size = 5, opacity = .2, color = ~color, colors = c("#6794A7", "#00A2D9"), showlegend=F) %>%
   add_trace(z = petal_lm_surface,
