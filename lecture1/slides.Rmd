@@ -580,7 +580,7 @@ result
 #### 1.3. Import and eyeball data
 
 <ul>
-  <li>You can <b>download</b> this dataset here or from the course webpage</li>
+  <li>You can <b>download</b> this dataset <a href = "https://louissirugue.github.io/intro_to_R/lecture1/data.zip">here</a> or from the course webpage</li>
   <ul>
     <li>Note that the extension of the file is <b>.csv</b> (for <i><b>C</b>omma <b>S</b>eparated <b>V</b>alues</i>)</li>
     <li>Let's have a look at <b>first 5 lines</b> of the raw csv file</li>
@@ -967,7 +967,7 @@ read.csv("dt.csv", ",")
 ```
 
 ```{r, eval = F}
-read.csv("dt.csv", T, ",")
+read.csv("dt.csv", TRUE, ",")
 ```
 ]
  
@@ -1044,7 +1044,7 @@ read.csv("dt.csv", ",")
 ```
 
 ```{r, eval = F}
-read.csv("dt.csv", T, ",")
+read.csv("dt.csv", TRUE, ",")
 ```
 ]
 
@@ -1213,7 +1213,7 @@ str(fb)
 
 #### 2.1. Data structure
 
- * The **first 10 values** of each variable
+ * The **first values** of each variable
 
 ```{r, eval = F}
 str(fb)
