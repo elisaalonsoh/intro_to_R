@@ -1,5 +1,5 @@
 ---
-title: 'Introduction to <img src = "../site_elements/rstudio_logo.png" alt = "R" width = "40"> Programming'
+title: 'Introduction to <img src = "site_elements/rstudio_logo.png" alt = "R" width = "40"> Programming'
 author: "PSE - M1 APE"
 date: "Louis Sirugue"
 params:
@@ -8,9 +8,9 @@ params:
 output: 
   html_document:
     theme: cosmo
-    css: ../site_elements/style.css
+    css: site_elements/style.css
     includes:
-      in_header: ../site_elements/header.html
+      in_header: site_elements/header.html
 editor_options: 
   chunk_output_type: console
 ---
@@ -66,7 +66,7 @@ astre <- ifelse(params$dark, "sun", "moon")
 
 ````{=html}
 ```{r, echo=FALSE, results='asis'}
-writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/intro_to_R/home', ifelse(params$dark, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "../site_elements/', astre, '.png"> </p> </a></div>'), 'astre.html')
+writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/intro_to_R/home', ifelse(params$dark, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "site_elements/', astre, '.png"> </p> </a></div>'), 'astre.html')
 xfun::file_string('astre.html')
 ```
 ````
@@ -145,7 +145,7 @@ slides <- tibble(x = NA_character_, type = NA_character_,
 
 for (i in 1:length(roman)) {
   
-    lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
+    lecture <- tibble(x = readLines(paste0("lecture", i, "/slides.Rmd")))
     
     slides <- slides %>%
       bind_rows(tibble(x = paste(roman[i], gsub('title: \"|\"', "", lecture$x[2])),
@@ -244,7 +244,7 @@ slides <- tibble(x = NA_character_, type = NA_character_,
 
 for (i in (1:length(roman))+2) {
   
-    lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
+    lecture <- tibble(x = readLines(paste0("lecture", i, "/slides.Rmd")))
     
       fourticks <- lecture %>%
         mutate(row = row_number()) %>%
@@ -365,7 +365,7 @@ xfun::file_string('toc2.html')
 ```{r, echo = F, eval = params$update_functions, results = "hide"}
 library(readxl)
 
-functions <- read_xlsx("../site_elements/functions.xlsx")
+functions <- read_xlsx("site_elements/functions.xlsx")
 
 # Get the last R documentation version of each package
 packages <- functions %>% select(package) %>% unique()

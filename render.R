@@ -8,7 +8,7 @@ for (dk in c("", "_dark")) {
            output_options = list(includes = list(after_body = paste0("slides_elements/insert-logo", dk, ".html"))), 
            output_file = paste0("lecture", j, "/slides", dk, ".html"))
   } 
-  render(input = paste0("structure/home.Rmd"),
+  render(input = "home.Rmd",
          params = list(dark = dk != ""), 
          output_file = paste0("home", dk, ".html"))
 }
