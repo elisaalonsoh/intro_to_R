@@ -8,7 +8,3 @@ This repository hosts all the source code and material used to create the conten
  * All cheatsheets are centralized in the `cheatsheet/` folder.
  * The `site_elements/` folder contains files that are used in the compilation process of most documents in the repository, such as stylesheets and icons.
  * The root `home.Rmd` file generates the html webpage of the course where all the material is hosted.
-
-<br> 
-
-<img src="https://github.com/LouisSirugue/intro_to_R/blob/main/site_elements/rstudio_logo.png" alt="rstudio_logo" width="200"/>
