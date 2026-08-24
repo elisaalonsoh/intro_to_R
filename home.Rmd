@@ -3,7 +3,6 @@ title: 'Introduction to <img src = "site_elements/rstudio_logo.png" alt = "R" wi
 author: "PSE - M1 APE"
 date: "Louis Sirugue"
 params:
-  dark: false
   update_functions: false
 output: 
   html_document:
@@ -21,7 +20,7 @@ lapply(c("tidyverse", "kableExtra"), library, character.only = T)
 root <- "https://louissirugue.github.io/intro_to_R/"
 ```
 
-```{css, echo = F, eval = !params$dark}
+```{css, echo = F}
 .share-box {
   width: 40px;
   height: 40px;
@@ -38,38 +37,6 @@ root <- "https://louissirugue.github.io/intro_to_R/"
               inset -4px -4px 6px #E7EDF0
 }
 ```
-
-```{css, echo = F, eval = params$dark}
-body{background-color:#201914;filter:invert(1)}
-
-.share-box {
-  width: 40px;
-  height: 40px;
-  background: #DFE6EB;
-  border-radius: 80px;
-  text-align:left;
-  padding:24px;
-  box-shadow: 4px 4px 6px #F3F5F7, 
-              -4px -4px 6px #D8DEE3;
-}
-
-.share-box:active {
-  box-shadow: inset 4px 4px 6px #F3F5F7, 
-              inset -4px -4px 6px #D8DEE3
-}
-```
-
-```{r, echo = F}
-dark <- ifelse(params$dark, "_dark", "")
-astre <- ifelse(params$dark, "sun", "moon")
-```
-
-````{=html}
-```{r, echo=FALSE, results='asis'}
-writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/intro_to_R/home', ifelse(params$dark, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "site_elements/', astre, '.png"> </p> </a></div>'), 'astre.html')
-xfun::file_string('astre.html')
-```
-````
 
 <p style = "margin-bottom:5cm;">
 
@@ -91,10 +58,10 @@ s1 <- data.frame(a = c(" ",
                        "Econometrics in R"),
                  
                  c = c("Slides", 
-                       paste0("[html](", root, "lecture1/slides", dark, ".html) - [pdf](", root, "lecture1/slides", dark, ".pdf)"),
-                       paste0("[html](", root, "lecture2/slides", dark, ".html) - [pdf](", root, "lecture2/slides", dark, ".pdf)"),
-                       paste0("[html](", root, "lecture3/slides", dark, ".html) - [pdf](", root, "lecture3/slides", dark, ".pdf)"),
-                       paste0("[html](", root, "lecture4/slides", dark, ".html) - [pdf](", root, "lecture4/slides", dark, ".pdf)")),
+                       paste0("[html](", root, "lecture1/slides.html) - [pdf](", root, "lecture1/slides.pdf)"),
+                       paste0("[html](", root, "lecture2/slides.html) - [pdf](", root, "lecture2/slides.pdf)"),
+                       paste0("[html](", root, "lecture3/slides.html) - [pdf](", root, "lecture3/slides.pdf)"),
+                       paste0("[html](", root, "lecture4/slides.html) - [pdf](", root, "lecture4/slides.pdf)")),
                  
                  e = c("Data",  
                        paste0("[data](", root, "lecture1/slides_elements/data/data.zip)"),
@@ -177,7 +144,7 @@ for (i in 1:length(roman)) {
                   ungroup() %>%
                   mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
                          link = paste0(root, "lecture", i, "/slides", 
-                                       ifelse(params$dark, "_dark", ""), ".html#", slide),
+                                       ".html#", slide),
                          last = ifelse(row_number() == n(), "title", last)) %>%
                   select(x, type, link, bullet, last, n))
 }
@@ -288,7 +255,7 @@ for (i in (1:length(roman))+2) {
                   ungroup() %>%
                   mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
                          link = paste0(root, "lecture", i, "/slides", 
-                                       ifelse(params$dark, "_dark", ""), ".html#", slide),
+                                       ".html#", slide),
                          last = ifelse(row_number() == n(), "title", last)) %>%
                   select(x, type, link, bullet, last, n))
 }

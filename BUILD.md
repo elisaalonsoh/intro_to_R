@@ -32,9 +32,7 @@ Each lecture has the same main layout:
 lectureN/
 |-- slides.Rmd                  Main editable slide source
 |-- slides.html                 Generated light HTML slides
-|-- slides_dark.html            Generated dark HTML slides
 |-- slides.pdf                  Generated light PDF slides
-|-- slides_dark.pdf             Generated dark PDF slides
 `-- slides_elements/
 	 |-- data/                   Lecture datasets and downloadable data.zip
 	 |-- figures/                Images displayed in the lecture
@@ -42,14 +40,13 @@ lectureN/
 	 |-- archive/                Old examples and generated leftovers
 	 |-- header.html              Lecture HTML header
 	 |-- insert-logo.html        Light-slide navigation logo
-	 |-- insert-logo_dark.html   Dark-slide navigation logo
 	 |-- theme.css               Lecture-specific theme overrides
 	 `-- xaringan-themer.css     Generated base slide theme
 ```
 
 `site_elements/` contains files shared by the whole course: common R and CSS
-code, homepage icons, logos, theme-switch icons, helper scripts, and the single
-canonical `functions.xlsx` glossary input.
+code, homepage icons, logos, helper scripts, and the single canonical
+`functions.xlsx` glossary input.
 
 `archive/` contains material that is kept for reference but is not part of the
 main build. Do not edit generated HTML or PDF files directly; change their
@@ -87,8 +84,8 @@ Open R or RStudio in the repository root and run:
 source("render.R")
 ```
 
-This creates both light and dark HTML versions of all four lectures and both
-homepage versions. It also refreshes the root `home.html` and `home_dark.html`.
+This creates the HTML version of all four lectures and refreshes the root
+`home.html` homepage.
 
 From a terminal, the equivalent command is:
 
@@ -107,13 +104,9 @@ HTML files and does not read the `.Rmd` files directly.
 
 ```text
 decktape remark lecture1/slides.html lecture1/slides.pdf
-decktape remark lecture1/slides_dark.html lecture1/slides_dark.pdf
 decktape remark lecture2/slides.html lecture2/slides.pdf
-decktape remark lecture2/slides_dark.html lecture2/slides_dark.pdf
 decktape remark lecture3/slides.html lecture3/slides.pdf
-decktape remark lecture3/slides_dark.html lecture3/slides_dark.pdf
 decktape remark lecture4/slides.html lecture4/slides.pdf
-decktape remark lecture4/slides_dark.html lecture4/slides_dark.pdf
 ```
 
 Check the PDFs visually after rendering, especially slides containing large
@@ -159,8 +152,7 @@ For a single lecture, edit:
   backgrounds, and CSS overrides.
 - `lectureN/slides_elements/xaringan-themer.css` only when regenerating the
   base theme with `xaringanthemer`.
-- `lectureN/slides_elements/insert-logo.html` and
-  `insert-logo_dark.html` for the navigation logo behavior.
+- `lectureN/slides_elements/insert-logo.html` for the navigation logo behavior.
 - `lectureN/slides_elements/header.html` for the lecture favicon/header.
 
 For site-wide styling or logos, edit the corresponding file in
@@ -175,7 +167,7 @@ Edit `home.Rmd` at the repository root. It controls:
 - links to lecture HTML, PDF, and data files;
 - the contents generated from the four `slides.Rmd` files;
 - the function glossary;
-- the light/dark homepage switch.
+- the homepage navigation and course contents.
 
 Homepage assets belong in `site_elements/`. After editing, run:
 
@@ -198,8 +190,8 @@ access and the relevant R packages.
 Use this checklist:
 
 1. Render the HTML files from the repository root.
-2. Recreate all eight lecture PDFs.
-3. Open both light and dark versions of every lecture.
+2. Recreate all four lecture PDFs.
+3. Open every lecture HTML and PDF.
 4. Check that figures, datasets, navigation logos, and homepage links work.
 5. Confirm that the homepage links point to the current lecture outputs and
 	`slides_elements/data/data.zip` files.

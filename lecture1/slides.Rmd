@@ -3,8 +3,6 @@ title: "Data manipulation"
 subtitle: "Lecture 1"
 author: "<br>Elisa Alonso Herrero"
 date: "M1 PPD - Fall 2026"
-params:
-  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -24,10 +22,6 @@ editor_options:
 ---
 
 <style> .left-column {width: 65%;} .right-column {width: 31%;} </style>
-
-```{css, echo = F, eval = params$dark}
-body{background-color:black;filter:invert(1)}
-```
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../site_elements/style.R"))

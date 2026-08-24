@@ -3,8 +3,6 @@ title: "Data visualization"
 subtitle: "Lecture 2"
 author: "<br>Louis SIRUGUE"
 date: "M1 APE - Fall 2022"
-params:
-  dark: false
 output:
   xaringan::moon_reader:  
     css: 
@@ -22,10 +20,6 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
-
-```{css, echo = F, eval = params$dark}
-body{background-color:black;filter:invert(1)}
-```
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../site_elements/style.R"))
