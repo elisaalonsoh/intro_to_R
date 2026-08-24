@@ -1,0 +1,19 @@
+---
+title: "Starbucks"
+author: "Louis Sirugue"
+output: html_document
+---
+
+```{r, echo = F, message = F, warning = F}
+library(dplyr)
+library(ggplot2)
+starbucks <- read.csv("data/starbucks.csv", sep = ";")
+```
+
+Nutritional values of `r nrow(starbucks)` *starbucks* beverages
+```{r, fig.height = 4}
+ggplot(starbucks, aes(x = Calories, y = Cholesterol, 
+                      size = Trans.Fat, color = Sugars)) +
+  geom_point(alpha = .3) + theme_minimal(base_size = 14) +
+  scale_color_gradient(low = "green", high = "red")
+```

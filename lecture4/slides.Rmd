@@ -8,12 +8,12 @@ params:
 output:
   xaringan::moon_reader:  
     css: 
-        - xaringan-themer.css
-        - theme.css
+        - slides_elements/xaringan-themer.css
+        - slides_elements/theme.css
     includes:
-      in_header: header.html
-      after_body: insert-logo.html
-    lib_dir: libs
+      in_header: slides_elements/header.html
+      after_body: slides_elements/insert-logo.html
+    lib_dir: slides_elements/libs
     nature:
       ratio: '16:9'
       highlightStyle: github
@@ -30,7 +30,7 @@ body{background-color:black;filter:invert(1)}
 ```
 
 ```{r setup, include = FALSE}
-source(paste0(getwd(), "/../source/style.R"))
+source(paste0(getwd(), "/../site_elements/style.R"))
 
 stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
@@ -51,7 +51,7 @@ showasecplot <- T
 --
 
 ```{r, eval = F}
-read.csv("ligue1.csv") 
+read.csv("slides_elements/data/ligue1.csv") 
                                                     #
                                                     #
                                                     #
@@ -82,7 +82,7 @@ read.csv("ligue1.csv")
 #### Manipulate data with `dplyr`
 
 ```{r, eval= F}
-read.csv("ligue1.csv") %>%
+read.csv("slides_elements/data/ligue1.csv") %>%
   select(Home, xG, Score, xG.1, Away)               # Keep/drop certain columns
                                                     #
                                                     #
@@ -112,7 +112,7 @@ read.csv("ligue1.csv") %>%
 #### Manipulate data with `dplyr`
 
 ```{r, eval = F}
-read.csv("ligue1.csv") %>%
+read.csv("slides_elements/data/ligue1.csv") %>%
   select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
   mutate(home_winner = xG > xG.1)                   # Create a new variable
                                                     #
@@ -143,7 +143,7 @@ read.csv("ligue1.csv") %>%
 #### Manipulate data with `dplyr`
 
 ```{r, eval = F}
-read.csv("ligue1.csv") %>%
+read.csv("slides_elements/data/ligue1.csv") %>%
   select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
   mutate(home_winner = xG > xG.1) %>%               # Create a new variable
   filter(Home == "Rennes")                          # Keep/drop certain rows 
@@ -173,7 +173,7 @@ read.csv("ligue1.csv") %>%
 #### Manipulate data with `dplyr`
 
 ```{r, eval = F}
-read.csv("ligue1.csv") %>%
+read.csv("slides_elements/data/ligue1.csv") %>%
   select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
   mutate(home_winner = xG > xG.1) %>%               # Create a new variable
   filter(Home == "Rennes") %>%                      # Keep/drop certain rows
@@ -203,7 +203,7 @@ read.csv("ligue1.csv") %>%
 #### Manipulate data with `dplyr`
 
 ```{r}
-read.csv("ligue1.csv") %>%
+read.csv("slides_elements/data/ligue1.csv") %>%
   select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
   mutate(home_winner = xG > xG.1) %>%               # Create a new variable
   filter(Home == "Rennes") %>%                      # Keep/drop certain rows
@@ -221,12 +221,12 @@ read.csv("ligue1.csv") %>%
 --
 
 ```{r, eval = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
-ggplot(read.csv("wid.csv"))                                         # Data
+ggplot(read.csv("slides_elements/data/wid.csv"))                                         # Data
                                                                     #
 ```
 
 ```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
-ggplot(read.csv("wid.csv"))                                         # Data
+ggplot(read.csv("slides_elements/data/wid.csv"))                                         # Data
                                                                     #
 ```
 
@@ -237,12 +237,12 @@ ggplot(read.csv("wid.csv"))                                         # Data
 #### Plot data with `ggplot()`
  
 ```{r, eval = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
-ggplot(read.csv("wid.csv"), aes(x = inc_head, y = top1))            # Data & aesthetics
+ggplot(read.csv("slides_elements/data/wid.csv"), aes(x = inc_head, y = top1))            # Data & aesthetics
                                                                     #
 ```
  
 ```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
-ggplot(read.csv("wid.csv"), aes(x = inc_head, y = top1))            # Data & aesthetics
+ggplot(read.csv("slides_elements/data/wid.csv"), aes(x = inc_head, y = top1))            # Data & aesthetics
                                                                     #
 ```
 
@@ -253,12 +253,12 @@ ggplot(read.csv("wid.csv"), aes(x = inc_head, y = top1))            # Data & aes
 #### Plot data with `ggplot()`
 
 ```{r, eval = F, fig.width = 8, fig.height = 4.5, out.width=  "60%"}
-ggplot(read.csv("wid.csv"), aes(x = inc_head, y = top1)) +          # Data & aesthetics
+ggplot(read.csv("slides_elements/data/wid.csv"), aes(x = inc_head, y = top1)) +          # Data & aesthetics
   geom_point()                                                      # Geometry
 ```
 
 ```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width=  "60%"}
-ggplot(read.csv("wid.csv"), aes(x = inc_head, y = top1)) +          # Data & aesthetics
+ggplot(read.csv("slides_elements/data/wid.csv"), aes(x = inc_head, y = top1)) +          # Data & aesthetics
   geom_point()                                                      # Geometry
 ```
 
@@ -286,7 +286,7 @@ output: html_document
 .right-column[
 ]
 
-<img src = "starbucks_top.png" width = "399" style = "margin-top:-15.25cm !important;margin-left:18.6cm;margin-bottom:19cm"/>
+<img src = "slides_elements/figures/starbucks_top.png" width = "399" style = "margin-top:-15.25cm !important;margin-left:18.6cm;margin-bottom:19cm"/>
 
 ---
 
@@ -307,7 +307,7 @@ output: html_document
 
 `r ''````{r, echo = F, message = F, warning = F}
 library(ggplot2) # Load package
-starbucks <- read.csv("starbucks.csv", sep = ";") # Load data
+starbucks <- read.csv("slides_elements/data/starbucks.csv", sep = ";") # Load data
 ```
 
 Nutritional values of `r "\u0060r nrow(starbucks)\u0060"` *starbucks* beverages
@@ -318,7 +318,7 @@ Nutritional values of `r "\u0060r nrow(starbucks)\u0060"` *starbucks* beverages
 .right-column[
 ]
 
-<img src = "starbucks_mid.png" width = "399" style = "margin-top:-15.25cm !important;margin-left:18.6cm;margin-bottom:15cm"/>
+<img src = "slides_elements/figures/starbucks_mid.png" width = "399" style = "margin-top:-15.25cm !important;margin-left:18.6cm;margin-bottom:15cm"/>
 
 
 ---
@@ -340,7 +340,7 @@ output: html_document
 
 `r ''````{r, echo = F, message = F, warning = F}
 library(ggplot2) # Load package
-starbucks <- read.csv("starbucks.csv", sep = ";") # Load data
+starbucks <- read.csv("slides_elements/data/starbucks.csv", sep = ";") # Load data
 ```
 
 Nutritional values of `r "\u0060r nrow(starbucks)\u0060"` *starbucks* beverages
@@ -359,7 +359,7 @@ ggplot(starbucks, aes(x = Calories, y = Cholesterol,
 
 <div  style = "position:absolute!important;top:0px!important:left:0px;">
 <p style = "margin-bottom:.5cm;"></p>
-<img src = "starbucks.png" width = "399" style = "margin-left:18.6cm;"/>
+<img src = "slides_elements/figures/starbucks.png" width = "399" style = "margin-left:18.6cm;"/>
 </div>
 
 ---
@@ -454,7 +454,7 @@ ggplot(starbucks, aes(x = Calories, y = Cholesterol,
 <p style = "margin-bottom:1.25cm;"></p>
 
 ```{r}
-ggcurve <- read.csv("ggcurve.csv")
+ggcurve <- read.csv("slides_elements/data/ggcurve.csv")
 str(ggcurve)
 ```
 
@@ -1497,7 +1497,7 @@ lm(ige ~ continent, ggcurve)
 --
 
 ```{r}
-asec <- read.csv("asec.csv")
+asec <- read.csv("slides_elements/data/asec.csv")
 str(asec)
 ```
 
@@ -1793,7 +1793,7 @@ class: inverse, hide-logo
 --
 
 ```{r}
-wid <- read.csv("wid.csv")
+wid <- read.csv("slides_elements/data/wid.csv")
 ```
 
 <p style = "margin-bottom:2cm;"></p>
@@ -3349,7 +3349,7 @@ results[2, 1] + (results[2, 2] * t003)
 
 --
 
-<center><a href = "https://economics.mit.edu/files/7782"><img src = "table.png" width = "550"/></a></center>
+<center><a href = "https://economics.mit.edu/files/7782"><img src = "slides_elements/figures/table.png" width = "550"/></a></center>
 
 ---
 
@@ -3598,7 +3598,7 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 
 #### 4.1. Regression tables
 
-<center><img src = "latex_output.png" width = "900"/></center>
+<center><img src = "slides_elements/figures/latex_output.png" width = "900"/></center>
 
 ---
 
@@ -3606,7 +3606,7 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 
 #### 4.1. Regression tables
 
-<center><img src = "html_output.png" width = "900"/></center>
+<center><img src = "slides_elements/figures/html_output.png" width = "900"/></center>
 
 ---
 
@@ -3630,13 +3630,13 @@ huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 .pull-left[
-<center><img src = "pdf_output.png" width = "600"/></center>
+<center><img src = "slides_elements/figures/pdf_output.png" width = "600"/></center>
 ]
 
 --
 
 .pull-right[
-<center><img src = "docx_output.png" width = "600"/></center>
+<center><img src = "slides_elements/figures/docx_output.png" width = "600"/></center>
 ]
 
 ---
@@ -4317,5 +4317,5 @@ huxreg(
 ]
 
 .pull-right[
-<center><img src = "pdf_output.png" width = "600"/></center>
+<center><img src = "slides_elements/figures/pdf_output.png" width = "600"/></center>
 ]

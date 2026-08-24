@@ -8,9 +8,9 @@ The compiled version of the course is accessible at this webpage: [https://louis
 
  * The material of each lecture session is gathered and compiled in its dedicated folder from `lecture1/` to `lecture4/`.
  * All cheatsheets are centralized in the `cheatsheet/` folder.
- * The `source/` folder contains files that are used in the compilation process of most documents in the repository, such as stylesheets and icons.
+ * The `site_elements/` folder contains files that are used in the compilation process of most documents in the repository, such as stylesheets and icons.
  * The `structure/` folder generates the html webpage of the course where all the material is hosted.
 
 <br> 
 
-<img src="https://github.com/LouisSirugue/intro_to_R/blob/main/source/rstudio_logo.png" alt="rstudio_logo" width="200"/>
+<img src="https://github.com/LouisSirugue/intro_to_R/blob/main/site_elements/rstudio_logo.png" alt="rstudio_logo" width="200"/>

@@ -8,12 +8,12 @@ params:
 output:
   xaringan::moon_reader:  
     css: 
-        - xaringan-themer.css
-        - theme.css
+        - slides_elements/xaringan-themer.css
+        - slides_elements/theme.css
     includes:
-      in_header: header.html
-      after_body: insert-logo.html
-    lib_dir: libs
+      in_header: slides_elements/header.html
+      after_body: slides_elements/insert-logo.html
+    lib_dir: slides_elements/libs
     nature:
       ratio: '16:9'
       highlightStyle: github
@@ -28,7 +28,7 @@ body{background-color:black;filter:invert(1)}
 ```
 
 ```{r setup, include = FALSE}
-source(paste0(getwd(), "/../source/style.R"))
+source(paste0(getwd(), "/../site_elements/style.R"))
 stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
 options(htmltools.dir.version = F)
@@ -172,7 +172,7 @@ str(names)
 ```
 
 ```{r, echo = F}
-names <- read.csv("fichier_prenoms.csv", sep = ";", encoding = "UTF-8")
+names <- read.csv("slides_elements/data/fichier_prenoms.csv", sep = ";", encoding = "UTF-8")
 str(names)
 ```
 
@@ -461,7 +461,7 @@ names %>%
 --
 
 .pull-left[
-<img src = "new_markdown.png" width = "450"/>
+<img src = "slides_elements/figures/new_markdown.png" width = "450"/>
 ]
 
 --
@@ -507,7 +507,7 @@ names %>%
 ]
 
 .right-column[
-<center><img src = "template.png" width = "650"/></center>
+<center><img src = "slides_elements/figures/template.png" width = "650"/></center>
 ]
 
 ---
@@ -813,7 +813,7 @@ Horizontal rule:
 <ul>
   <li>To <b>execute</b> the content of a <b>code</b> chunk in R Markdown</li>
   <ul>
-    <li>Click on the <b>green play button</b> at the top right of the chunk <img src = "current_chunk.png" width = "20"/></li>
+    <li>Click on the <b>green play button</b> at the top right of the chunk <img src = "slides_elements/figures/current_chunk.png" width = "20"/></li>
   </ul>
 </ul>
  
@@ -824,12 +824,12 @@ Horizontal rule:
   <ul>
     <li>You can also:</li>
     <ul>
-      <li><b>Run all chunks above</b> the current chunk <img src = "all_chunks_above.png" width = "20"/></li>
+      <li><b>Run all chunks above</b> the current chunk <img src = "slides_elements/figures/all_chunks_above.png" width = "20"/></li>
       <li><b>Run all chunks</b> from the Run drop down menu at the top right (or Ctrl+Alt+R)</li>
     </ul>
   </ul>
   
-  <center><img src = "run_all.png" width = "185"/></center>
+  <center><img src = "slides_elements/figures/run_all.png" width = "185"/></center>
   
 ]
 
@@ -851,7 +851,7 @@ Horizontal rule:
   
   <p style = "margin-left:8.88cm; margin-top:-.55cm;">in <b>console panel</b></p>
   
-  <center><img src = "inline.png" width = "200"/></center>
+  <center><img src = "slides_elements/figures/inline.png" width = "200"/></center>
   
 ]
   
@@ -861,11 +861,11 @@ Horizontal rule:
 
 #### 1.5. Run and knit your code
 
- * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/> (`ctrl + shift + k`)
+ * To **render** an R Markdown file, click on the **knit button** <img src = "slides_elements/figures/knit.png" width = "35"/> (`ctrl + shift + k`)
  
 --
 
-<center><img src = "comparison_1.png" width = "900"/></center>
+<center><img src = "slides_elements/figures/comparison_1.png" width = "900"/></center>
 
 ---
 
@@ -873,9 +873,9 @@ Horizontal rule:
 
 #### 1.5. Run and knit your code
 
- * To **render** an R Markdown file, click on the **knit button** <img src = "knit.png" width = "35"/> (`ctrl + shift + k`)
+ * To **render** an R Markdown file, click on the **knit button** <img src = "slides_elements/figures/knit.png" width = "35"/> (`ctrl + shift + k`)
 
-<center><img src = "comparison_2.png" width = "900"/></center>
+<center><img src = "slides_elements/figures/comparison_2.png" width = "900"/></center>
 
 ---
 
@@ -1014,7 +1014,7 @@ Horizontal rule:
  
  * Consider the following report :
 
-<center><img src = "report_example_1.png" width = "740"/></center>
+<center><img src = "slides_elements/figures/report_example_1.png" width = "740"/></center>
 
 ---
 
@@ -1024,7 +1024,7 @@ Horizontal rule:
 
  * Imagine that there is a problem with the observation for which `dist > 100` and that you should discard it
 
-<center><img src = "report_example_2.png" width = "740"/></center>
+<center><img src = "slides_elements/figures/report_example_2.png" width = "740"/></center>
 
 ---
 
@@ -1096,7 +1096,7 @@ Horizontal rule:
 
  * With inline code, **paragraphs** also do **update automatically**:
 
-<center><img src = "report_example_3.png" width = "700"/></center>
+<center><img src = "slides_elements/figures/report_example_3.png" width = "700"/></center>
 
 
 ---
@@ -1253,14 +1253,14 @@ output:
 
 .pull-left[
 <center><h4 style = "margin-bottom:0cm;">cosmo</h4>
-<img src = "default_cosmo.png" width = "550"/></center>
+<img src = "slides_elements/figures/default_cosmo.png" width = "550"/></center>
 ]
 
 --
 
 .pull-right[
 <center><h4 style = "margin-bottom:0cm;">cerulean</h4>
-<img src = "default_cerulean.png" width = "550"/></center>
+<img src = "slides_elements/figures/default_cerulean.png" width = "550"/></center>
 ]
 
 ---
@@ -1273,14 +1273,14 @@ output:
 
 .pull-left[
 <center><h4 style = "margin-bottom:0cm;">cayman (from prettydoc)</h4>
-<img src = "prettydoc_cayman.png" width = "375"/></center>
+<img src = "slides_elements/figures/prettydoc_cayman.png" width = "375"/></center>
 ]
 
 --
 
 .pull-right[
 <center><h4 style = "margin-bottom:0cm;">tactile (from prettydoc)</h4>
-<img src = "prettydoc_tactile.png" width = "360"/></center>
+<img src = "slides_elements/figures/prettydoc_tactile.png" width = "360"/></center>
 ]
 
 ---
@@ -1290,7 +1290,7 @@ output:
 #### 2.3. Preset themes
 
 <center><h4 style = "margin-bottom:0cm;">leonids (from prettydoc)</h4>
-<img src = "prettydoc_leonids.png" width = "725"/></center>
+<img src = "slides_elements/figures/prettydoc_leonids.png" width = "725"/></center>
 
 ---
 
@@ -1302,14 +1302,14 @@ output:
 
 .pull-left[
 <center><h4 style = "margin-bottom:0cm;">downcute (from rmdformats)</h4>
-<img src = "rmdformats_downcute.png" width = "550"/></center>
+<img src = "slides_elements/figures/rmdformats_downcute.png" width = "550"/></center>
 ]
 
 --
 
 .pull-right[
 <center><h4 style = "margin-bottom:.5cm;">downcute chaos (from rmdformats)</h4>
-<img src = "rmdformats_downcute_chaos.png" width = "550"/></center>
+<img src = "slides_elements/figures/rmdformats_downcute_chaos.png" width = "550"/></center>
 ]
 
 ---
@@ -1321,14 +1321,14 @@ output:
 
 .pull-left[
 <center><h4 style = "margin-bottom:0cm;">readthedown (from rmdformats)</h4>
-<img src = "rmdformats_readthedown.png" width = "550"/></center>
+<img src = "slides_elements/figures/rmdformats_readthedown.png" width = "550"/></center>
 ]
 
 --
 
 .pull-right[
 <center><h4 style = "margin-bottom:0cm;">robobook (from rmdformats)</h4>
-<img src = "rmdformats_robobook.png" width = "550"/></center>
+<img src = "slides_elements/figures/rmdformats_robobook.png" width = "550"/></center>
 ]
 
 
@@ -1361,7 +1361,7 @@ class: inverse, hide-logo
 
 .pull-right[
 <p style = "margin-bottom:-4cm;"></p>
-<center><img src = "louis.png" height = "677" width = "auto"/></center>
+<center><img src = "slides_elements/figures/louis.png" height = "677" width = "auto"/></center>
 ]
 
 ---
@@ -1407,7 +1407,7 @@ class: inverse, hide-logo
 ### 2) Data cleaning
 
 `r ''````{r}
-names <- read.csv("fichier_prenoms.csv", encoding = "UTF-8", sep = ";") %>%
+names <- read.csv("slides_elements/data/fichier_prenoms.csv", encoding = "UTF-8", sep = ";") %>%
   mutate(sexe = ifelse(sexe == 1, "Male", "Female")) %>%
   rename(Sex = sexe, Year = annais) %>%
   filter(Year != "XXXX") %>%
@@ -1507,24 +1507,24 @@ updates automatically.
 class: hide-logo
 .pull-left[
 <p style = "margin-bottom:-.9cm;"></p>
-<center><img src = "louis.png" height = "677" width = "auto"/></center>
+<center><img src = "slides_elements/figures/louis.png" height = "677" width = "auto"/></center>
 ]
 --
 .pull-right[
 <p style = "margin-bottom:-.9cm;"></p>
-<center><img src = "didier.png" height = "677" width = "auto"/></center>
+<center><img src = "slides_elements/figures/didier.png" height = "677" width = "auto"/></center>
 ]
 
 ---
 class: hide-logo
 .pull-left[
 <p style = "margin-bottom:-.9cm;"></p>
-<center><img src = "pauline.png" height = "677" width = "auto"/></center>
+<center><img src = "slides_elements/figures/pauline.png" height = "677" width = "auto"/></center>
 ]
 --
 .pull-right[
 <p style = "margin-bottom:-.9cm;"></p>
-<center><img src = "camille.png" height = "677" width = "auto"/></center>
+<center><img src = "slides_elements/figures/camille.png" height = "677" width = "auto"/></center>
 ]
 
 ---
@@ -2348,7 +2348,7 @@ $\hat{Y_i}$ denote the fitted values of the model.
 ]
 
 .right-column[
-<img src = "report_example_3.png" width = "700"/>
+<img src = "slides_elements/figures/report_example_3.png" width = "700"/>
 ]
 
 ---

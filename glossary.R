@@ -2,7 +2,7 @@
 library(tidyverse)
 library(readxl)
 
-functions <- read_xlsx("C:/Users/l.sirugue/Desktop/Teaching/APE/functions.xlsx")
+functions <- read_xlsx(file.path(getwd(), "functions.xlsx"))
 
 # Get the last R documentation version of each package
 packages <- functions %>% select(package) %>% unique()

@@ -8,12 +8,12 @@ params:
 output:
   xaringan::moon_reader:  
     css: 
-        - xaringan-themer.css
-        - theme.css
+        - slides_elements/xaringan-themer.css
+        - slides_elements/theme.css
     includes:
-      in_header: header.html
-      after_body: insert-logo.html
-    lib_dir: libs
+      in_header: slides_elements/header.html
+      after_body: slides_elements/insert-logo.html
+    lib_dir: slides_elements/libs
     nature:
       ratio: '16:9'
       highlightStyle: github
@@ -30,7 +30,7 @@ body{background-color:black;filter:invert(1)}
 ```
 
 ```{r setup, include = FALSE}
-source(paste0(getwd(), "/../source/style.R"))
+source(paste0(getwd(), "/../site_elements/style.R"))
 
 detach("package:dplyr", unload=TRUE)
 
@@ -205,7 +205,7 @@ Sys.setenv(LANG = "en")
 
  * R is a **programming language** and free software environment for **statistical computing and graphics**
  
-<img style = "margin-left:16cm;margin-top:2.5cm;" src = "rstudio_logo.png" width = "300"/>
+<img style = "margin-left:16cm;margin-top:2.5cm;" src = "slides_elements/figures/rstudio_logo.png" width = "300"/>
 
 <p style = "margin-bottom:-11cm;"></p>
 
@@ -246,7 +246,7 @@ Sys.setenv(LANG = "en")
 #### 1.2. The R Studio IDE
 
 <center>
-<img src = "rstudio.png" width = "770"/>
+<img src = "slides_elements/figures/rstudio.png" width = "770"/>
 </center>
  
 ---
@@ -256,7 +256,7 @@ Sys.setenv(LANG = "en")
 #### 1.2. The R Studio IDE
 
 <center>
-<img src = "console.png" width = "300"/>
+<img src = "slides_elements/figures/console.png" width = "300"/>
 </center>
 
 &#10140; <b>The Console panel</b>
@@ -282,7 +282,7 @@ Sys.setenv(LANG = "en")
 #### 1.2. The R Studio IDE
 
 <center>
-<img src = "source.png" width = "300"/>
+<img src = "slides_elements/figures/source.png" width = "300"/>
 </center>
 
 &#10140; <b>The Source panel</b>
@@ -310,7 +310,7 @@ Sys.setenv(LANG = "en")
 #### 1.2. The R Studio IDE
 
 <center>
-<img src = "source.png" width = "300"/>
+<img src = "slides_elements/figures/source.png" width = "300"/>
 </center>
 
 &#10140; <b>The Source panel</b>
@@ -338,7 +338,7 @@ Sys.setenv(LANG = "en")
 #### 1.2. The R Studio IDE
 
 <center>
-<img src = "environment.png" width = "300"/>
+<img src = "slides_elements/figures/environment.png" width = "300"/>
 </center>
 
 &#10140; <b>The Environment panel</b>
@@ -369,7 +369,7 @@ x <- 1
 #### 1.2. The R Studio IDE
 
 <center>
-<img src = "environment.png" width = "300"/>
+<img src = "slides_elements/figures/environment.png" width = "300"/>
 </center>
 
 &#10140; <b>The Environment panel</b>
@@ -404,7 +404,7 @@ x
 #### 1.2. The R Studio IDE
 
 <center>
-<img src = "plot.png" width = "300"/>
+<img src = "slides_elements/figures/plot.png" width = "300"/>
 </center>
 
 &#10140; <b>The Files/Plots/... panel</b>
@@ -427,7 +427,7 @@ x
 #### 1.2. The R Studio IDE
 
 <center>
-<img src = "plot.png" width = "300"/>
+<img src = "slides_elements/figures/plot.png" width = "300"/>
 </center>   
 
 &#10140; <b>The Files/Plots/... panel</b>
@@ -440,7 +440,7 @@ x
 
 #### 1.2. The R Studio IDE
 
-<img style = "margin-left:5cm;" src = "plot.png" width = "300"/>
+<img style = "margin-left:5cm;" src = "slides_elements/figures/plot.png" width = "300"/>
 
 &#10140; <b>The Files/Plots/... panel</b>
 
@@ -450,7 +450,7 @@ x
 <ul><ul><li>It <b>explains</b> the different parameters of the command</li></ul></ul>
 <ul><ul><li>It <b>gives examples</b> of how to use the command</li></ul></ul>
 
-<img style = "margin-top:-12.75cm;margin-left:18.5cm;" src = "help_file.png" width = "370"/>
+<img style = "margin-top:-12.75cm;margin-left:18.5cm;" src = "slides_elements/figures/help_file.png" width = "370"/>
 
 ---
 
@@ -570,7 +570,7 @@ result
 <p style = "margin-bottom:.5cm;"></p>
 
 <center>
-<img src = "fbref_2022.png" width = "825"/>
+<img src = "slides_elements/figures/fbref_2022.png" width = "825"/>
 </center>
 
 ---
@@ -580,7 +580,7 @@ result
 #### 1.3. Import and eyeball data
 
 <ul>
-  <li>You can <b>download</b> this dataset <a href = "https://louissirugue.github.io/intro_to_R/lecture1/data.zip">here</a> or from the course webpage</li>
+  <li>You can <b>download</b> this dataset <a href = "https://louissirugue.github.io/intro_to_R/lecture1/slides_elements/data/data.zip">here</a> or from the course webpage</li>
   <ul>
     <li>Note that the extension of the file is <b>.csv</b> (for <i><b>C</b>omma <b>S</b>eparated <b>V</b>alues</i>)</li>
     <li>Let's have a look at <b>first 5 lines</b> of the raw csv file</li>
@@ -674,7 +674,7 @@ fb <- read.csv("C:/User/Documents/ligue1.csv")
 --
 
 ```{r, echo = F}
-fb <- read.csv("ligue1.csv")
+fb <- read.csv("slides_elements/data/ligue1.csv")
 ```
 
 <center><i>&#10140; Let's <b>inspect</b> this new object to check that it worked</i></center>
@@ -710,7 +710,7 @@ head(fb, 4)
 #### 1.3. Import and eyeball data
 
 <center>
-<img src = "view_fb.png" width = "1100"/>
+<img src = "slides_elements/figures/view_fb.png" width = "1100"/>
 
 <p style = "margin-bottom:.5cm;"></p>
 
@@ -724,7 +724,7 @@ head(fb, 4)
 #### 1.3. Import and eyeball data
 
 <center>
-<img src = "view_fb_kinda.png" width = "1100"/>
+<img src = "slides_elements/figures/view_fb_kinda.png" width = "1100"/>
 
 <p style = "margin-bottom:.5cm;"></p>
 
@@ -752,7 +752,7 @@ fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
 ```
 
 ```{r, echo = F}
-fb <- read.csv("ligue1.csv", encoding = "UTF-8")
+fb <- read.csv("slides_elements/data/ligue1.csv", encoding = "UTF-8")
 ```
 
 <p style = "margin-bottom:1cm;"></p>
@@ -766,7 +766,7 @@ fb <- read.csv("ligue1.csv", encoding = "UTF-8")
 --
 
 <center>
-<img src = "csv_help.png" width = "800"/>
+<img src = "slides_elements/figures/csv_help.png" width = "800"/>
 </center>
 
 ---
@@ -2114,7 +2114,7 @@ ls("package:dplyr")[1:5]
 
 <p style = "margin-bottom:1cm;"></p>
 
-<img src = "pipe.png" width = "180"/>
+<img src = "slides_elements/figures/pipe.png" width = "180"/>
 
 --
 
@@ -2854,7 +2854,7 @@ fb %>%
 --
 
 <center>
-<img src = "paste_help.png"/>
+<img src = "slides_elements/figures/paste_help.png"/>
 </center>
 
 ---
@@ -2873,7 +2873,7 @@ fb %>%
 --
 
 <center>
-<img src = "ask_google.png" width = 750 />
+<img src = "slides_elements/figures/ask_google.png" width = 750 />
 </center>
 
 ---
@@ -2902,7 +2902,7 @@ read.csv("C:\Users\Documents\R")
 --
 
 <center>
-<img src = "error.png" width = 750 />
+<img src = "slides_elements/figures/error.png" width = 750 />
 </center>
 
 ---
@@ -3030,5 +3030,5 @@ kable(tibble(Function = c("mutate()", "select()", "filter()",
 --
 
 .right-column[
-<img style = "margin-top:0cm; margin-left:1.5cm;" src = "pipe.png" width = "180"/>
+<img style = "margin-top:0cm; margin-left:1.5cm;" src = "slides_elements/figures/pipe.png" width = "180"/>
 ]

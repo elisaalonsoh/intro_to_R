@@ -8,12 +8,12 @@ params:
 output:
   xaringan::moon_reader:  
     css: 
-        - xaringan-themer.css
-        - theme.css
+        - slides_elements/xaringan-themer.css
+        - slides_elements/theme.css
     includes:
-      in_header: header.html
-      after_body: insert-logo.html
-    lib_dir: libs
+      in_header: slides_elements/header.html
+      after_body: slides_elements/insert-logo.html
+    lib_dir: slides_elements/libs
     nature:
       ratio: '16:9'
       highlightStyle: github
@@ -28,7 +28,7 @@ body{background-color:black;filter:invert(1)}
 ```
 
 ```{r setup, include = FALSE}
-source(paste0(getwd(), "/../source/style.R"))
+source(paste0(getwd(), "/../site_elements/style.R"))
 stargazer <- stargazer::stargazer
 options(htmltools.dir.version = F)
 knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", dpi = 300, out.width = "100%")
@@ -43,7 +43,7 @@ scale_colour_discrete <- ggplot2::scale_colour_discrete
 #### 1. Import data
 
 ```{r, echo = F}
-fb <- read.csv("ligue1.csv", encoding = "UTF-8")
+fb <- read.csv("slides_elements/data/ligue1.csv", encoding = "UTF-8")
 ```
 
 ```{r, eval = F}
@@ -106,7 +106,7 @@ kable(tibble(Function = c("mutate()", "select()", "filter()",
 --
 
 .right-column[
-<img style = "margin-top:0cm; margin-left:1.5cm;" src = "pipe.png" width = "180"/>
+<img style = "margin-top:0cm; margin-left:1.5cm;" src = "slides_elements/figures/pipe.png" width = "180"/>
 ]
 
 ---
@@ -155,12 +155,12 @@ View(starbucks)
 ```
 
 ```{r, echo = F}
-starbucks <- read.csv("starbucks.csv")
+starbucks <- read.csv("slides_elements/data/starbucks.csv")
 ```
 
 --
 
-<center><img src = "view_starbucks.png" width = "1100"/></center>
+<center><img src = "slides_elements/figures/view_starbucks.png" width = "1100"/></center>
 
 ---
 
@@ -176,10 +176,10 @@ View(starbucks)
 ```
 
 ```{r, echo = F}
-starbucks <- read.csv("starbucks.csv")
+starbucks <- read.csv("slides_elements/data/starbucks.csv")
 ```
 
-<center><img src = "view_starbucks_sep.png" width = "1100"/></center>
+<center><img src = "slides_elements/figures/view_starbucks_sep.png" width = "1100"/></center>
 
 <p style = "margin-bottom:1cm;"></p>
 
@@ -204,10 +204,10 @@ View(starbucks)
 ```
 
 ```{r, echo = F}
-starbucks <- read.csv("starbucks.csv")
+starbucks <- read.csv("slides_elements/data/starbucks.csv")
 ```
 
-<center><img src = "view_starbucks_encoding.png" width = "1100"/></center>
+<center><img src = "slides_elements/figures/view_starbucks_encoding.png" width = "1100"/></center>
 
 <p style = "margin-bottom:1cm;"></p>
 
@@ -226,7 +226,7 @@ starbucks <- read.csv("starbucks.csv")
 ```
 
 ```{r, echo = F}
-starbucks <- read.csv("starbucks.csv", sep = ";", encoding = "UTF-8")
+starbucks <- read.csv("slides_elements/data/starbucks.csv", sep = ";", encoding = "UTF-8")
 ```
 
 ---
@@ -409,7 +409,7 @@ wid <- read.csv("C:/User/Documents/wid.csv")
 ```
 
 ```{r, echo = F}
-wid <- read.csv("wid.csv")
+wid <- read.csv("slides_elements/data/wid.csv")
 ```
 
 --
@@ -452,7 +452,7 @@ str(wid)
 
 <p style = "margin-bottom:-1cm;">
 
-<center><img src = "ggplot.png" width = "150" style="margin-left:17cm; margin-top:-8cm"/></center>
+<center><img src = "slides_elements/figures/ggplot.png" width = "150" style="margin-left:17cm; margin-top:-8cm"/></center>
 
 --
 
@@ -2183,7 +2183,7 @@ ggarrange(ggplot(den, aes(x = x)) +
 <p style = "margin-bottom:1cm;"></p>
 
 .left-column[
-<center><img src = "trump.png" width = "720"/></center>
+<center><img src = "slides_elements/figures/trump.png" width = "720"/></center>
 ]
  
 .right-column[
@@ -2203,7 +2203,7 @@ ggarrange(ggplot(den, aes(x = x)) +
 
 .left-column[
 ```{r, echo = F, fig.width = 8, fig.height=5, out.width = '100%'}
-trump <- read.csv("data-atVjV.csv") %>%
+trump <- read.csv("slides_elements/data/data-atVjV.csv") %>%
   pivot_longer(-Date, names_to = "Dates", values_to = "tests") %>%
   pivot_wider(values_from = "tests", names_from = "Date") %>%
   mutate(order = row_number()) %>%
@@ -2307,7 +2307,7 @@ ggplot(tibble(Year = 2015:2021, Something = seq(9455, 9467, 2)),
 
 #### 4.2. Axis manipulations
 
-<center><img src = "foxnews.png" width = "600"/></center>
+<center><img src = "slides_elements/figures/foxnews.png" width = "600"/></center>
 
 ---
 
