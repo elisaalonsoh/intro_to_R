@@ -1,0 +1,436 @@
+---
+title: 'Introduction to <img src = "../site_elements/rstudio_logo.png" alt = "R" width = "40"> Programming'
+author: "PSE - M1 APE"
+date: "Louis Sirugue"
+params:
+  dark: false
+  update_functions: false
+output: 
+  html_document:
+    theme: cosmo
+    css: ../site_elements/style.css
+    includes:
+      in_header: ../site_elements/header.html
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = F}
+knitr::opts_chunk$set(echo = F, message = F, warning = F)
+lapply(c("tidyverse", "kableExtra"), library, character.only = T)
+root <- "https://louissirugue.github.io/intro_to_R/"
+```
+
+```{css, echo = F, eval = !params$dark}
+.share-box {
+  width: 40px;
+  height: 40px;
+  background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #c7c4c4, 
+              -4px -4px 6px #E7EDF0;
+}
+
+.share-box:active {
+  box-shadow: inset 4px 4px 6px #c7c4c4, 
+              inset -4px -4px 6px #E7EDF0
+}
+```
+
+```{css, echo = F, eval = params$dark}
+body{background-color:#201914;filter:invert(1)}
+
+.share-box {
+  width: 40px;
+  height: 40px;
+  background: #DFE6EB;
+  border-radius: 80px;
+  text-align:left;
+  padding:24px;
+  box-shadow: 4px 4px 6px #F3F5F7, 
+              -4px -4px 6px #D8DEE3;
+}
+
+.share-box:active {
+  box-shadow: inset 4px 4px 6px #F3F5F7, 
+              inset -4px -4px 6px #D8DEE3
+}
+```
+
+```{r, echo = F}
+dark <- ifelse(params$dark, "_dark", "")
+astre <- ifelse(params$dark, "sun", "moon")
+```
+
+````{=html}
+```{r, echo=FALSE, results='asis'}
+writeLines(paste0('<div class = "share-box" style ="margin-top:-11em;margin-left: auto; margin-right: 3em;"><a href = "https://louissirugue.github.io/intro_to_R/home', ifelse(params$dark, "", "_dark"), '.html"><p style = "margin-left:-.51cm;margin-top:-.51cm;width:40px"> <img src = "../site_elements/', astre, '.png"> </p> </a></div>'), 'astre.html')
+xfun::file_string('astre.html')
+```
+````
+
+<p style = "margin-bottom:5cm;">
+
+
+<blockquote>
+<i><p style="margin-left:1cm;"></p>The objective of this course is to provide you with the necessary bases in R programming to be able to carry out your empirical homeworks and research projects. The course is structured in 4 classes of 2 hours. No preliminary knowledge in programming is required, but part of the content of the last lecture is based on what you're going to see in Econometrics I. Lectures will take place in the computer room R2-07 at Campus Jourdan, but feel free to bring up your own laptop (in that case install <a href = "https://cran.r-project.org/">R</a> and <a href = "https://www.rstudio.com/products/rstudio/download/#download">R Studio</a> before the first class).</i>
+</blockquote>
+
+### Material
+
+```{r}
+s1 <- data.frame(a = c(" ", 
+                       paste("Lecture", 1:4)),
+                 
+                 b = c(" ",
+                       "Data manipulation",
+                       "Data visualization",
+                       "R Markdown & LaTeX",
+                       "Econometrics in R"),
+                 
+                 c = c("Slides", 
+                       paste0("[html](", root, "lecture1/slides", dark, ".html) - [pdf](", root, "lecture1/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture2/slides", dark, ".html) - [pdf](", root, "lecture2/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture3/slides", dark, ".html) - [pdf](", root, "lecture3/slides", dark, ".pdf)"),
+                       paste0("[html](", root, "lecture4/slides", dark, ".html) - [pdf](", root, "lecture4/slides", dark, ".pdf)")),
+                 
+                 e = c("Data",  
+                       paste0("[data](", root, "lecture1/slides_elements/data/data.zip)"),
+                       paste0("[data](", root, "lecture2/slides_elements/data/data.zip)"),
+                       paste0("[data](", root, "lecture3/slides_elements/data/data.zip)"),
+                       paste0("[data](", root, "lecture4/slides_elements/data/data.zip)")),
+                 
+                 f = c("Group 1",
+                       "01/09<br>09:00-11:00",
+                       "02/09<br>09:00-11:00",
+                       "07/09<br>14:00-16:00",
+                       "07/10<br>09:00-11:00"),
+                 
+                 g = c("Group 2",
+                       "01/09<br>11:15-13:15",
+                       "02/09<br>11:15-13:15",
+                       "05/09<br>09:00-11:00",
+                       "07/10<br>11:15-13:15"),
+                 
+                 h = c("Group 3",
+                       "01/09<br>14:30-16:30",
+                       "02/09<br>14:30-16:30",
+                       "05/09<br>16:00-18:00",
+                       "07/10<br>14:30-16:30"))
+
+kable(s1, col.names = NULL, align = "llccccc", escape = F) %>%
+  row_spec(1, font_size = 17) %>%
+  column_spec(1, width_max = "6em", width = "6em", width_min = "6em") %>%
+  column_spec(2, width_max = "15em", width = "15em", width_min = "15em") %>%
+  column_spec(3, width_max = "6em", width = "6em", width_min = "6em") %>%
+  column_spec(4, width_max = "4em", width = "4em", width_min = "4em") %>%
+  column_spec(5:7, width_max = "6em", width = "6em", width_min = "6em") %>%
+  column_spec(1:7, extra_css = "vertical-align:middle;") %>%
+  kable_styling(bootstrap_options = c("condensed", "hover"), full_width = F)
+```
+
+### Contents
+
+<div class="row">
+<div class="column" style = "margin-left:2cm;">
+
+```{r, include = F}
+roman <- c("I.", "II.")
+
+slides <- tibble(x = NA_character_, type = NA_character_, 
+                 link = NA_character_, bullet = NA_character_,
+                 last = NA_character_, n = NA) %>% na.omit()
+
+for (i in 1:length(roman)) {
+  
+    lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
+    
+    slides <- slides %>%
+      bind_rows(tibble(x = paste(roman[i], gsub('title: \"|\"', "", lecture$x[2])),
+                       type = "title",
+                       link = paste0(root, "lecture", i, "/slides.html#1"),
+                       bullet = "detail",
+                       last = "",
+                       n = NA)) %>%
+      bind_rows(lecture %>%
+                  mutate(type = case_when(grepl("^-", x) ~ "Dashed",
+                                          grepl("^### [0-9]\\. ", x) ~ "Section",
+                                          grepl("^#### [0-9]\\.[0-9]\\. ", x) ~ "Subsection"),
+                         x = gsub(":.*$", "", x)) %>%
+                  na.omit() %>%
+                  group_by(x) %>%
+                  filter(type == "Dashed" | row_number() == 1) %>%
+                  ungroup() %>%
+                  group_by(type == "Dashed") %>%
+                  mutate(toc_element = ifelse(type != "Dashed", row_number(), NA)) %>%
+                  ungroup() %>%
+                  mutate(slide = row_number() - toc_element,
+                         x = sub("#* ", "", x)) %>%
+                  na.omit() %>%
+                  select(x, type, slide) %>%
+                  mutate(section = substr(x, 1, 1)) %>%
+                  group_by(section) %>%
+                  mutate(n = n(),
+                         last = ifelse(row_number() == n(), "Section", "")) %>%
+                  ungroup() %>%
+                  mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
+                         link = paste0(root, "lecture", i, "/slides", 
+                                       ifelse(params$dark, "_dark", ""), ".html#", slide),
+                         last = ifelse(row_number() == n(), "title", last)) %>%
+                  select(x, type, link, bullet, last, n))
+}
+slides <- slides %>% mutate(x = gsub("`", "", x))
+
+htmlcode <- ""
+for (i in 1:nrow(slides)) {
+  
+  # Open level 1
+  if (slides$type[i] == "title") {
+    if (slides$bullet[i] == "detail") {
+      htmlcode <- paste0(htmlcode, '<details open style = "margin-left:1cm;"><summary><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></summary>')
+    }
+    if (slides$bullet[i] == "item") {
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li>', slides$x[i], '</li></ul><p style = "margin-bottom:.75cm;"></p>')
+    }
+  }
+  
+  # Open level 2
+  
+  if (slides$type[i] == "Section") {
+    if (slides$bullet[i] == "detail") {
+      htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></summary>')
+    }
+    if (slides$bullet[i] == "item") {
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;margin-bottom:0cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></li></ul>')
+    }
+  }
+  
+  # Level 3
+  if (slides$type[i] == "Subsection") {
+    htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.6cm;margin-bottom:0cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></li></ul>')
+  }
+  
+  # Close level 2
+  if (slides$last[i] == "Section" & slides$n[i] > 1) {
+    htmlcode <- paste0(htmlcode, '</details>')
+    }
+  
+  # Close level 1
+  if (slides$last[i] == "title") {htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p>')}
+}
+writeLines(htmlcode, "toc.html")
+```
+
+````{=html}
+```{r, echo=FALSE, results='asis'}
+xfun::file_string('toc.html')
+```
+````
+</div>
+
+<div class="column" style = "margin-left:-2cm;">
+```{r, include = F}
+roman <- c("III.", "IV.")
+
+slides <- tibble(x = NA_character_, type = NA_character_, 
+                 link = NA_character_, bullet = NA_character_,
+                 last = NA_character_, n = NA) %>% na.omit()
+
+for (i in (1:length(roman))+2) {
+  
+    lecture <- tibble(x = readLines(paste0("../Lecture", i, "/slides.Rmd")))
+    
+      fourticks <- lecture %>%
+        mutate(row = row_number()) %>%
+        filter(grepl("^````", x)) %>%
+        mutate(x = rep(1:(nrow(.)/2), each = 2),
+               group = ifelse(row_number() %% 2, "start", "stop")) %>%
+        pivot_wider(names_from = "group", values_from = "row")
+      
+      for (j in nrow(fourticks):1) {
+        lecture <- lecture %>%
+          filter(!row_number() %in% fourticks$start[j]:fourticks$stop[j])
+      }
+    
+    slides <- slides %>%
+      bind_rows(tibble(x = paste(roman[i - 2], gsub('title: \"|\"', "", lecture$x[2])),
+                       type = "title",
+                       link = paste0(root, "lecture", i, "/slides.html#1"),
+                       bullet = "detail",
+                       last = "",
+                       n = NA)) %>%
+      bind_rows(lecture %>%
+                  mutate(type = case_when(grepl("^-", x) ~ "Dashed",
+                                          grepl("^### [0-9]\\. ", x) ~ "Section",
+                                          grepl("^#### [0-9]\\.[0-9]\\. ", x) ~ "Subsection"),
+                         x = gsub(":.*$", "", x)) %>%
+                  na.omit() %>%
+                  group_by(x) %>%
+                  filter(type == "Dashed" | row_number() == 1) %>%
+                  ungroup() %>%
+                  group_by(type == "Dashed") %>%
+                  mutate(toc_element = ifelse(type != "Dashed", row_number(), NA)) %>%
+                  ungroup() %>%
+                  mutate(slide = row_number() - toc_element,
+                         x = sub("#* ", "", x)) %>%
+                  na.omit() %>%
+                  select(x, type, slide) %>%
+                  mutate(section = substr(x, 1, 1)) %>%
+                  group_by(section) %>%
+                  mutate(n = n(),
+                         last = ifelse(row_number() == n(), "Section", "")) %>%
+                  ungroup() %>%
+                  mutate(bullet = ifelse(type == "Section" & n > 1, "detail", "item"),
+                         link = paste0(root, "lecture", i, "/slides", 
+                                       ifelse(params$dark, "_dark", ""), ".html#", slide),
+                         last = ifelse(row_number() == n(), "title", last)) %>%
+                  select(x, type, link, bullet, last, n))
+}
+slides <- slides %>% mutate(x = gsub("`", "", x))
+
+htmlcode <- ""
+for (i in 1:nrow(slides)) {
+  
+  # Open level 1
+  if (slides$type[i] == "title") {
+    if (slides$bullet[i] == "detail") {
+      htmlcode <- paste0(htmlcode, '<details open style = "margin-left:1cm;"><summary><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></summary>')
+    }
+    if (slides$bullet[i] == "item") {
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;"><li>', slides$x[i], '</li></ul><p style = "margin-bottom:.75cm;"></p>')
+    }
+  }
+  
+  # Open level 2
+  
+  if (slides$type[i] == "Section") {
+    if (slides$bullet[i] == "detail") {
+      htmlcode <- paste0(htmlcode, '<details style = "margin-left:1cm;"><summary><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></summary>')
+    }
+    if (slides$bullet[i] == "item") {
+      htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.4cm;margin-bottom:0cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></li></ul>')
+    }
+  }
+  
+  # Level 3
+  if (slides$type[i] == "Subsection") {
+    htmlcode <- paste0(htmlcode, '<ul style = "margin-left:.6cm;margin-bottom:0cm;"><li><a href = "', 
+                         slides$link[i], '">', slides$x[i], '</a></li></ul>')
+  }
+  
+  # Close level 2
+  if (slides$last[i] == "Section" & slides$n[i] > 1) {
+    htmlcode <- paste0(htmlcode, '</details>')
+    }
+  
+  # Close level 1
+  if (slides$last[i] == "title") {htmlcode <- paste0(htmlcode, '</details><p style = "margin-bottom:.75cm;"></p><br>')}
+}
+writeLines(htmlcode, "toc2.html")
+```
+
+````{=html}
+```{r, echo=FALSE, results='asis'}
+xfun::file_string('toc2.html')
+```
+````
+</div>
+</div>
+
+<p style = "margin-bottom:-1.5em;"></p>
+
+### Cheatsheets
+
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/rstudio.pdf"><img style = "margin-left:7cm;margin-top:2.3cm;" src = "../cheatsheets/rstudio.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/baser.pdf"><img style = "margin-left:-1.45cm;margin-top:-2.3cm;" src = "../cheatsheets/baser.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/readr.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;"  src = "../cheatsheets/readr.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/dplyr.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/dplyr.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/ggplot.pdf"><img  style = "margin-top:2.3cm;margin-left:-1.45cm;"src = "../cheatsheets/ggplot.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/rmarkdown.pdf"><img style = "margin-top:-2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/rmarkdown.png" width = "100"/></a>
+<a href = "https://louissirugue.github.io/intro_to_R/cheatsheets/latex.pdf"><img style = "margin-top:2.3cm;margin-left:-1.45cm;" src = "../cheatsheets/latex.png" width = "100"/></a>
+
+### Functions glossary
+
+<p style = "margin-bottom:1cm;"></p>
+
+```{r, echo = F, eval = params$update_functions, results = "hide"}
+library(readxl)
+
+functions <- read_xlsx("../site_elements/functions.xlsx")
+
+# Get the last R documentation version of each package
+packages <- functions %>% select(package) %>% unique()
+version <- lapply(packages$package, function(a) {
+  return(gsub('^.*versionsArray":\\["|".*$', '', 
+              paste(readLines(paste0('https://www.rdocumentation.org/packages/',  a)), collapse = "")))
+})
+
+# Get the alias of each function
+lapply(packages$package, require, character.only = TRUE)
+alias <- lapply(functions$`function`, function(a) {
+  hf <- as.character(help(a))
+  keep <- grepl(paste0(functions %>% filter(`function` == a) %>% pull(package), "/help"), hf)
+  return(gsub("^.*/", "", hf[keep]))
+})
+
+# Form URL
+functions <- functions %>%
+  left_join(packages %>% mutate(version = unlist(as.character(version)))) %>%
+  mutate(alias = unlist(alias)) %>%
+  # Manual modifications
+  mutate(alias = ifelse(`function` %in% c("n", "log", "scale_x_discrete", 
+                                          "element_rect", "element_line", "rel"), 
+                        `function`, alias),
+         alias = ifelse(`function` == "scale_y_discrete", "scale_x_discrete", alias),
+         alias = ifelse(`function` == "scale_color_manual", "scale_colour_manual", alias),
+         alias = ifelse(`function` == "scale_color_gradient", "scale_colour_gradient", alias),
+         alias = ifelse(alias == "reorder.factor", "reorder.default", alias),
+         version = ifelse(`function` %in% c("scale_color_manual", "geom_text", "geom_histogram"), 
+                          "0.9.1", version),
+         version = ifelse(`function` %in% c("element_rect", "element_line", "rel"), 
+                          "2.1.0", version))%>%
+  filter(`function` != "rename") %>%
+  # Now form urls
+  mutate(doc = paste0("https://www.rdocumentation.org/packages/", package, 
+                      "/versions/", version, 
+                      "/topics/", alias))
+
+write.csv(functions, "processed_functions.csv", row.names = F)
+```
+
+
+```{r, echo = F}
+library(DT)
+datatable(read.csv("processed_functions.csv") %>% 
+              mutate(doc = paste0('<a href = "', doc, '">', alias, '</a>'),
+                     lecture = paste("Lecture", lecture)) %>%
+              rename(`function` = function., documentation = doc) %>%
+              select(lecture, `function`, package, documentation), 
+          escape = F, rownames = F, options = list(pageLength = 5), 
+          class = list(stripe = FALSE)) %>% 
+  formatStyle(c("lecture", "function", "package", "documentation"), 
+              backgroundColor = "#DFE6EB")
+```
+
+### References
+
+This course is adapted from [the one I teach in CPES-2](https://louissirugue.github.io/metrics_on_R/home.html), inspired by:
+
+ * [Introduction to R](https://introtor-pse.appspot.com/), <i>by H. Bull and P. Charousset.</i> Paris School of Economics (2020)
+ * [Advanced Mircoeconometrics](https://enseignements.ehess.fr/2020-2021/ue/798), <i>by D. Margolis and F. Libois.</i> Paris School of Economics (2020)
+ * [How to Lie with Graphics](http://data.visualisation.free.fr/Papers/Part1-HowToLie.pdf), <i>by C. Bontemps.</i> Toulouse School of Economics (2020)
+ * [Introduction to Econometrics with R](https://scpoecon.github.io/ScPoEconometrics/), <i>by F. Oswald, V. Viers, P. Villedieu, and G. Kenedi.</i> SciencesPo Dep. of Economics (2020)
+ * Introduction to Causal Inference, <i>by L. Zabrocki.</i> Paris Sciences et Lettres - CPES (2020)
+ * Geolocalized Datasets and Applications for Economics, <i>by F. Libois and E. Madinier.</i> Paris School of Economics (2020)
+ * Countless posts on [stackoverflow](https://stackoverflow.com/) and [R-bloggers](https://www.r-bloggers.com/)
+ 
+<br><br><br><br>
