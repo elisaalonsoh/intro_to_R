@@ -1,6 +1,6 @@
 ## Introduction to R Programming
 
-This repository hosts all the source code and meterial used to create the content of the course *Introduction to R Programming* taught to APE graduate students at Paris School of Economics. 
+This repository hosts all the source code and meterial used to create the content of the course *Introduction to R Programming* taught to PPD graduate students at Paris School of Economics. It is forked and adapted from [Louis Sirugue's course](https://github.com/LouisSirugue/intro_to_R).
 
 The compiled version of the course is accessible at this webpage: [https://louissirugue.github.io/intro_to_R/home.html](https://louissirugue.github.io/intro_to_R/home.html).
 
