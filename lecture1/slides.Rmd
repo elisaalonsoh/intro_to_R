@@ -1,8 +1,8 @@
 ---
 title: "Data manipulation"
 subtitle: "Lecture 1"
-author: "<br>Louis SIRUGUE"
-date: "M1 APE - Fall 2022"
+author: "<br>Elisa Alonso Herrero"
+date: "M1 PPD - Fall 2026"
 params:
   dark: false
 output:
@@ -63,9 +63,9 @@ Sys.setenv(LANG = "en")
 <ul>
   <li>I work primarily on:</li>
   <ul>
-    <li>Intergenerational (income) mobility</li>
-    <li>Residential segregation</li>
-    <li>Discrimination</li>
+    <li>Take-up of social programs</li>
+    <li>Optimal taxation</li>
+    <li>Intergenerational mobility</li>
   </ul>
 </ul>
 

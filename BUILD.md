@@ -101,7 +101,9 @@ The build expects the current working directory to be the repository root.
 ## 4. Create the PDF slides
 
 DeckTape converts the rendered Remark/Xaringan HTML slides to PDF. After the
-HTML build finishes, run:
+HTML build finishes, run the commands below. Always rerun the HTML build after
+changing paths, images, headers, or slide content; DeckTape reads the existing
+HTML files and does not read the `.Rmd` files directly.
 
 ```text
 decktape remark lecture1/slides.html lecture1/slides.pdf
