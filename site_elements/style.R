@@ -70,7 +70,7 @@ scale_fill_discrete <- function(...) {
 }
 
 kable <- function(data, caption, ...) {
-  knitr::kable(data, caption = caption, booktabs = TRUE, digits = 2, ...) %>% 
+  knitr::kable(data, caption = caption, booktabs = TRUE, digits = 2, format = "html", ...) %>%
     kable_styling(bootstrap_options = c('hover', 'condensed'), full_width = F)
 }
 

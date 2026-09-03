@@ -26,8 +26,6 @@ editor_options:
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../site_elements/style.R"))
 
-detach("package:dplyr", unload=TRUE)
-
 stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
 options(htmltools.dir.version = F)
@@ -72,7 +70,7 @@ Sys.setenv(LANG = "en")
 <p style = "margin-bottom:1.25cm;"></p>
 
 <ul>
-  <li>You can reach me at <a href="mailto:louis.sirugue@psemail.eu">louis.sirugue@psemail.eu</a> for any question or comment about the course</li>
+  <li>You can reach me at <a href="mailto:elisa.alonsoh@gmail.com">elisa.alonsoh@gmail.com</a> for any question or comment about the course</li>
 </ul>
 ]
 
@@ -85,6 +83,10 @@ Sys.setenv(LANG = "en")
 <p style = "margin-bottom:1cm;"></p>
 
 <ul>
+  <li>Course originally designed by <a href="https://www.louissirugue.com/teaching/">Louis Sirugue</a> </li>
+</ul>
+
+<ul>
   <li><b>Objective:</b> Learning R programming to carry out your empirical homeworks and research projects</li>
 </ul>
 
@@ -94,24 +96,12 @@ Sys.setenv(LANG = "en")
     <li>Data manipulation</li>
     <li>Data visualization</li>
     <li>R Markdown & LaTeX</li>
-    <li>Econometrics in R</li>
+    <li>Econometrics and Tables in R</li>
   </ol>
 </ul>
-
-<ul>
- <li>Lectures 1 to 3 are about learning R</li>
-</ul>
-
-
-<p style = "margin-bottom:.63cm;"></p>
-<center><i>1-month break for you to follow the first lectures/tutorials in Econometrics I</i></center> 
-<p style = "margin-bottom:.63cm;"></p>
-
-<ul>
- <li>Lectures 4 is about Econometrics using R</li>
-</ul>
-
 ]
+
+
 
 ---
 
@@ -126,8 +116,9 @@ Sys.setenv(LANG = "en")
   <ul style = "list-style: none">
     <li>1.1. About R</li>
     <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
+    <li>1.3. R projects</li>
+    <li>1.4. Packages</li>
+    <li>1.5. Import and eyeball data</li>
   </ul>
 </ul>
 
@@ -148,11 +139,10 @@ Sys.setenv(LANG = "en")
 .pull-right[
 
 <ul style = "margin-left:-1cm;list-style: none">
-  <li><b>3. The dplyr grammar</b></li>
+  <li><b>3. The dplyr package</b></li>
   <ul style = "list-style: none">
-    <li>3.1. Packages</li>
-    <li>3.2. Basic functions</li>
-    <li>3.3. group_by() and summarise()</li>
+    <li>3.1. Basic functions</li>
+    <li>3.2. group_by() and summarise()</li>
   </ul>
 </ul>
 
@@ -170,25 +160,6 @@ Sys.setenv(LANG = "en")
 <p style = "margin-bottom:1cm;"></p>
 
 <ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
-]
-
----
-
-<h3>Let's delve into it!</h3>
-
-<p style = "margin-bottom:2.5cm;"></p>
-
-.pull-left[
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>1. Getting started</b></li>
-  <ul style = "list-style: none">
-    <li>1.1. About R</li>
-    <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
-  </ul>
-</ul>
 ]
 
 ---
@@ -448,6 +419,40 @@ x
 
 ---
 
+### 1. Getting started
+
+#### 1.3. R projects
+
+<ul>
+  <li>What is an R project?</li>
+  <ul>
+    <li>An R project is simply a <b>folder</b> tied to a <b>.Rproj</b> file</li>
+    <li>Opening the .Rproj file <b>starts a fresh R session</b> with the <b>working directory set to that folder</b></li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>Why bother? This is <b>good practice</b> for anything that is not a one-off script</li>
+  <ul>
+    <li>Your <b>scripts, data, and outputs</b> stay together in one place</li>
+    <li>Your code becomes <b>portable</b>: it will run the same way on a collaborator's computer, or on your computer in five years</li>
+    <li>You never need to use <code>setwd()</code> with an absolute path again</li>
+  </ul>
+</ul>
+
+--
+
+<p style = "margin-bottom:1cm;"></p>
+
+<center><i>&#10140; Create a project (File > New Project...) now for this course, and put today's script and data inside it</i></center>
+
+
+---
+
 class: inverse, hide-logo
 
 ### Practice
@@ -485,7 +490,7 @@ tibble(a = c("Operation:", "Symbol in R:"),
 
 <p style = "margin-bottom:1cm;"></p>
 
-#### 3) Print `result` in your console and save your script somewhere in your computer (`Ctrl+S`)
+#### 3) Print `result` in your console and save your script in your R project folder (`Ctrl+S`)
 
 --
 
@@ -541,19 +546,58 @@ result <- b*c/a + (b-a)^c
 
 <p style = "margin-bottom:1.25cm;"></p>
 
-#### 3) Print `result` in your console and save your script somewhere in your computer (`Ctrl + S`)
+#### 3) Print `result` in your console and save your script in your R project folder (`Ctrl + S`)
 
 --
 
 ```{r}
-result
+print(result)
 ```
+
 
 ---
 
 ### 1. Getting started
 
-#### 1.3. Import and eyeball data
+#### 1.4. Packages
+
+<ul>
+  <li>Base R is the core of the R programming language, but packages extend its capabilities (and make your life easier!):</li>
+  <ul>
+    <li>Packages are <b>centralized</b> on the <a href = "https://cran.r-project.org/">Comprehensive R Archive Network (CRAN)</a></li>
+    <li>To <b>download</b> and install a CRAN package you can simply use <b>install.packages()</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r, eval = F}
+install.packages("rio") # Requires an internet connection
+```
+
+--
+
+<ul> 
+  <li>The package is now <b>installed on your computer</b>: you won't have to do it again</li> 
+  <ul> 
+    <li>But it is <b>not loaded in R yet</b>: each time you start a <b>new R session</b>, you'll have to load the packages you need with <b>library()</b></li> 
+  </ul> 
+</ul>
+
+--
+```{r, eval = F}
+library(rio)
+```
+
+<ul> 
+  <li>You can also use a package's functions without fully loading the package by using the <b>double colon</b> operator (<code>package::function</code>)</li> 
+</ul>
+
+---
+
+### 1. Getting started
+
+#### 1.5. Import and eyeball data
 
  * We now know how to <b>use R</b> as a calculator, but our goal is <b>to analyze data!</b>
 
@@ -571,10 +615,10 @@ result
 
 ### 1. Getting started
 
-#### 1.3. Import and eyeball data
+#### 1.5. Import and eyeball data
 
 <ul>
-  <li>You can <b>download</b> this dataset <a href = "https://louissirugue.github.io/intro_to_R/lecture1/slides_elements/data/data.zip">here</a> or from the course webpage</li>
+  <li>You can <b>download</b> this dataset from Konosys or from the <a href = "https://louissirugue.github.io/intro_to_R/home.html">original course webpage</a></li>
   <ul>
     <li>Note that the extension of the file is <b>.csv</b> (for <i><b>C</b>omma <b>S</b>eparated <b>V</b>alues</i>)</li>
     <li>Let's have a look at <b>first 5 lines</b> of the raw csv file</li>
@@ -615,14 +659,14 @@ Wk,Day,Date,Time,Home,xG,Score,xG,Away,Attendance,Venue,Referee,Match Report,Not
 
 ### 1. Getting started
 
-#### 1.3. Import and eyeball data
+#### 1.5. Import and eyeball data
 
 .pull-left[
 <ul>
-  <li>To <b>import</b> stuff in R we use <b><i>read</i> functions</b></li>
+  <li>There are many ways to <b>import</b> stuff in R, but I recommend the package <code>rio</code></li>
   <ul>
-    <li>They take the <b>file directory</b> as an <b>input</b></li>
-    <li>And give the <b>file content</b> as an <b>output</b></li>
+    <li>It takes the <b>file directory</b> as an <b>input</b></li>
+    <li>And gives the <b>file content</b> as an <b>output</b></li>
   </ul>
 </ul>
 ]
@@ -640,44 +684,72 @@ function(input)
 
 <p style = "margin-bottom:1cm;"></p>
 
+  <ul>
+    <li>The function <code>rio::import()</code> chooses the right reader <b>based on the file extension</b> (.csv, .xlsx, .dta, .sav, ...)</li>
+    <li>For <b>.csv</b> files, it uses <b>data.table::fread()</b> under the hood, which is <b>much faster</b> than base R's reader</li>
+  </ul>
+
+ * Let's use it to import the Ligue 1 data
+```{r, eval = F}
+fb <- rio::import("C:/User/Documents/R class/lecture1/ligue1.csv")
+```
+
+<center><b><i>&#10140; This works, but an absolute path is a bad idea... there's a better way!</i></b></center>
+
+---
+### 1. Getting started
+
+#### 1.5. Import and eyeball data
+
 <ul>
-  <li>The read function dedicated to .csv files is <b>read.csv()</b></li>
+  <li>An <b>absolute path</b> like <code>"C:/User/Documents/class/ligue1.csv"</code> only works <b>on your computer</b></li>
+  <ul>
+    <li>It <b>breaks</b> as soon as you share your script, or move your files around</li>
+    <li>Depending on your operating system, it can also break if you use backslashes (\) instead of forward slashes (/)</li>
+  </ul>
 </ul>
 
-```{r, eval = F}
-fb <- read.csv("C:\User\Documents\ligue1.csv")
-```
-
 --
-
-```{r, echo = F, error = T}
-fb <- read.csv("C:\User\Documents\ligue1.csv")
-```
-
-<center>Oops, slashes must be the other way around!</center>
-
 
 <p style = "margin-bottom:1cm;"></p>
 
+<ul>
+  <li>Since we are working inside an <b>R project</b>, we can use <b>relative paths</b> instead</li>
+  <ul>
+    <li>They are defined <b>from the project's root folder</b>, not from your computer's root</li>
+  </ul>
+</ul>
+
 --
 
-```{r, eval = F}
-fb <- read.csv("C:/User/Documents/ligue1.csv")
+<p style = "margin-bottom:1cm;"></p>
+
+<ul>
+  <li>The <code>here</code> package makes this effortless with the <b>here()</b> function</li>
+  <ul>
+    <li>It automatically finds your <b>project's root</b>, wherever your R script is opened from</li>
+    <li>You just describe the path to your file <b>from there</b></li>
+  </ul>
+</ul>
+
+--
+
+```{r , eval = F}
+fb <- rio::import(here::here("lecture1", "ligue1.csv"))
 ```
 
---
-
-```{r, echo = F}
-fb <- read.csv("slides_elements/data/ligue1.csv")
+```{r load-fb, include = FALSE}
+fb <- rio::import(here::here("lecture1", "slides_elements", "data", "ligue1.csv"))
 ```
 
 <center><i>&#10140; Let's <b>inspect</b> this new object to check that it worked</i></center>
+
 
 ---
 
 ### 1. Getting started
 
-#### 1.3. Import and eyeball data
+#### 1.5. Import and eyeball data
 
  * The first thing we can do is to use `head()` to print the **top rows**
  
@@ -701,346 +773,16 @@ head(fb, 4)
 
 ### 1. Getting started
 
-#### 1.3. Import and eyeball data
+#### 1.5. Import and eyeball data
 
 <center>
 <img src = "slides_elements/figures/view_fb.png" width = "1100"/>
 
 <p style = "margin-bottom:.5cm;"></p>
 
-<b>Seems like it worked!</b>
+<b>Seems like it worked, but always check your data!</b>
 </center>
  
----
-
-### 1. Getting started
-
-#### 1.3. Import and eyeball data
-
-<center>
-<img src = "slides_elements/figures/view_fb_kinda.png" width = "1100"/>
-
-<p style = "margin-bottom:.5cm;"></p>
-
-<b>... or kind of worked?</b>
-</center>
- 
----
-
-### 1. Getting started
-
-#### 1.4. Use functions
-
-<ul>
-  <li>That kind of <b>weird characters</b> kicks in when there is an <b>encoding issue</b></li>
-  <ul>
-    <li>Thankfully, <b>read.csv()</b> can take many <b>other inputs</b>, including encoding!</li>
-    <li>Usually the UTF-8 encoding is the solution to French characters</li>
-  </ul>
-</ul>
-
---
-
-```{r, eval = F}
-fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
-```
-
-```{r, echo = F}
-fb <- read.csv("slides_elements/data/ligue1.csv", encoding = "UTF-8")
-```
-
-<p style = "margin-bottom:1cm;"></p>
-
---
-
-<ul>
-  <li>When you will be facing <b>similar issues</b>, check out the arguments of read.csv() using <b>?read.csv</b></li>
-</ul>
-
---
-
-<center>
-<img src = "slides_elements/figures/csv_help.png" width = "800"/>
-</center>
-
----
-
-### 1. Getting started
-
-#### 1.4. Use functions
-
-<ul>
-  <li>From the <b>documentation</b> you can see that functions have <b>many arguments</b></li>
-  <ul>
-    <li>Some <b>without default</b> values: You need to specify the argument for the function to work</li>
-    <li>Some <b>with default</b> values: If you don't specify these arguments, defaults will be used</li>
-  </ul>
-</ul>
- 
-```{r, eval = F}
-read.csv(file, header = TRUE, sep = ",", quote = "\"",
-         dec = ".", fill = TRUE, comment.char = "", ...)
-```
-
---
-
- * You don't need to write the argument names only for those written in the <b>correct order</b>
-
-
-
-.left-column[
-.pull-left[
-
-<p style="margin-bottom:-.5cm"></p>
-```{r, eval = F}
-read.csv(file = "dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv")
-```
-
-]
-.pull-right[
-$$\Longleftrightarrow$$
-
-<p style="margin-bottom:.5cm"></p>
-
-$$\underset{\Longleftrightarrow}{?}$$
-
-
-]
-]
-.right-column[
-<p style="margin-bottom:-1.07cm"></p>
-```{r, eval = F}
-read.csv("dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-]
- 
----
-
-### 1. Getting started
-
-#### 1.4. Use functions
-
-<ul>
-  <li>From the <b>documentation</b> you can see that functions have <b>many arguments</b></li>
-  <ul>
-    <li>Some <b>without default</b> values: You need to specify the argument for the function to work</li>
-    <li>Some <b>with default</b> values: If you don't specify these arguments, defaults will be used</li>
-  </ul>
-</ul>
- 
-```{r, eval = F}
-read.csv(file, header = TRUE, sep = ",", quote = "\"",
-         dec = ".", fill = TRUE, comment.char = "", ...)
-```
-
- * You don't need to write the argument names only for those written in the <b>correct order</b>
-
-.left-column[
-.pull-left[
-
-<p style="margin-bottom:-.5cm"></p>
-```{r, eval = F}
-read.csv(file = "dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-
-]
-.pull-right[
-$$\Longleftrightarrow$$
-
-<p style="margin-bottom:1cm"></p>
-
-$$\Longleftrightarrow$$
-
-<p style="margin-bottom:.5cm"></p>
-
-$$\underset{\Longleftrightarrow}{?}$$
-
-]
-]
-.right-column[
-<p style="margin-bottom:-1.07cm"></p>
-```{r, eval = F}
-read.csv("dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", ",")
-```
-]
- 
----
-
-### 1. Getting started
-
-#### 1.4. Use functions
-
-<ul>
-  <li>From the <b>documentation</b> you can see that functions have <b>many arguments</b></li>
-  <ul>
-    <li>Some <b>without default</b> values: You need to specify the argument for the function to work</li>
-    <li>Some <b>with default</b> values: If you don't specify these arguments, defaults will be used</li>
-  </ul>
-</ul>
- 
-```{r, eval = F}
-read.csv(file, header = TRUE, sep = ",", quote = "\"",
-         dec = ".", fill = TRUE, comment.char = "", ...)
-```
-
- * You don't need to write the argument names only for those written in the <b>correct order</b>
-
-.left-column[
-.pull-left[
-
-<p style="margin-bottom:-.5cm"></p>
-```{r, eval = F}
-read.csv(file = "dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-
-]
-.pull-right[
-$$\Longleftrightarrow$$
-
-<p style="margin-bottom:1cm"></p>
-
-$$\Longleftrightarrow$$
-<p style="margin-bottom:1cm"></p>
-
-$$\not\not\Longleftrightarrow$$
-
-<p style="margin-bottom:.5cm"></p>
-
-$$\underset{\Longleftrightarrow}{?}$$
-
-]
-]
-.right-column[
-<p style="margin-bottom:-1.07cm"></p>
-```{r, eval = F}
-read.csv("dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", ",")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", TRUE, ",")
-```
-]
- 
----
-
-### 1. Getting started
-
-#### 1.4. Use functions
-
-<ul>
-  <li>From the <b>documentation</b> you can see that functions have <b>many arguments</b></li>
-  <ul>
-    <li>Some <b>without default</b> values: You need to specify the argument for the function to work</li>
-    <li>Some <b>with default</b> values: If you don't specify these arguments, defaults will be used</li>
-  </ul>
-</ul>
- 
-```{r, eval = F}
-read.csv(file, header = TRUE, sep = ",", quote = "\"",
-         dec = ".", fill = TRUE, comment.char = "", ...)
-```
-
- * You don't need to write the argument names only for those written in the <b>correct order</b>
-
-.left-column[
-.pull-left[
-
-<p style="margin-bottom:-.5cm"></p>
-```{r, eval = F}
-read.csv(file = "dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-
-]
-.pull-right[
-$$\Longleftrightarrow$$
-
-<p style="margin-bottom:1cm"></p>
-
-$$\Longleftrightarrow$$
-<p style="margin-bottom:1cm"></p>
-
-$$\not\not\Longleftrightarrow$$
-
-<p style="margin-bottom:1cm"></p>
-
-$$\Longleftrightarrow$$
-
-]
-]
-.right-column[
-<p style="margin-bottom:-1.07cm"></p>
-```{r, eval = F}
-read.csv("dt.csv")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", sep = ",")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", ",")
-```
-
-```{r, eval = F}
-read.csv("dt.csv", TRUE, ",")
-```
-]
 
 ---
 
@@ -1055,67 +797,9 @@ read.csv("dt.csv", TRUE, ",")
   <ul style = "list-style: none">
     <li>1.1. About R</li>
     <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.5cm;"></p>
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Anatomy of a data.frame</b></li>
-  <ul style = "list-style: none">
-    <li>2.1. Data structure</li>
-    <li>2.2. Classes</li>
-    <li>2.3. Vectors</li>
-    <li>2.4. Subsetting</li>
-  </ul>
-</ul>
-
-]
-
-.pull-right[
-
-<ul style = "margin-left:-1cm;list-style: none">
-  <li><b>3. The dplyr grammar</b></li>
-  <ul style = "list-style: none">
-    <li>3.1. Packages</li>
-    <li>3.2. Basic functions</li>
-    <li>3.3. group_by() and summarise()</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul style = "margin-left:-1cm;list-style: none">
-  <li><b>4. A few words on learning R</b></li>
-  <ul style = "list-style: none">
-    <li>4.1. When it doesn't work the way you want</li>
-    <li>4.2. Where to find help</li>
-    <li>4.3. When it doesn't work at all</li>
-  </ul>
-</ul>
- 
-<p style = "margin-bottom:1cm;"></p>
-
-<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
-]
-
----
-
-<h3>Overview</h3>
-
-<p style = "margin-bottom:2.5cm;"></p>
-
-.pull-left[
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>1. Getting started &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>1.1. About R</li>
-    <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
+    <li>1.3. R projects</li>
+    <li>1.4. Packages</li>
+    <li>1.5. Import and eyeball data</li>
   </ul>
 </ul>
 
@@ -1131,6 +815,32 @@ read.csv("dt.csv", TRUE, ",")
   </ul>
 </ul>
 
+]
+
+.pull-right[
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>3. The dplyr package </b></li>
+  <ul style = "list-style: none">
+    <li>3.1. Basic functions</li>
+    <li>3.2. group_by() and summarise()</li>
+  </ul>
+</ul>
+
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none">
+  <li><b>4. A few words on learning R </b></li>
+  <ul style = "list-style: none">
+    <li>4.1. When it doesn't work the way you want</li>
+    <li>4.2. Where to find help</li>
+    <li>4.3. When it doesn't work at all</li>
+  </ul>
+</ul>
+ 
+<p style = "margin-bottom:1cm;"></p>
+
+<ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
 ]
 
 ---
@@ -1819,7 +1529,7 @@ class: inverse, hide-logo
 --
 
 ```{r, eval = F}
-fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+fb <- rio::import(here::here("lecture1", "ligue1.csv"))
 ```
 
 --
@@ -1905,8 +1615,9 @@ fb[fb$Wk == 38, c("Home", "Score", "Away")]
   <ul style = "list-style: none">
     <li>1.1. About R</li>
     <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
+    <li>1.3. R projects</li>
+    <li>1.4. Packages</li>
+    <li>1.5. Import and eyeball data</li>
   </ul>
 </ul>
 
@@ -1927,18 +1638,17 @@ fb[fb$Wk == 38, c("Home", "Score", "Away")]
 .pull-right[
 
 <ul style = "margin-left:-1cm;list-style: none">
-  <li><b>3. The dplyr grammar</b></li>
+  <li><b>3. The dplyr package </b></li>
   <ul style = "list-style: none">
-    <li>3.1. Packages</li>
-    <li>3.2. Basic functions</li>
-    <li>3.3. group_by() and summarise()</li>
+    <li>3.1. Basic functions</li>
+    <li>3.2. group_by() and summarise()</li>
   </ul>
 </ul>
 
 <p style = "margin-bottom:1cm;"></p>
 
 <ul style = "margin-left:-1cm;list-style: none">
-  <li><b>4. A few words on learning R</b></li>
+  <li><b>4. A few words on learning R </b></li>
   <ul style = "list-style: none">
     <li>4.1. When it doesn't work the way you want</li>
     <li>4.2. Where to find help</li>
@@ -1953,145 +1663,9 @@ fb[fb$Wk == 38, c("Home", "Score", "Away")]
 
 ---
 
-<h3>Overview</h3>
+### 3. The `dplyr` package
 
-<p style = "margin-bottom:2.5cm;"></p>
-
-.pull-left[
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>1. Getting started &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>1.1. About R</li>
-    <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.5cm;"></p>
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Anatomy of a data.frame &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>2.1. Data structure</li>
-    <li>2.2. Classes</li>
-    <li>2.3. Vectors</li>
-    <li>2.4. Subsetting</li>
-  </ul>
-</ul>
-
-]
-
-.pull-right[
-
-<ul style = "margin-left:-1cm;list-style: none">
-  <li><b>3. The dplyr grammar</b></li>
-  <ul style = "list-style: none">
-    <li>3.1. Packages</li>
-    <li>3.2. Basic functions</li>
-    <li>3.3. group_by() and summarise()</li>
-  </ul>
-</ul>
-]
-
----
-
-### 3. The `dplyr` grammar
-
-#### 3.1. Packages
-
-<ul>
-  <li>So far we only used functions that are directly available in R</li>
-  <ul>
-    <li>But there are tons of <b>user-created functions</b> out there that can make your life so much easier</li>
-    <li>These functions are shared in what we call <b>packages</b></li>
-  </ul>
-</ul>
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul>
-  <li>Packages are <b>bundles of functions</b> that R users put at the disposal of other R users</li>
-  <ul>
-    <li>Packages are <b>centralized</b> on the <a href = "https://cran.r-project.org/">Comprehensive R Archive Network (CRAN)</a></li>
-    <li>To <b>download</b> and install a CRAN package you can simply use <b>install.packages()</b></li>
-  </ul>
-</ul>
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul>
-  <li>All the functions of the dplyr grammar are gathered in the <b>dplyr package</b></li>
-  <ul>
-    <li>We can download these functions and make them ready to use with the install.packages() function</li>
-  </ul>
-</ul>
-
---
-
-```{r, eval = F}
-install.packages("dplyr") # Requires an internet connection
-```
-
---
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul>
-  <li>The tidyverse package is <b>now installed</b> on your computer</li>
-  <ul>
-    <li>You won't have to do it again</li>
-  </ul>
-</ul>
- 
----
-
-### 3. The `dplyr` grammar
-
-#### 3.1. Packages
-
- * The `dplyr` package is now <b>on your computer</b>, but it is <b>not loaded in R</b>
-
---
-
-```{r, error = TRUE}
-ls("package:dplyr")
-```
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-<ul>
-  <li>You need to use the <b>library()</b> command to load it</li>
-</ul>
-
---
-
-```{r}
-library(dplyr)
-ls("package:dplyr")[1:5]
-```
-
---
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-<ul>
-  <li>But even though the package is permanently installed, it is <b>loaded only for your current session</b></li>
-  <ul>
-    <li>Each time you start a <b>new R session</b>, you'll have to load the packages you need with <b>library()</b></li>
-  </ul>
-</ul>
-
----
-
-### 3. The `dplyr` grammar
-
-#### 3.2. Basic functions
+#### 3.1. Basic functions
 
 
 `dplyr` is a **grammar** of data manipulation providing very **user-friendly functions** to handle the most common **data manipulation** tasks:
@@ -2138,9 +1712,9 @@ ls("package:dplyr")[1:5]
 
 ---
 
-### 3. The `dplyr` grammar
+### 3. The `dplyr` package
 
-#### 3.2. Basic functions
+#### 3.1. Basic functions
 
 ```{r, eval = F}
 fb 
@@ -2169,9 +1743,9 @@ fb
 
 ---
 
-### 3. The `dplyr` grammar
+### 3. The `dplyr` package
 
-#### 3.2. Basic functions
+#### 3.1. Basic functions
 
 ```{r, eval= F}
 fb %>%
@@ -2199,9 +1773,9 @@ fb %>%
 
 ---
 
-### 3. The `dplyr` grammar
+### 3. The `dplyr` package
 
-#### 3.2. Basic functions
+#### 3.1. Basic functions
 
 ```{r, eval = F}
 fb %>%
@@ -2230,9 +1804,9 @@ fb %>%
 
 ---
 
-### 3. The `dplyr` grammar
+### 3. The `dplyr` package
 
-#### 3.2. Basic functions
+#### 3.1. Basic functions
 
 ```{r, eval = F}
 fb %>%
@@ -2260,9 +1834,9 @@ fb %>%
 
 ---
 
-### 3. The `dplyr` grammar
+### 3. The `dplyr` package
 
-#### 3.2. Basic functions
+#### 3.1. Basic functions
 
 ```{r, eval = F}
 fb %>%
@@ -2290,9 +1864,9 @@ fb %>%
 
 ---
 
-### 3. The `dplyr` grammar
+### 3. The `dplyr` package
 
-#### 3.2. Basic functions
+#### 3.1. Basic functions
 
 ```{r}
 fb %>%
@@ -2306,9 +1880,9 @@ fb %>%
 
 ---
 
-### 3. The `dplyr` grammar
+### 3. The `dplyr` package
 
-#### 3.2. Basic functions
+#### 3.1. Basic functions
 
  * Here are two very **handy functions** to use within `mutate()`
    
@@ -2627,8 +2201,9 @@ fb %>%
   <ul style = "list-style: none">
     <li>1.1. About R</li>
     <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
+    <li>1.3. R projects</li>
+    <li>1.4. Packages</li>
+    <li>1.5. Import and eyeball data</li>
   </ul>
 </ul>
 
@@ -2649,18 +2224,17 @@ fb %>%
 .pull-right[
 
 <ul style = "margin-left:-1cm;list-style: none">
-  <li><b>3. The dplyr grammar &#10004;</b></li>
+  <li><b>3. The dplyr package &#10004;</b></li>
   <ul style = "list-style: none">
-    <li>3.1. Packages</li>
-    <li>3.2. Basic functions</li>
-    <li>3.3. group_by() and summarise()</li>
+    <li>3.1. Basic functions</li>
+    <li>3.2. group_by() and summarise()</li>
   </ul>
 </ul>
 
 <p style = "margin-bottom:1cm;"></p>
 
 <ul style = "margin-left:-1cm;list-style: none">
-  <li><b>4. A few words on learning R</b></li>
+  <li><b>4. A few words on learning R </b></li>
   <ul style = "list-style: none">
     <li>4.1. When it doesn't work the way you want</li>
     <li>4.2. Where to find help</li>
@@ -2671,61 +2245,6 @@ fb %>%
 <p style = "margin-bottom:1cm;"></p>
 
 <ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
-]
-
----
-
-<h3>Overview</h3>
-
-<p style = "margin-bottom:2.5cm;"></p>
-
-.pull-left[
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>1. Getting started &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>1.1. About R</li>
-    <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.5cm;"></p>
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Anatomy of a data.frame &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>2.1. Data structure</li>
-    <li>2.2. Classes</li>
-    <li>2.3. Vectors</li>
-    <li>2.4. Subsetting</li>
-  </ul>
-</ul>
-
-]
-
-.pull-right[
-
-<ul style = "margin-left:-1cm;list-style: none">
-  <li><b>3. The dplyr grammar &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>3.1. Packages</li>
-    <li>3.2. Basic functions</li>
-    <li>3.3. group_by() and summarise()</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul style = "margin-left:-1cm;list-style: none">
-  <li><b>4. A few words on learning R</b></li>
-  <ul style = "list-style: none">
-    <li>4.1. When it doesn't work the way you want</li>
-    <li>4.2. Where to find help</li>
-    <li>4.3. When it doesn't work at all</li>
-  </ul>
-</ul>
 ]
 
 ---
@@ -2855,34 +2374,9 @@ fb %>%
 
 ### 4. A few words on learning R
 
-#### 4.2. Where to find help
-
-<ul>
-  <li>Search on the internet!</li>
-  <ul>
-    <li>Your question is for sure already asked and answered on <a href = "https://stackoverflow.com/">stackoverflow</a></li>
-  </ul>
-</ul>
- 
---
-
-<center>
-<img src = "slides_elements/figures/ask_google.png" width = 750 />
-</center>
-
----
-
-### 4. A few words on learning R
-
 #### 4.3. When it doesn't work at all
 
  * Sometimes R breaks and returns an <b>error</b> (usually kind of cryptic)
-
---
-
-```{r, error = TRUE}
-read.csv("C:\Users\Documents\R")
-```
 
 --
 
@@ -2912,8 +2406,9 @@ read.csv("C:\Users\Documents\R")
   <ul style = "list-style: none">
     <li>1.1. About R</li>
     <li>1.2. The R Studio IDE</li>
-    <li>1.3. Import and eyeball data</li>
-    <li>1.4. Use functions</li>
+    <li>1.3. R projects</li>
+    <li>1.4. Packages</li>
+    <li>1.5. Import and eyeball data</li>
   </ul>
 </ul>
 
@@ -2934,11 +2429,10 @@ read.csv("C:\Users\Documents\R")
 .pull-right[
 
 <ul style = "margin-left:-1cm;list-style: none">
-  <li><b>3. The dplyr grammar &#10004;</b></li>
+  <li><b>3. The dplyr package &#10004;</b></li>
   <ul style = "list-style: none">
-    <li>3.1. Packages</li>
-    <li>3.2. Basic functions</li>
-    <li>3.3. group_by() and summarise()</li>
+    <li>3.1. Basic functions</li>
+    <li>3.2. group_by() and summarise()</li>
   </ul>
 </ul>
 
@@ -2965,7 +2459,7 @@ read.csv("C:\Users\Documents\R")
 #### 1. Import data
 
 ```{r, eval = F}
-fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+fb <- rio::import(here::here("lecture1", "ligue1.csv"))
 ```
 
 --
