@@ -1,7 +1,7 @@
 ---
 title: "Data visualization"
 subtitle: "Lecture 2"
-author: "<br>Louis SIRUGUE"
+author: "<br>Elisa Alonso Herrero"
 date: "M1 APE - Fall 2022"
 output:
   xaringan::moon_reader:  
@@ -22,12 +22,13 @@ editor_options:
 ---
 
 ```{r setup, include = FALSE}
-source(paste0(getwd(), "/../site_elements/style.R"))
+source(here::here("site_elements", "style.R"))
 stargazer <- stargazer::stargazer
 options(htmltools.dir.version = F)
 knitr::opts_chunk$set(echo = T, message = F, warning = F, fig.align = "center", dpi = 300, out.width = "100%")
 theme_set(theme_gray())
 scale_colour_discrete <- ggplot2::scale_colour_discrete
+
 ```
 
 <style> .left-column {width: 65%;} .right-column {width: 30%;} </style>
@@ -36,12 +37,12 @@ scale_colour_discrete <- ggplot2::scale_colour_discrete
 
 #### 1. Import data
 
-```{r, echo = F}
-fb <- read.csv("slides_elements/data/ligue1.csv", encoding = "UTF-8")
+```{r, eval = F}
+fb <- rio::import(here::here("lecture2", "ligue1.csv"))
 ```
 
-```{r, eval = F}
-fb <- read.csv("C:/User/Documents/ligue1.csv", encoding = "UTF-8")
+```{r, echo = F}
+fb <- rio::import(here::here("lecture2", "slides_elements", "data", "ligue1.csv"))
 ```
 
 --
@@ -144,12 +145,12 @@ class: inverse, hide-logo
 #### 1) Import `starbucks.csv` and `View()` the data
 
 ```{r, eval = F}
-starbucks <- read.csv("C:/User/Documents/starbucks.csv")
+starbucks <- rio::import(here::here("lecture2", "starbucks.csv"))
 View(starbucks)
 ```
 
 ```{r, echo = F}
-starbucks <- read.csv("slides_elements/data/starbucks.csv")
+starbucks <- rio::import(here::here("lecture2", "slides_elements", "data", "starbucks.csv"))
 ```
 
 --
@@ -165,62 +166,12 @@ class: inverse, hide-logo
 #### 1) Import `starbucks.csv` and `View()` the data
 
 ```{r, eval = F}
-starbucks <- read.csv("C:/User/Documents/starbucks.csv")
+starbucks <- rio::import(here::here("lecture2", "slides_elements", "data", "starbucks.csv"))
 View(starbucks)
 ```
 
 ```{r, echo = F}
-starbucks <- read.csv("slides_elements/data/starbucks.csv")
-```
-
-<center><img src = "slides_elements/figures/view_starbucks_sep.png" width = "1100"/></center>
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul>
-  <li>We only have <b>one variable</b> in which all values are <b>separated by semicolons</b></li>
-  <ul>
-    <li>We need to set the <b>sep</b> argument of the function accordingly</li>
-  </ul>
-</ul>
-
----
-
-class: inverse, hide-logo
-
-### Solution
-
-#### 1) Import `starbucks.csv` and `View()` the data
-
-```{r, eval = F}
-starbucks <- read.csv("C:/User/Documents/starbucks.csv")
-View(starbucks)
-```
-
-```{r, echo = F}
-starbucks <- read.csv("slides_elements/data/starbucks.csv")
-```
-
-<center><img src = "slides_elements/figures/view_starbucks_encoding.png" width = "1100"/></center>
-
-<p style = "margin-bottom:1cm;"></p>
-
-<ul>
-  <li>We only have <b>one variable</b> in which all values are <b>separated by semicolons</b></li>
-  <ul>
-    <li>We need to set the <b>sep</b> argument of the function accordingly</li>
-    <li>Like last time, we also need to set the <b>encoding</b> argument correctly</li>
-  </ul>
-</ul>
-
---
-
-```{r, eval = F}
-*starbucks <- read.csv("C:/User/Documents/starbucks.csv", sep = ";", encoding = "UTF-8")
-```
-
-```{r, echo = F}
-starbucks <- read.csv("slides_elements/data/starbucks.csv", sep = ";", encoding = "UTF-8")
+starbucks <- rio::import(here::here("lecture2", "slides_elements", "data", "starbucks.csv"))
 ```
 
 ---
@@ -399,11 +350,11 @@ maxcal
 </ul>
 
 ```{r, eval = F}
-wid <- read.csv("C:/User/Documents/wid.csv")
+wid <- rio::import(here::here("lecture2", "slides_elements", "data", "wid.csv"))
 ```
 
 ```{r, echo = F}
-wid <- read.csv("slides_elements/data/wid.csv")
+wid <- rio::import(here::here("lecture2", "slides_elements", "data", "wid.csv"))
 ```
 
 --
@@ -607,7 +558,7 @@ ggplot(wid, aes(x = inc_head, y = top1)) +          # Data & aesthetics
 --
 
 ```{r, eval = F}
-ggsave("C:/User/Documents/wid.png")
+ggsave(here::here("lecture2", "slides_elements", "figures", "wid.png"))
 ```
 
 --
@@ -630,7 +581,7 @@ ggsave("C:/User/Documents/wid.png")
 <p style = "margin-bottom:1.25cm;"></p>
 
 ```{r, eval = F}
-ggsave("wid.png", plot = last_plot(), width = 16, height = 9, unit = "cm", dpi = 900)
+ggsave(here::here("lecture2", "slides_elements", "figures", "wid.png"), plot = last_plot(), width = 16, height = 9, unit = "cm", dpi = 900)
 ```
 
 ---
@@ -1454,7 +1405,7 @@ class: inverse, hide-logo
 
 ```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
 ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) + 
+       aes(x = Calories, y = Cholesterol, size = `Trans Fat`, color = Sugars)) + 
   geom_point(alpha = .3) + 
   scale_color_gradient(low = "green", high = "red") +
   theme_minimal(base_size = 14)
@@ -1515,7 +1466,7 @@ class: inverse, hide-logo
 
 ```{r, eval = F}
 ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+       aes(x = Calories, y = Cholesterol, size = `Trans Fat`, color = Sugars)) +
   geom_point()
                                                                                                  #
                                                                                                  #
@@ -1523,7 +1474,7 @@ ggplot(starbucks,
 
 ```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
 ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+       aes(x = Calories, y = Cholesterol, size = `Trans Fat`, color = Sugars)) +
   geom_point()
 ```
 
@@ -1535,7 +1486,7 @@ class: inverse, hide-logo
 
 ```{r, eval = F}
 ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+       aes(x = Calories, y = Cholesterol, size = `Trans Fat`, color = Sugars)) +
   geom_point(alpha = .3) + 
   scale_color_gradient(low = "green", high = "red")
                                                                                                  #
@@ -1543,7 +1494,7 @@ ggplot(starbucks,
 
 ```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
 ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+       aes(x = Calories, y = Cholesterol, size = `Trans Fat`, color = Sugars)) +
   geom_point(alpha = .3) + 
   scale_color_gradient(low = "green", high = "red")
 ```
@@ -1556,7 +1507,7 @@ class: inverse, hide-logo
 
 ```{r, eval = F}
 ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+       aes(x = Calories, y = Cholesterol, size = `Trans Fat`, color = Sugars)) +
   geom_point(alpha = .3) + 
   scale_color_gradient(low = "green", high = "red") +
   theme_minimal(base_size = 14)
@@ -1564,7 +1515,7 @@ ggplot(starbucks,
 
 ```{r, echo = F, fig.width = 8, fig.height = 3.75, out.width="70%"}
 ggplot(starbucks, 
-       aes(x = Calories, y = Cholesterol, size = Trans.Fat, color = Sugars)) +
+       aes(x = Calories, y = Cholesterol, size = `Trans Fat`, color = Sugars)) +
   geom_point(alpha = .3) + 
   scale_color_gradient(low = "green", high = "red") +
   theme_minimal(base_size = 14)
@@ -1812,7 +1763,7 @@ ggplot(wid %>% filter(year == 2019), aes(x = fshare)) +
 <ul>
   <li>The <b>continuous</b> equivalent of the histogram is the <b>density</b></li>
   <ul>
-    <li>Similarly you can tune the <b>bandwidth</b> with the <b>bw</b> argument <i>(don't do it)</i></li>
+    <li>Similarly you can tune the <b>bandwidth</b> with the <b>bw</b> argument </li>
   </ul>
 </ul>
 
@@ -2197,7 +2148,7 @@ ggarrange(ggplot(den, aes(x = x)) +
 
 .left-column[
 ```{r, echo = F, fig.width = 8, fig.height=5, out.width = '100%'}
-trump <- read.csv("slides_elements/data/data-atVjV.csv") %>%
+trump <- rio::import(here::here("lecture2", "slides_elements", "data", "data-atVjV.csv")) %>%
   pivot_longer(-Date, names_to = "Dates", values_to = "tests") %>%
   pivot_wider(values_from = "tests", names_from = "Date") %>%
   mutate(order = row_number()) %>%
