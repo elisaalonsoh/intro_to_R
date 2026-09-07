@@ -2,7 +2,7 @@
 title: "Data visualization"
 subtitle: "Lecture 2"
 author: "<br>Elisa Alonso Herrero"
-date: "M2 PPD - Fall 2026"
+date: "M1 PPD - Fall 2026"
 output:
   xaringan::moon_reader:  
     css: 
@@ -154,24 +154,6 @@ starbucks <- rio::import(here::here("lecture2", "slides_elements", "data", "star
 ```
 
 ---
-
-class: inverse, hide-logo
-
-### Solution
-
-#### 1) Import `starbucks.csv` and `View()` the data
-
-```{r, eval = F}
-starbucks <- rio::import(here::here("lecture2", "slides_elements", "data", "starbucks.csv"))
-View(starbucks)
-```
-
-```{r, echo = F}
-starbucks <- rio::import(here::here("lecture2", "slides_elements", "data", "starbucks.csv"))
-```
-
----
-
 class: inverse, hide-logo
 
 ### Solution
