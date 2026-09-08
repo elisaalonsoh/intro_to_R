@@ -5,6 +5,7 @@ author: "<br>Elisa Alonso Herrero"
 date: "M1 PPD - Fall 2026"
 output:
   xaringan::moon_reader:  
+    self_contained: true
     css: 
         - slides_elements/xaringan-themer.css
         - slides_elements/theme.css
