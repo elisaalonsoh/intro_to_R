@@ -14,6 +14,7 @@ intro_to_R/
 |-- lecture1/
 |-- lecture2/
 |-- lecture3/
+|-- lecture3-quarto/           Additional Quarto and LaTeX lecture deck
 |-- lecture4/
 `-- site_elements/            Shared R code, CSS, and images
 ```
@@ -58,7 +59,7 @@ install.packages(c(
 ))
 ```
 
-These packages cover the four active `slides.Rmd` files and the shared code in
+These packages cover the five active `slides.Rmd` files and the shared code in
 `site_elements/style.R`. Packages used only by archived experiments are not
 needed for the normal build. Install them if you plan to run those files:
 
@@ -91,6 +92,16 @@ To render only one lecture:
 
 ```r
 rmarkdown::render("lecture2/slides.Rmd", knit_root_dir = "lecture2")
+```
+
+The additional Quarto and LaTeX deck uses the same Xaringan output and can be
+rendered with:
+
+```r
+rmarkdown::render(
+  "lecture3-quarto/slides.Rmd",
+  knit_root_dir = "lecture3-quarto"
+)
 ```
 
 Open the generated `lectureN/slides.html` and check figures, datasets, links,
@@ -131,11 +142,12 @@ For one lecture, edit its `slides_elements/theme.css`, `header.html`, or
 should only be changed when deliberately regenerating the theme.
 
 Changes to `site_elements/style.R` or shared assets can affect multiple
-lectures, so rerender all four lectures afterward.
+lectures, so rerender all five decks afterward.
 
 ## 7. Before publishing
 
-1. Render all four HTML slide decks.
+1. Render all five HTML slide decks, including `lecture3-quarto` when it is
+  part of the published course.
 2. Recreate any changed PDFs with DeckTape.
 3. Open the generated HTML and PDF files and check figures, data links,
    navigation, code output, and slide breaks.
