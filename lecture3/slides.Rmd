@@ -165,12 +165,12 @@ class: inverse, hide-logo
 --
 
 ```{r, eval = F}
-names <- read.csv("C:/User/Documents/fichier_prenoms.csv", sep = ";", encoding = "UTF-8")
+names <- rio::import(here::here("lecture3", "fichier_prenoms.csv"))
 str(names)
 ```
 
 ```{r, echo = F}
-names <- read.csv("slides_elements/data/fichier_prenoms.csv", sep = ";", encoding = "UTF-8")
+names <- rio::import(here::here("lecture3", "slides_elements", "data", "fichier_prenoms.csv"))
 str(names)
 ```
 
@@ -215,7 +215,7 @@ class: inverse, hide-logo
 
 --
 
-<center><h3><i>You've got 10 minutes!</i></h3></center>
+<center><h3><i>Don't forget to load the necessary packages!</i></h3></center>
 
 `r countdown(minutes = 10, top = 0, right = 0, play_sound = F, color_border = "#DFE6EB", color_text = "#DFE6EB", color_running_background = "#DFE6EB", color_running_text = "#014D64", color_finished_background = "#014D64", color_finished_text = "#DFE6EB", start_immediately = T)`
 
@@ -228,8 +228,7 @@ class: inverse, hide-logo
 #### Load the necessary packages
 
 ```{r}
-library(dplyr)
-library(ggplot2)
+library(tidyverse) # Needed for ggplot2 and dplyr
 ```
 
 --
@@ -410,7 +409,9 @@ names %>%
 #### 1.1. What is Quarto?
 
 <ul>
-  <li><b>Quarto</b> is an open-source publishing system in which you can both <b>write/run code</b> (R/Python/Julia/Observable) and <b>edit text</b></li>
+  <li><b>Quarto</b> is an open-source publishing system in which you can both <b>write/run code</b> (R/Python/Julia) and <b>edit text</b></li>
+  <li> Produces <b>dynamic documents</b> that are updated automatically every time the script runs</li>
+  <li> Good for research transparency and simple documents that don't require a lot of formatting (e.g. reports)</li>
 </ul>
 
 <p style = "margin-bottom:1cm;">
@@ -420,9 +421,9 @@ names %>%
 <ul>
   <li>Here are some examples of Quarto documents</li>
   <ul>
-  <li><a href="https://louissirugue.github.io/metrics_on_R/homework/guidelines.html">Homework</a></li>
-  <li><a href="https://www.louissirugue.com">Website</a></li>
+  <li><a href="https://www.louissirugue.com">Louis Sirugue's Website</a></li>
   <li><a href="https://quarto.org/docs/presentations/revealjs/demo/#/title-slide">Slides</a></li>
+  <li>And many <a href="https://quarto.org/docs/gallery/">more examples!</a></li>
   </ul>
 </ul>
 
@@ -441,9 +442,24 @@ names %>%
 
 <p style = "margin-bottom:1cm;">
 
---
+---
 
- <center><h4><i>&#10140; Let's go through them by creating our first Quarto document!</i></h4></center>
+### 1. Basic principles
+
+#### 1.1. What is Quarto?
+
+<center>
+<h3 style = "font-size:1.35em; margin-top:1.5cm;">But how is this different from R Markdown?</h3>
+</center>
+
+<p style = "margin-bottom:1.25cm;"></p>
+
+<ul>
+  <li><b>Quarto is the successor to R Markdown</b>: R Markdown code chunks can be used with little or no change!</li>
+  <li><b>Quarto is multi-language</b>: it supports R, Python, Julia, and Observable JavaScript in the same publishing system</li>
+  <li><b>Quarto offers more publishing options</b></li>
+</ul>
+
 
 ---
 
@@ -458,7 +474,7 @@ names %>%
 --
 
 .pull-left[
-<img src = "slides_elements/figures/new_quarto.png" width = "450"/>
+<img src = "slides_elements/figures/new_quarto.png" width = "400"/>
 ]
 
 --
@@ -468,7 +484,7 @@ names %>%
 
 <ol>
   <li>Fill out the information and select <b>HTML</b></li>
-  <li style = "margin-top:7cm;">Click on <b>OK</b></li>
+  <li style = "margin-top:7cm;">Click on <b>CREATE</b></li>
 </ol>
 ]
 
@@ -500,7 +516,7 @@ names %>%
 ]
 
 .right-column[
-<center><img src = "slides_elements/figures/template.png" width = "550"/></center>
+<center><img src = "slides_elements/figures/template.png" width = "700"/></center>
 ]
 
 ---

@@ -7,8 +7,8 @@ The aim of the course is to provide you with **basic R knowledge** in data manip
 The original course was created by [Louis Sirugue](https://github.com/LouisSirugue/intro_to_R), and this repository is an updated version where I have changed some slides and simplified the repository structure. For **future TAs**, you can fork [this course](https://github.com/elisaalonsoh/intro_to_R) to your own github in order to change the content. The markdown file [TA_BUILD.md](https://github.com/elisaalonsoh/intro_to_R/blob/main/TA_BUILD.md) explains how to adapt the slides quickly. 
 
 ## Before the first class:
-- [ ] 💻 Install R and R Studio.
-- [ ] 📥 Download the materials of the first lecture (it can take a few days to set up your Wi-Fi access on campus)
+- 💻 Install R and R Studio.
+- 📥 Download the materials of the first lecture (it can take a few days to set up your Wi-Fi access on campus)
 
 ## Lectures:
 Lectures will take place in the computer room *R2-07* at Campus Jourdan. Feel free to bring your own laptop, especially if you're not used to the 🇫🇷🇧🇪AZERTY keyboard.
