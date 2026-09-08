@@ -20,24 +20,15 @@ The original course was created by [Louis Sirugue](https://github.com/LouisSirug
 4. Econometrics in R 
     - ⚠️ Material on its way!
 
+### Cheatsheets
 
-## Cheatsheets
-
-<table>
-    <tr>
-        <td align="center"><a href="cheatsheets/baser.pdf"><img src="cheatsheets/baser.png" alt="Base R cheatsheet" width="220"></a><br>Base R</td>
-        <td align="center"><a href="cheatsheets/dplyr.pdf"><img src="cheatsheets/dplyr.png" alt="dplyr cheatsheet" width="220"></a><br>dplyr</td>
-        <td align="center"><a href="cheatsheets/ggplot.pdf"><img src="cheatsheets/ggplot.png" alt="ggplot2 cheatsheet" width="220"></a><br>ggplot2</td>
-    </tr>
-    <tr>
-        <td align="center"><a href="cheatsheets/latex.pdf"><img src="cheatsheets/latex.png" alt="LaTeX cheatsheet" width="220"></a><br>LaTeX</td>
-        <td align="center"><a href="cheatsheets/readr.pdf"><img src="cheatsheets/readr.png" alt="readr cheatsheet" width="220"></a><br>readr</td>
-        <td align="center"><a href="cheatsheets/rmarkdown.pdf"><img src="cheatsheets/rmarkdown.png" alt="R Markdown cheatsheet" width="220"></a><br>R Markdown</td>
-    </tr>
-    <tr>
-        <td align="center"><a href="cheatsheets/rstudio.pdf"><img src="cheatsheets/rstudio.png" alt="RStudio cheatsheet" width="220"></a><br>RStudio</td>
-    </tr>
-</table>
+<a href="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/rstudio.pdf"><img style="margin-left:7cm;margin-top:2.3cm;" src="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/rstudio.png" width="100" alt="RStudio cheatsheet"></a>
+<a href="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/baser.pdf"><img style="margin-left:-1.45cm;margin-top:-2.3cm;" src="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/baser.png" width="100" alt="Base R cheatsheet"></a>
+<a href="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/readr.pdf"><img style="margin-top:2.3cm;margin-left:-1.45cm;" src="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/readr.png" width="100" alt="readr cheatsheet"></a>
+<a href="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/dplyr.pdf"><img style="margin-top:-2.3cm;margin-left:-1.45cm;" src="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/dplyr.png" width="100" alt="dplyr cheatsheet"></a>
+<a href="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/ggplot.pdf"><img style="margin-top:2.3cm;margin-left:-1.45cm;" src="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/ggplot.png" width="100" alt="ggplot2 cheatsheet"></a>
+<a href="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/rmarkdown.pdf"><img style="margin-top:-2.3cm;margin-left:-1.45cm;" src="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/rmarkdown.png" width="100" alt="R Markdown cheatsheet"></a>
+<a href="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/latex.pdf"><img style="margin-top:2.3cm;margin-left:-1.45cm;" src="https://elisaalonsoh.github.io/intro_to_R/cheatsheets/latex.png" width="100" alt="LaTeX cheatsheet"></a>
 
 ## Extra material
 There are many useful material online to become at R, here are some recommendations:
