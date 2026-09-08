@@ -328,7 +328,7 @@ maxcal
 </ul>
 
 ```{r, eval = F}
-wid <- rio::import(here::here("lecture2", "slides_elements", "data", "wid.csv"))
+wid <- rio::import(here::here("lecture2", "wid.csv"))
 ```
 
 ```{r, echo = F}

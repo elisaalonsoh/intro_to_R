@@ -6,24 +6,15 @@ version without editing generated files.
 
 ## 1. Repository structure
 
-Run all commands below from the repository root, the directory containing this
-file, `home.Rmd`, and `render.R`.
-
 ```text
 intro_to_R/
-|-- home.Rmd                    Homepage source
-|-- home.html                   Generated light homepage
-|-- home_dark.html              Generated dark homepage
-|-- render.R                    Main HTML build script
-|-- render.Rmd                  Documented alternative build script
-|-- glossary.R                  Optional glossary helper
 |-- cheatsheets/                PDF and image reference sheets
 |-- site_elements/              Shared site assets and code
 |-- lecture1/
 |-- lecture2/
 |-- lecture3/
 |-- lecture4/
-`-- BUILD.md                   This guide
+`-- TA_BUILD.md                   This guide
 ```
 
 Each lecture has the same main layout:
@@ -75,25 +66,6 @@ Install DeckTape once from PowerShell, Command Prompt, or a terminal:
 ```text
 npm install -g decktape
 ```
-
-## 3. Render the HTML course
-
-Open R or RStudio in the repository root and run:
-
-```r
-source("render.R")
-```
-
-This creates the HTML version of all four lectures and refreshes the root
-`home.html` homepage.
-
-From a terminal, the equivalent command is:
-
-```text
-Rscript render.R
-```
-
-The build expects the current working directory to be the repository root.
 
 ## 4. Create the PDF slides
 
