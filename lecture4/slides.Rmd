@@ -25,7 +25,7 @@ editor_options:
 <style> .left-column {width: 65%;} .right-column {width: 31%;} </style>
 
 ```{r setup, include = FALSE}
-source(paste0(getwd(), "/../site_elements/style.R"))
+source(here::here("site_elements", "style.R"))
 
 stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
@@ -46,7 +46,7 @@ showasecplot <- T
 --
 
 ```{r, eval = F}
-rio::import(here::here("slides_elements","data", "ligue1.csv"))
+rio::import(here::here("lecture4", "slides_elements", "data", "ligue1.csv"))
                                                     #
                                                     #
                                                     #
@@ -77,7 +77,7 @@ rio::import(here::here("slides_elements","data", "ligue1.csv"))
 #### Manipulate data with `dplyr`
 
 ```{r, eval= F}
-rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
+rio::import(here::here("lecture4", "slides_elements", "data", "ligue1.csv")) %>%
   select(Home, xG, Score, xG.1, Away)               # Keep/drop certain columns
                                                     #
                                                     #
@@ -107,7 +107,7 @@ rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
 #### Manipulate data with `dplyr`
 
 ```{r, eval = F}
-rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
+rio::import(here::here("lecture4", "slides_elements", "data", "ligue1.csv")) %>%
   select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
   mutate(home_winner = xG > xG.1)                   # Create a new variable
                                                     #
@@ -138,7 +138,7 @@ rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
 #### Manipulate data with `dplyr`
 
 ```{r, eval = F}
-rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
+rio::import(here::here("lecture4", "slides_elements", "data", "ligue1.csv")) %>%
   select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
   mutate(home_winner = xG > xG.1) %>%               # Create a new variable
   filter(Home == "Rennes")                          # Keep/drop certain rows 
@@ -168,7 +168,7 @@ rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
 #### Manipulate data with `dplyr`
 
 ```{r, eval = F}
-rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
+rio::import(here::here("lecture4", "slides_elements", "data", "ligue1.csv")) %>%
   select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
   mutate(home_winner = xG > xG.1) %>%               # Create a new variable
   filter(Home == "Rennes") %>%                      # Keep/drop certain rows
@@ -198,7 +198,7 @@ rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
 #### Manipulate data with `dplyr`
 
 ```{r}
-rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
+rio::import(here::here("lecture4", "slides_elements", "data", "ligue1.csv")) %>%
   select(Home, xG, Score, xG.1, Away) %>%           # Keep/drop certain columns
   mutate(home_winner = xG > xG.1) %>%               # Create a new variable
   filter(Home == "Rennes") %>%                      # Keep/drop certain rows
@@ -216,12 +216,12 @@ rio::import(here::here("slides_elements","data", "ligue1.csv")) %>%
 --
 
 ```{r, eval = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
-ggplot(rio::import(here::here("slides_elements","data", "wid.csv")))                                         # Data
+ggplot(rio::import(here::here("lecture4", "slides_elements", "data", "wid.csv")))                                         # Data
                                                                     #
 ```
 
 ```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
-ggplot(rio::import(here::here("slides_elements","data", "wid.csv")))                                         # Data
+ggplot(rio::import(here::here("lecture4", "slides_elements", "data", "wid.csv")))                                         # Data
                                                                     #
 ```
 
@@ -232,12 +232,12 @@ ggplot(rio::import(here::here("slides_elements","data", "wid.csv")))            
 #### Plot data with `ggplot()`
  
 ```{r, eval = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
-ggplot(rio::import(here::here("slides_elements","data", "wid.csv")), aes(x = inc_head, y = top1))            # Data & aesthetics
+ggplot(rio::import(here::here("lecture4", "slides_elements", "data", "wid.csv")), aes(x = inc_head, y = top1))            # Data & aesthetics
                                                                     #
 ```
  
 ```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
-ggplot(rio::import(here::here("slides_elements","data", "wid.csv")), aes(x = inc_head, y = top1))            # Data & aesthetics
+ggplot(rio::import(here::here("lecture4", "slides_elements", "data", "wid.csv")), aes(x = inc_head, y = top1))            # Data & aesthetics
                                                                     #
 ```
 
@@ -248,12 +248,12 @@ ggplot(rio::import(here::here("slides_elements","data", "wid.csv")), aes(x = inc
 #### Plot data with `ggplot()`
 
 ```{r, eval = F, fig.width = 8, fig.height = 4.5, out.width=  "60%"}
-ggplot(rio::import(here::here("slides_elements","data", "wid.csv")), aes(x = inc_head, y = top1)) +          # Data & aesthetics
+ggplot(rio::import(here::here("lecture4", "slides_elements", "data", "wid.csv")), aes(x = inc_head, y = top1)) +          # Data & aesthetics
   geom_point()                                                      # Geometry
 ```
 
 ```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width=  "60%"}
-ggplot(rio::import(here::here("slides_elements","data", "wid.csv")), aes(x = inc_head, y = top1)) +          # Data & aesthetics
+ggplot(rio::import(here::here("lecture4", "slides_elements", "data", "wid.csv")), aes(x = inc_head, y = top1)) +          # Data & aesthetics
   geom_point()                                                      # Geometry
 ```
 
@@ -302,7 +302,7 @@ output: html_document
 
 `r ''````{r, echo = F, message = F, warning = F}
 library(ggplot2) # Load package
-starbucks <- rio::import(here::here("slides_elements","data", "starbucks.csv")) # Load data
+starbucks <- rio::import(here::here("lecture4", "slides_elements", "data", "starbucks.csv")) # Load data
 ```
 
 Nutritional values of `r "\u0060r nrow(starbucks)\u0060"` *starbucks* beverages
@@ -335,7 +335,7 @@ output: html_document
 
 `r ''````{r, echo = F, message = F, warning = F}
 library(ggplot2) # Load package
-starbucks <- rio::import(here::here("slides_elements","data", "starbucks.csv")) # Load data
+starbucks <- rio::import(here::here("lecture4", "slides_elements", "data", "starbucks.csv")) # Load data
 ```
 
 Nutritional values of `r "\u0060r nrow(starbucks)\u0060"` *starbucks* beverages
@@ -449,7 +449,7 @@ ggplot(starbucks, aes(x = Calories, y = Cholesterol,
 <p style = "margin-bottom:1.25cm;"></p>
 
 ```{r}
-ggcurve <- rio::import(here::here("slides_elements","data", "ggcurve.csv"))
+ggcurve <- rio::import(here::here("lecture4", "slides_elements", "data", "ggcurve.csv"))
 str(ggcurve)
 ```
 
@@ -1492,7 +1492,7 @@ lm(ige ~ continent, ggcurve)
 --
 
 ```{r}
-asec <- read.csv("slides_elements/data/asec.csv")
+asec <- read.csv(here::here("lecture4", "slides_elements", "data", "asec.csv"))
 str(asec)
 ```
 
@@ -1788,7 +1788,7 @@ class: inverse, hide-logo
 --
 
 ```{r}
-wid <- read.csv("slides_elements/data/wid.csv")
+wid <- read.csv(here::here("lecture4", "slides_elements", "data", "wid.csv"))
 ```
 
 <p style = "margin-bottom:2cm;"></p>
