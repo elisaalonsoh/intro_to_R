@@ -5,6 +5,7 @@ author: "<br>Louis SIRUGUE"
 date: "M1 APE - Fall 2022"
 output:
   xaringan::moon_reader:  
+    self_contained: true
     css: 
         - slides_elements/xaringan-themer.css
         - slides_elements/theme.css
@@ -23,6 +24,10 @@ editor_options:
 
 ```{r setup, include = FALSE}
 source(paste0(getwd(), "/../site_elements/style.R"))
+library(knitr)
+library(dplyr)
+library(ggplot2)
+library(DT)
 stargazer <- stargazer::stargazer
 theme_minimal <- theme_Rcourse
 options(htmltools.dir.version = F)

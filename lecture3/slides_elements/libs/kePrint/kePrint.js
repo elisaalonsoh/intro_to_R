@@ -1,4 +1,3 @@
-if (typeof $ !== "undefined") {
 $(document).ready(function(){
     if (typeof $('[data-toggle="tooltip"]').tooltip === 'function') {
         $('[data-toggle="tooltip"]').tooltip();
@@ -7,4 +6,3 @@ $(document).ready(function(){
         $('[data-toggle="popover"]').popover();
     }
 });
-}
