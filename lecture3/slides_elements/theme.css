@@ -24,7 +24,7 @@ h1, h2, h3 {
 }
 
 .title-slide {
-  background-image: url(title_bg.png);
+  background-image: url(slides_elements/figures/title_bg.png);
   background-size: cover;
 }
 

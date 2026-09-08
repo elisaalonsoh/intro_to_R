@@ -20,7 +20,8 @@ Lectures will take place in the computer room *R2-07* at Campus Jourdan. Feel fr
     - 📄 [Html slides](https://elisaalonsoh.github.io/intro_to_R/lecture2/slides.html#1), [PDF slides](https://elisaalonsoh.github.io/intro_to_R/lecture2/slides.pdf)
     - 📊 Data: [starbucks.csv](https://elisaalonsoh.github.io/intro_to_R/lecture2/slides_elements/data/starbucks.csv), [wid.csv](https://elisaalonsoh.github.io/intro_to_R/lecture2/slides_elements/data/wid.csv)
 3. R Markdown, LaTeX and other tools for reproducible research
-    - ⚠️ Material on its way!
+    - 📄 [Html slides](https://elisaalonsoh.github.io/intro_to_R/lecture3/slides.html#1), [PDF slides](https://elisaalonsoh.github.io/intro_to_R/lecture3/slides.pdf)
+    - 📊 Data: [fichier_prenoms.csv](https://elisaalonsoh.github.io/intro_to_R/lecture3/slides_elements/data/fichier_prenoms.csv)
 4. Econometrics in R 
     - ⚠️ Material on its way!
 

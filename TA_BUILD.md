@@ -14,7 +14,6 @@ intro_to_R/
 |-- lecture1/
 |-- lecture2/
 |-- lecture3/
-|-- lecture3-quarto/           Additional Quarto and LaTeX lecture deck
 |-- lecture4/
 `-- site_elements/            Shared R code, CSS, and images
 ```
@@ -37,9 +36,7 @@ lectureN/
 ```
 
 Edit the `.Rmd`, CSS, HTML includes, or data files. Do not edit generated HTML
-or files in `slides_elements/libs/` directly. The current repository has no
-separate `home.Rmd`, `render.R`, glossary spreadsheet, or downloadable data
-archive; the published links are documented in `README.md`.
+or files in `slides_elements/libs/` directly. 
 
 ## 2. Install prerequisites
 
@@ -59,13 +56,8 @@ install.packages(c(
 ))
 ```
 
-These packages cover the five active `slides.Rmd` files and the shared code in
-`site_elements/style.R`. Packages used only by archived experiments are not
-needed for the normal build. Install them if you plan to run those files:
-
-```r
-install.packages(c("gganimate", "transformr"))
-```
+These packages cover the four active `slides.Rmd` files and the shared code in
+`site_elements/style.R`. 
 
 Install DeckTape once from PowerShell or a terminal:
 
@@ -80,28 +72,32 @@ folder is important because the slide sources use paths relative to that
 folder.
 
 ```r
-for (lecture in paste0("lecture", 1:4)) {
+render_clean <- function(lecture) {
   rmarkdown::render(
     file.path(lecture, "slides.Rmd"),
-    knit_root_dir = lecture
+    knit_root_dir = lecture,
+    clean = TRUE
   )
+  unlink(file.path(lecture, "slides.knit.md"), force = TRUE)
+  unlink(file.path(lecture, "slides_files"), recursive = TRUE, force = TRUE)
+}
+
+for (lecture in paste0("lecture", 1:4)) {
+  render_clean(lecture)
 }
 ```
 
 To render only one lecture:
 
 ```r
-rmarkdown::render("lecture2/slides.Rmd", knit_root_dir = "lecture2")
+render_clean("lecture2")
 ```
 
-The additional Quarto and LaTeX deck uses the same Xaringan output and can be
+The additional R Markdown and LaTeX deck uses the same Xaringan output and can be
 rendered with:
 
 ```r
-rmarkdown::render(
-  "lecture3-quarto/slides.Rmd",
-  knit_root_dir = "lecture3-quarto"
-)
+render_clean("lecture3-rmarkdown")
 ```
 
 Open the generated `lectureN/slides.html` and check figures, datasets, links,
@@ -120,6 +116,11 @@ decktape remark lecture4/slides.html lecture4/slides.pdf
 
 DeckTape reads the existing HTML and does not read the `.Rmd` files directly,
 so rerender HTML after changing slide content, paths, images, or headers.
+The cleanup lines remove intermediate `slides.knit.md` and `slides_files/`
+output after rendering; they do not remove the final HTML. The RStudio Render
+button may leave an empty `slides_files/` directory because it does not run
+these final cleanup lines; use the command above when a clean folder is
+required.
 
 ## 5. Adapt a lecture
 
@@ -146,7 +147,7 @@ lectures, so rerender all five decks afterward.
 
 ## 7. Before publishing
 
-1. Render all five HTML slide decks, including `lecture3-quarto` when it is
+1. Render all five HTML slide decks, including `lecture3-rmarkdown` when it is
   part of the published course.
 2. Recreate any changed PDFs with DeckTape.
 3. Open the generated HTML and PDF files and check figures, data links,
