@@ -4,7 +4,7 @@ This repository hosts all the material of the course *Introduction to R Programm
 
 The aim of the course is to provide you with **basic R knowledge** in data manipulation, visualization, how to create reports with R markdown/Quarto, and basic econometric analysis in R; which will be the skills necessary to carry out the empirical homework and research project in the program. The course is structured in 4 classes of 2 hours. No preliminary knowledge of programming is required, but part of the content of the last lecture is based on what you're going to see in Econometrics I. 
 
-The original course was created by [Louis Sirugue](https://github.com/LouisSirugue/intro_to_R), and this repository is an updated version where I have changed some slides and simplified the repository structure. For **future TAs**, you can fork this course to your own github in order to change the content. The markdown file `TA_BUILD.md` explains how to adapt the slides quickly. 
+The original course was created by [Louis Sirugue](https://github.com/LouisSirugue/intro_to_R), and this repository is an updated version where I have changed some slides and simplified the repository structure. For **future TAs**, you can fork [this course](https://github.com/elisaalonsoh/intro_to_R) to your own github in order to change the content. The markdown file [TA_BUILD.md](https://github.com/elisaalonsoh/intro_to_R/blob/main/TA_BUILD.md) explains how to adapt the slides quickly. 
 
 ## Before the first class:
 - [ ] 💻 Install R and R Studio.
