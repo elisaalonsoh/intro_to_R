@@ -1,78 +1,104 @@
 # Maintaining and Building the Course
 
-This guide is for someone opening the repository for the first time. It explains
-where to edit the course, how to render it, and how to create a customized
-version without editing generated files.
+This guide is for a TA opening the repository for the first time. It explains
+the current layout, the packages required to render every lecture, and the
+workflow for adapting the slides.
 
 ## 1. Repository structure
 
 ```text
 intro_to_R/
-|-- cheatsheets/                PDF and image reference sheets
-|-- site_elements/              Shared site assets and code
+|-- README.md                  Course information and published links
+|-- TA_BUILD.md               This guide
+|-- cheatsheets/              PDF and image reference sheets
 |-- lecture1/
 |-- lecture2/
 |-- lecture3/
 |-- lecture4/
-`-- TA_BUILD.md                   This guide
+`-- site_elements/            Shared R code, CSS, and images
 ```
 
-Each lecture has the same main layout:
+Each lecture contains one editable source and its assets:
 
 ```text
 lectureN/
-|-- slides.Rmd                  Main editable slide source
-|-- slides.html                 Generated light HTML slides
-|-- slides.pdf                  Generated light PDF slides
+|-- slides.Rmd                Main slide source
+|-- slides.html               Generated HTML slides
 `-- slides_elements/
-	 |-- data/                   Lecture datasets and downloadable data.zip
-	 |-- figures/                Images displayed in the lecture
-	 |-- libs/                   Libraries copied by knitr/xaringan
-	 |-- archive/                Old examples and generated leftovers
-	 |-- header.html              Lecture HTML header
-	 |-- insert-logo.html        Light-slide navigation logo
-	 |-- theme.css               Lecture-specific theme overrides
-	 `-- xaringan-themer.css     Generated base slide theme
+    |-- data/                 Lecture datasets
+    |-- figures/              Generated or inserted figures
+    |-- libs/                 Browser libraries copied by xaringan
+    |-- archive/              Reference material, not part of the build
+    |-- header.html
+    |-- insert-logo.html
+    |-- theme.css
+    `-- xaringan-themer.css
 ```
 
-`site_elements/` contains files shared by the whole course: common R and CSS
-code, homepage icons, logos, helper scripts, and the single canonical
-`functions.xlsx` glossary input.
-
-`archive/` contains material that is kept for reference but is not part of the
-main build. Do not edit generated HTML or PDF files directly; change their
-`.Rmd` source and render them again.
+Edit the `.Rmd`, CSS, HTML includes, or data files. Do not edit generated HTML
+or files in `slides_elements/libs/` directly. The current repository has no
+separate `home.Rmd`, `render.R`, glossary spreadsheet, or downloadable data
+archive; the published links are documented in `README.md`.
 
 ## 2. Install prerequisites
 
-Install the following software:
+Install:
 
-1. R, with `rmarkdown`, `xaringan`, `xaringanthemer`, `tidyverse`,
-	`kableExtra`, and the packages used by the lecture being edited.
-2. Node.js and npm, required for PDF conversion with DeckTape.
-3. A Chromium-based browser, used by DeckTape to print HTML slides.
+1. R and RStudio (or another R IDE).
+2. Node.js and npm, required only for creating PDFs with DeckTape.
+3. A Chromium-based browser, used by DeckTape.
 
-In R, install the common packages with:
+In a fresh R installation, run this complete package setup once:
 
 ```r
 install.packages(c(
-  "rmarkdown", "xaringan", "xaringanthemer", "tidyverse", "kableExtra",
-  "readxl"
+  "rmarkdown", "knitr", "xaringan", "tidyverse", "ggthemes",
+  "kableExtra", "countdown", "stargazer", "here", "rio", "ggpubr",
+  "scales", "DT", "reshape2", "plotly", "car", "huxtable", "jtools"
 ))
 ```
 
-Install DeckTape once from PowerShell, Command Prompt, or a terminal:
+These packages cover the four active `slides.Rmd` files and the shared code in
+`site_elements/style.R`. Packages used only by archived experiments are not
+needed for the normal build. Install them if you plan to run those files:
+
+```r
+install.packages(c("gganimate", "transformr"))
+```
+
+Install DeckTape once from PowerShell or a terminal:
 
 ```text
 npm install -g decktape
 ```
 
-## 4. Create the PDF slides
+## 3. Render the HTML slides
 
-DeckTape converts the rendered Remark/Xaringan HTML slides to PDF. After the
-HTML build finishes, run the commands below. Always rerun the HTML build after
-changing paths, images, headers, or slide content; DeckTape reads the existing
-HTML files and does not read the `.Rmd` files directly.
+Run this from the repository root. Setting `knit_root_dir` to the lecture
+folder is important because the slide sources use paths relative to that
+folder.
+
+```r
+for (lecture in paste0("lecture", 1:4)) {
+  rmarkdown::render(
+    file.path(lecture, "slides.Rmd"),
+    knit_root_dir = lecture
+  )
+}
+```
+
+To render only one lecture:
+
+```r
+rmarkdown::render("lecture2/slides.Rmd", knit_root_dir = "lecture2")
+```
+
+Open the generated `lectureN/slides.html` and check figures, datasets, links,
+code output, and slide breaks.
+
+## 4. Create PDF slides
+
+After rendering the HTML, run DeckTape from the repository root:
 
 ```text
 decktape remark lecture1/slides.html lecture1/slides.pdf
@@ -81,93 +107,39 @@ decktape remark lecture3/slides.html lecture3/slides.pdf
 decktape remark lecture4/slides.html lecture4/slides.pdf
 ```
 
-Check the PDFs visually after rendering, especially slides containing large
-images, tables, or incremental content.
+DeckTape reads the existing HTML and does not read the `.Rmd` files directly,
+so rerender HTML after changing slide content, paths, images, or headers.
 
-## 5. Adapt one lecture
+## 5. Adapt a lecture
 
-Use this workflow when changing lecture content:
+1. Edit `lectureN/slides.Rmd` and its YAML metadata or R Markdown chunks.
+2. Put images in `lectureN/slides_elements/figures/`.
+3. Put datasets in `lectureN/slides_elements/data/`.
+4. Reference assets relative to the lecture, for example
+   `slides_elements/data/example.csv`.
+5. Render the changed lecture using the command above.
+6. Recreate its PDF with DeckTape if the published PDF should change.
 
-1. Open `lectureN/slides.Rmd`.
-2. Change the YAML metadata at the top if the title, author, date, theme, or
-	included files need to change.
-3. Edit the slide content below the YAML. A line containing `---` starts a new
-	slide in Xaringan.
-4. Put new lecture images in `lectureN/slides_elements/figures/`.
-5. Put new lecture datasets in `lectureN/slides_elements/data/`.
-6. Reference images with paths such as:
-
-	```html
-	<img src="slides_elements/figures/example.png" width="700">
-	```
-
-7. Reference data with paths such as:
-
-	```r
-	data <- read.csv("slides_elements/data/example.csv")
-	```
-
-8. Update or add code examples in the R Markdown chunks.
-9. Run `source("render.R")` from the repository root.
-10. Recreate the light and dark PDFs with DeckTape.
-11. Open the generated HTML and PDF files and check images, links, code, and
-	 slide breaks.
-
-Do not place new files directly in the lecture root. Keep the root limited to
-`slides.Rmd` and its generated slide outputs.
+A line containing `---` starts a new Xaringan slide. Keep lecture-specific
+assets inside that lecture and shared styling or helper code in
+`site_elements/`.
 
 ## 6. Change the visual style
 
-For a single lecture, edit:
+For one lecture, edit its `slides_elements/theme.css`, `header.html`, or
+`insert-logo.html`. The `xaringan-themer.css` file is generated theme CSS and
+should only be changed when deliberately regenerating the theme.
 
-- `lectureN/slides_elements/theme.css` for lecture-specific colors, title
-  backgrounds, and CSS overrides.
-- `lectureN/slides_elements/xaringan-themer.css` only when regenerating the
-  base theme with `xaringanthemer`.
-- `lectureN/slides_elements/insert-logo.html` for the navigation logo behavior.
-- `lectureN/slides_elements/header.html` for the lecture favicon/header.
+Changes to `site_elements/style.R` or shared assets can affect multiple
+lectures, so rerender all four lectures afterward.
 
-For site-wide styling or logos, edit the corresponding file in
-`site_elements/`. This affects the homepage and/or all lectures, so render the
-whole course afterward.
+## 7. Before publishing
 
-## 7. Change the homepage
-
-Edit `home.Rmd` at the repository root. It controls:
-
-- the homepage introduction and schedule;
-- links to lecture HTML, PDF, and data files;
-- the contents generated from the four `slides.Rmd` files;
-- the function glossary;
-- the homepage navigation and course contents.
-
-Homepage assets belong in `site_elements/`. After editing, run:
-
-```r
-source("render.R")
-```
-
-The temporary table-of-contents fragments are generated during rendering and
-should not be edited manually.
-
-## 8. Update the glossary
-
-The glossary input is `site_elements/functions.xlsx`. To update the function
-list, edit that spreadsheet and rerun the relevant homepage build. The helper
-script `glossary.R` can generate documentation URLs, but it requires internet
-access and the relevant R packages.
-
-## 9. Before publishing
-
-Use this checklist:
-
-1. Render the HTML files from the repository root.
-2. Recreate all four lecture PDFs.
-3. Open every lecture HTML and PDF.
-4. Check that figures, datasets, navigation logos, and homepage links work.
-5. Confirm that the homepage links point to the current lecture outputs and
-	`slides_elements/data/data.zip` files.
-6. Check `git status` and ensure only intended source, asset, and generated
-	output changes are present.
+1. Render all four HTML slide decks.
+2. Recreate any changed PDFs with DeckTape.
+3. Open the generated HTML and PDF files and check figures, data links,
+   navigation, code output, and slide breaks.
+4. Check `git status` and keep only intended source, asset, and generated-output
+   changes.
 
 The repository does not require a commit as part of the build process.
