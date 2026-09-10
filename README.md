@@ -23,7 +23,8 @@ Lectures will take place in the computer room *R2-07* at Campus Jourdan. Feel fr
     - 📄 [Html slides](https://elisaalonsoh.github.io/intro_to_R/lecture3/slides.html#1), [PDF slides](https://elisaalonsoh.github.io/intro_to_R/lecture3/slides.pdf)
     - 📊 Data: [fichier_prenoms.csv](https://elisaalonsoh.github.io/intro_to_R/lecture3/slides_elements/data/fichier_prenoms.csv)
 4. Econometrics in R 
-    - ⚠️ Material on its way!
+    - [Html slides](https://elisaalonsoh.github.io/intro_to_R/lecture4/slides.html#1), [PDF slides](https://elisaalonsoh.github.io/intro_to_R/lecture4/slides.pdf)
+    - 📊 Data: [ggcurve.csv](https://elisaalonsoh.github.io/intro_to_R/lecture4/slides_elements/data/ggcurve.csv), [asec.csv](https://elisaalonsoh.github.io/intro_to_R/lecture4/slides_elements/data/asec.csv)
 
 ## Cheatsheets
 
