@@ -286,7 +286,7 @@ output: html_document
 
 ### What we've seen so far
 
-#### Write reports with `R markdown`
+#### Write reports with `Quarto`
 
 <p style = "margin-bottom:-.5cm;"></p>
 
@@ -296,7 +296,7 @@ output: html_document
 ---
 title: "Starbucks"
 author: "Louis Sirugue"
-output: html_document
+format: html
 ---
 
 `r ''````{r, echo = F, message = F, warning = F}
@@ -319,7 +319,7 @@ Nutritional values of `r "\u0060r nrow(starbucks)\u0060"` *starbucks* beverages
 
 ### What we've seen so far
 
-#### Write reports with `R markdown`
+#### Write reports with `Quarto`
 
 <p style = "margin-bottom:-.5cm;"></p>
 
@@ -329,7 +329,7 @@ Nutritional values of `r "\u0060r nrow(starbucks)\u0060"` *starbucks* beverages
 ---
 title: "Starbucks"
 author: "Louis Sirugue"
-output: html_document
+output: html
 ---
 
 `r ''````{r, echo = F, message = F, warning = F}
@@ -377,7 +377,7 @@ ggplot(starbucks, aes(x = Calories, y = Cholesterol,
 <p style = "margin-bottom:1.5cm;"></p>
 
 <ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Case study</b></li>
+  <li><b>2. Getting to the right model</b></li>
   <ul style = "list-style: none">
     <li>2.1. Variable transformation</li>
     <li>2.2. Functional form</li>
@@ -393,7 +393,7 @@ ggplot(starbucks, aes(x = Calories, y = Cholesterol,
   <li><b>3. Inference</b></li>
   <ul style = "list-style: none">
     <li>3.1. Hypothesis testing</li>
-    <li>3.2. Confidence intervals</li>
+    
   </ul>
 </ul>
  
@@ -1644,13 +1644,19 @@ as.factor(asec$Race) %>%
 
 .pull-right[
 ```{r}
-as.factor(asec$Race) %>% 
-  relevel("White") %>% 
-  levels()
+asec <- asec %>%
+  mutate(Race = relevel(as.factor(Race), ref = "White"))
+
+levels(asec$Race)
 ```
 ]
 
----
+Another option would have been to modify our `Race` variable directly in the regression call:
+```{r, eval = F}
+lm(Earnings ~ relevel(as.factor(Race), ref = "White"), asec)
+```
+
+
 ---
 
 class: inverse, hide-logo
@@ -1752,6 +1758,7 @@ lm(Earnings ~ Black + Other, asec)
 ```{r, echo = F}
 lm(Earnings ~ Black + Other, asec)
 ```
+
 ---
 
 ### 1. Regressions
@@ -1929,7 +1936,7 @@ lm(Earnings ~ White + Black + Other, asec)
 <p style = "margin-bottom:1.5cm;"></p>
 
 <ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Case study</b></li>
+  <li><b>2. Getting to the right model</b></li>
   <ul style = "list-style: none">
     <li>2.1. Variable transformation</li>
     <li>2.2. Functional form</li>
@@ -1945,7 +1952,7 @@ lm(Earnings ~ White + Black + Other, asec)
   <li><b>3. Inference</b></li>
   <ul style = "list-style: none">
     <li>3.1. Hypothesis testing</li>
-    <li>3.2. Confidence intervals</li>
+    
   </ul>
 </ul>
  
@@ -1965,38 +1972,10 @@ lm(Earnings ~ White + Black + Other, asec)
 
 ]
 
----
-
-<h3>Overview</h3>
-
-<p style = "margin-bottom:2.5cm;"></p>
-
-.pull-left[
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>1. Regressions &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>1.1. On continuous variables</li>
-    <li>1.2. On binary variables</li>
-    <li>1.3. On categorical variables</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.5cm;"></p>
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Case study</b></li>
-  <ul style = "list-style: none">
-    <li>2.1. Variable transformation</li>
-    <li>2.2. Functional form</li>
-    <li>2.3. Control variables</li>
-    <li>2.4. Interactions</li>
-  </ul>
-</ul>
-]
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.1. Variable transformation
 
@@ -2040,7 +2019,7 @@ lm(Earnings ~ Hours, asec)
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.1. Variable transformation
 
@@ -2071,7 +2050,7 @@ ggplot(asec, aes(x = Hours, y = Earnings)) +
 <p style="margin-bottom:1cm"></p>
 
 <ul>
-  <li>The joint distribution does <b>not seem adequate</b> on the the <b>y dimension</b></li>
+  <li>The regression does not fit well on the <b>y dimension</b></li>
 </ul>
 
 <ul>
@@ -2081,7 +2060,7 @@ ggplot(asec, aes(x = Hours, y = Earnings)) +
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.1. Variable transformation
 
@@ -2101,17 +2080,19 @@ ggplot(asec, aes(x = Earnings)) +
 .right-column[
 <p style="margin-bottom:2cm"></p>
 
-<center>It's clearly <b>log-normal</b></center>
+<ul>
+  <li><center>The estimated probability density function has a long right tail</b></center></li>
+</ul>
 </ul>
 
 <p style="margin-bottom:1.5cm"></p>
 
-<center>&#10140; Let's <b>plot the log</b> of it</center>
+<center>&#10140; The distribution is likely <b>log-normal</b>! </center>
 ]
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.1. Variable transformation
 
@@ -2131,7 +2112,7 @@ ggplot(asec, aes(x = log(Earnings))) +
 .right-column[
 <p style="margin-bottom:2cm"></p>
 
-<center><b>Better!</b></center>
+<center><b>Better with a log-transformation!</b></center>
 
 <p style="margin-bottom:1.5cm"></p>
 
@@ -2140,7 +2121,7 @@ ggplot(asec, aes(x = log(Earnings))) +
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.2. Functional form
 
@@ -2172,12 +2153,12 @@ ggplot(asec, aes(x = Hours, y = log(Earnings))) +
 
 <p style="margin-bottom:1.5cm"></p>
 
-<center>&#10140; But something <b>still</b> feels <b>off</b></center>
+<center>&#10140; But the fit looks weird for low and high number of hours</center>
 ]
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.2. Functional form
 
@@ -2208,7 +2189,7 @@ ggplot(asec %>% mutate(fit = (Hours * coefs[2, 1]) + (Hours^2 * coefs[3, 1]) + c
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.2. Functional form
 
@@ -2263,12 +2244,12 @@ lm(lEarnings ~ Hours + sqHours, asec)
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.3. Control variables
 
 <ul>
-  <li>This positive <b>relationship</b> could be <b>driven</b> by a <b>third variable</b></li>
+  <li>This positive <b>relationship</b> could be <b>driven</b> by a third variable (<b>omitted variable bias!)</b></li>
   <ul>
     <li><b>Males</b> tend both to work <b>part time less often</b> and to <b>earn more</b></li>
     <li>The <b>higher</b> the <b>hours</b>, the higher the <b>probability to be a male</b>, the higher the <b>expected earnings</b></li>
@@ -2316,62 +2297,26 @@ kable(tibble(` ` = c("Intercept", "Slope"),
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.3. Control variables
 
-.pull-left[
 <p style = "margin-bottom:1cm"></p>
-```{r, echo = F, fig.width = 8, fig.height = 5.5, out.width=  "100%", eval = showasecplot}
+
+```{r, echo = F, fig.width = 5, fig.height = 4, out.width=  "55%", eval = showasecplot}
 coefs <- summary(lm(log(Earnings) ~ Hours + Hours2 + Sex, asec %>% mutate(Hours2 = Hours * Hours)))$coefficients
 ggplot(asec %>% mutate(fit = (Hours * coefs[2, 1]) + (Hours^2 * coefs[3, 1]) + coefs[1, 1],
-                       fit = ifelse(Sex == "Male", fit + coefs[4, 1], fit)), 
+                        fit = ifelse(Sex == "Male", fit + coefs[4, 1], fit)),
        aes(x = Hours, y = log(Earnings), color = Sex)) +
-  geom_point(alpha = .1) + 
-  geom_line(aes(y = fit))
+  geom_point(alpha = .1) +
+  geom_line(aes(y = fit)) +
+  scale_color_manual(values = c("Female" = "coral", "Male" = "#00BFC4"))
 ```
-]
+
  
-.pull-right[
-<!-- -->
-```{r, echo = F, fig.width = 6, fig.height = 1.5, out.width= '100%', eval = showplotly}
-asec_plotly <- asec_plotly %>%
-  mutate(Male = as.numeric(Sex == "Male"),
-         color = ifelse(Male, "#6794A7", "#00A2D9"))
-petal_lm <- lm(lEarnings ~ poly(Hours, 2, raw=TRUE) + Male, asec_plotly)
-graph_reso <- 0.05
-
-#Setup Axis
-axis_x <- seq(min(asec_plotly$Hours), max(asec_plotly$Hours), by = graph_reso)
-axis_y <- seq(min(asec_plotly$Male), max(asec_plotly$Male), by = graph_reso)
-
-#Sample points
-petal_lm_surface <- expand.grid(Hours = axis_x, Male = axis_y, KEEP.OUT.ATTRS = F)
-petal_lm_surface$lEarnings <- predict.lm(petal_lm, newdata = petal_lm_surface)
-petal_lm_surface <- reshape2::acast(petal_lm_surface, Male ~ Hours, value.var = "lEarnings") #y ~ x
-
-plotly::plot_ly(asec_plotly, x = ~Hours, y = ~Male, z = ~lEarnings) %>% 
-  plotly::add_markers(size = 5, opacity = .2, color = ~color, colors = c("#6794A7", "#00A2D9"), showlegend=F) %>%
-  plotly::add_trace(z = petal_lm_surface,
-            x = axis_x,
-            y = axis_y,
-            type = "surface", 
-            colorscale ='YlGnBu',
-            opacity = .4) %>% 
-  plotly::layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
-         aspectratio = list(x = 2, y = 1, z = .5),
-         scene = list(xaxis = list(title = 'Hours'),
-                      yaxis = list(title = 'Male'),
-                      zaxis = list(title = 'lEarnings'),
-                      camera = list(eye = list(x = 0, y = -2, z = 0)))) %>% 
-  plotly::style(hoverinfo = 'skip')
-```
-<!-- -->
-] 
-
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.3. Control variables
 
@@ -2406,7 +2351,7 @@ lm(lEarnings ~ Hours + sqHours, asec)
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.4. Interactions
 
@@ -2457,55 +2402,24 @@ kable(tibble(` ` = c("Intercept", "Slope"),
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.4. Interactions
 
-.pull-left[
 <p style = "margin-bottom:1cm"></p>
-```{r, echo = F, fig.width = 8, fig.height = 5.5, out.width=  "100%", eval = showasecplot}
+
+```{r, echo = F, fig.width = 5, fig.height = 4, out.width=  "55%", eval = showasecplot}
 ggplot(asec, aes(x = Hours, y = log(Earnings), color = Sex)) +
-    geom_point(alpha = .1) + geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = F)
+    geom_point(alpha = .1) + geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = F) + 
+      scale_color_manual(values = c("Female" = "coral", "Male" = "#00BFC4"))
 ```
-]
+
  
-.pull-right[
-<!-- -->
-```{r, echo = F, fig.width = 7, fig.height = 1.5, out.width= '100%', fig.align="left", eval = showplotly}
-petal_lm <- lm(lEarnings ~ poly(Hours, 2, raw=TRUE) + Male + Male * Hours, asec_plotly)
-graph_reso <- 0.05
 
-#Setup Axis
-axis_x <- seq(min(asec_plotly$Hours), max(asec_plotly$Hours), by = graph_reso)
-axis_y <- seq(min(asec_plotly$Male), max(asec_plotly$Male), by = graph_reso)
-
-#Sample points
-petal_lm_surface <- expand.grid(Hours = axis_x, Male = axis_y, KEEP.OUT.ATTRS = F)
-petal_lm_surface$lEarnings <- predict.lm(petal_lm, newdata = petal_lm_surface)
-petal_lm_surface <- reshape2::acast(petal_lm_surface, Male ~ Hours, value.var = "lEarnings") #y ~ x
-
-plotly::plot_ly(asec_plotly, x = ~Hours, y = ~Male, z = ~lEarnings) %>% 
-  plotly::add_markers(size = 5, opacity = .2, color = ~color, colors = c("#6794A7", "#00A2D9"), showlegend=F) %>%
-  plotly::add_trace(z = petal_lm_surface,
-            x = axis_x,
-            y = axis_y,
-            type = "surface", 
-            colorscale ='YlGnBu',
-            opacity = .4) %>% 
-  plotly::layout(plot_bgcolor = "#DFE6EB", paper_bgcolor = "#DFE6EB", fig_bgcolor = "#DFE6EB",
-         aspectratio = list(x = 2, y = 1, z = .5),
-         scene = list(xaxis = list(title = 'Hours'),
-                      yaxis = list(title = 'Male'),
-                      zaxis = list(title = 'lEarnings'),
-                      camera = list(eye = list(x = 0, y = -2, z = 0)))) %>% 
-  plotly::style(hoverinfo = 'skip')
-```
-<!-- -->
-] 
 
 ---
 
-### 2. Case study
+### 2. Getting to the right model
 
 #### 2.4. Interactions
 
@@ -2567,7 +2481,7 @@ results[5, 4]
 <p style = "margin-bottom:1.5cm;"></p>
 
 <ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Case study &#10004;</b></li>
+  <li><b>2. Getting to the right model &#10004;</b></li>
   <ul style = "list-style: none">
     <li>2.1. Variable transformation</li>
     <li>2.2. Functional form</li>
@@ -2583,7 +2497,7 @@ results[5, 4]
   <li><b>3. Inference</b></li>
   <ul style = "list-style: none">
     <li>3.1. Hypothesis testing</li>
-    <li>3.2. Confidence intervals</li>
+    
   </ul>
 </ul>
  
@@ -2622,7 +2536,7 @@ results[5, 4]
 <p style = "margin-bottom:1.5cm;"></p>
 
 <ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Case study &#10004;</b></li>
+  <li><b>2. Getting to the right model &#10004;</b></li>
   <ul style = "list-style: none">
     <li>2.1. Variable transformation</li>
     <li>2.2. Functional form</li>
@@ -2638,7 +2552,7 @@ results[5, 4]
   <li><b>3. Inference</b></li>
   <ul style = "list-style: none">
     <li>3.1. Hypothesis testing</li>
-    <li>3.2. Confidence intervals</li>
+    
   </ul>
 </ul>
 ]
@@ -2650,12 +2564,44 @@ results[5, 4]
 #### 3.1. Hypothesis testing
 
 <ul>
-  <li>According to our previous regression, \(\hat{\beta_1}\) is significantly <b>different from 0</b></li>
-  <ul>
-    <li>But let's pretend that you know that this coefficient is equal to <b>.12 in Canada</b></li>
-    <li>How could we test whether or not our coefficient is <b>different from .12?</b></li>
-  </ul>
+  <li>\(\hat{\beta_1}\) is significantly <b>different from 0</b>, but could we test whether it is <b>different from a specific value</b>?</li>
+  <li> We want to use our sample estimates to conclude something about the population parameter ! </li>
+
 </ul>
+
+
+
+```{r, echo = FALSE}
+concepts <- tibble(
+  Concept = c("Null hypothesis", "Alternative hypothesis", "Test statistic",
+              "P-value", "Significance level"),
+  Description = c(
+    "The hypothesis to evaluate",
+    "The statement if the value differs from the null hypothesis",
+    "The tool (point estimate statistic formula) we use to decide if we reject or not the null hypothesis",
+    "The prob. of obtaining a test statistic just as extreme or more extreme than the observed test statistic assuming the null is true. *How surprised am I of observing \\(t\\) assuming \\(H_0\\) holds?*",
+    "A cutoff on the p-value: if the p-value does not fall below \\(\\alpha\\) we would \"fail to reject\" \\(H_0\\)"
+  ),
+  Example = c(
+    "\\(H_0: \\beta_1 \\geq .12\\)",
+    "\\(H_1: \\beta_1 < .12\\)",
+    "\\(t = \\dfrac{\\hat{\\beta} - .12}{s.e.(\\hat{\\beta})}\\)",
+    "",
+    "\\(\\alpha = 0.05\\)"
+  )
+)
+
+kable(concepts, escape = FALSE, align = "lll", caption = "") %>%
+  kable_styling(full_width = TRUE) %>%
+  column_spec(1, bold = TRUE)
+```
+
+---
+
+### 3. Inference
+
+#### 3.1. Hypothesis testing
+
 
 ```{r}
 results
@@ -2687,9 +2633,10 @@ t
 #### 3.1. Hypothesis testing
 
 <ul>
-  <li>And then we need the value of the <b>area outside the interval</b> \(\left[-t;t\right]\)</li>
+  <li>From a <b>Student-t</b> distribution with the correct number of <b>degrees of freedom</b> (#obs - #parameters) </li>
   <ul>
-    <li>From a <b>Student-t</b> distribution with the correct number of <b>degrees of freedom</b> (#obs - #parameters)</li>
+    <li> We need the value of the <b>area outside the interval</b> \(\left[-t;t\right]\), because we are testing a two-sided hypothesis </li>
+    <li> Our t-stat shows that the event is unlikely to happen if the null hypothesis is true, but we need to quantify how unlikely it is </li>
   </ul>
 </ul>
 
@@ -2697,7 +2644,7 @@ t
 
 <p style = "margin-bottom:1cm;"></p>
 
-```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "67%"}
+```{r, echo = F, fig.width = 8, fig.height = 4.5, out.width = "60%"}
 ggplot(tibble(x = rt(10000, nrow(asec) - nrow(results))) %>%
          filter(x>-4&x<4),
        aes(x = x)) + 
@@ -2718,87 +2665,32 @@ ggplot(tibble(x = rt(10000, nrow(asec) - nrow(results))) %>%
 #### 3.1. Hypothesis testing
 
 <ul>
-  <li>You can get the <b>area below</b> a certain <b>t-value</b> with the <b>pt()</b> function</i></li>
-  <ol>
-    <li></li>
-    <li></li>
-  </ol>
-</ul>
-
-<p style = "margin-bottom:1.5cm"></p>
-
-```{r, eval = F}
-pt( , )
-```
-
----
-
-### 3. Inference
-
-#### 3.1. Hypothesis testing
-
-<ul>
-  <li>You can get the <b>area below</b> a certain <b>t-value</b> with the <b>pt()</b> function</i></li>
-  <ol>
-    <li>The first argument is the <b>t-value</b></li>
-    <li></li>
-  </ol>
-</ul>
-
-<p style = "margin-bottom:1.5cm"></p>
-
-```{r, eval = F}
-pt(t, )
-```
-
----
-
-### 3. Inference
-
-#### 3.1. Hypothesis testing
-
-<ul>
-  <li>You can get the <b>area below</b> a certain <b>t-value</b> with the <b>pt()</b> function</i></li>
+  <li> Compute the <b>p-value</b>: the probability of getting sample evidence as or more extreme than what we observed, under the null hypothesis</li>
+  <li> You can get the <b>area below</b> a certain <b>t-value</b> with the <b>pt()</b> function</i></li>
   <ol>
     <li>The first argument is the <b>t-value</b></li>
     <li>The second argument is the number of <b>degrees of freedom</b></li>
   </ol>
 </ul>
 
+```{r}
+2* pt(t, nrow(asec) - nrow(results))
+```
+
+Making a decision:
+<p style = "text-align:center; font-size:0.85em">
+\(\text{if p-value} \leq \alpha \Rightarrow \text{reject } H_0\)
+</p>
+<p style = "text-align:center; font-size:0.85em">
+\(\text{if p-value} > \alpha \Rightarrow \text{fail to reject } H_0\)
+</p>
+
+<ul>
+  <li>Since <b>&alpha;</b> is the maximum p-value at which we reject <b>\(H_0\)</b>, we are ensuring that there is at most a <b>100 &times; &alpha;%</b> chance of making a <b>Type I error</b> (rejecting the null when it is true): a <b>5% chance</b> of mistakenly deciding that \(\beta_1 \geq .12\) when \(\beta_1 < .12\)</li>
+</ul>
+
 <p style = "margin-bottom:1.5cm"></p>
 
-```{r, eval = F}
-pt(t, nrow(asec) - nrow(results))
-```
---
-```{r, echo = F}
-pt(t, nrow(asec) - nrow(results))
-```
-
---
-
-<p style = "margin-bottom:1cm"></p>
-
-.pull-left[
-
- * We just have to multiply this value by 2 to obtain the p-value
-
-```{r}
-2 * pt(t, nrow(asec) - nrow(results))
-```
-]
-
---
-
-.pull-right[
-
- * Had our t-stat been positive we would have needed to multiply 1 - $t$ by 2 
- 
-```{r}
-2 * (1 - pt(abs(t), nrow(asec)-nrow(results)))
-```
-]
-
 ---
 
 ### 3. Inference
@@ -2806,61 +2698,15 @@ pt(t, nrow(asec) - nrow(results))
 #### 3.1. Hypothesis testing
 
 <ul>
-  <li>A very handy function for hypothesis testing is <b>linearHypothesis()</b> from the <b>car</b> package</li>
-  <ul>
-    <li></li>
-    <li></li>
-  </ul>
-</ul>
-
-```{r, echo = F}
-library(car)
-```
- 
-```{r, eval = F}
-linearHypothesis( , )
-```
-
----
-
-### 3. Inference
-
-#### 3.1. Hypothesis testing
-
-<ul>
-  <li>A very handy function for hypothesis testing is <b>linearHypothesis()</b> from the <b>car</b> package</li>
-  <ul>
-    <li>The first argument is the <b>model</b></li>
-    <li></li>
-  </ul>
-</ul>
- 
-```{r, eval = F}
-linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), )
-```
-
----
-
-### 3. Inference
-
-#### 3.1. Hypothesis testing
-
-<ul>
-  <li>A very handy function for hypothesis testing is <b>linearHypothesis()</b> from the <b>car</b> package</li>
+  <li> We can use the linearHypothesis() function from the `{car}` package to perform t-tests</li>
   <ul>
     <li>The first argument is the <b>model</b></li>
     <li>The second argument is the <b>hypothesis/es</b></li>
   </ul>
 </ul>
  
-```{r, eval = F}
-linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), c("Hours = .12"))
-```
-
---
-
 ```{r, echo = F}
-linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), c("Hours = .12"))
+car::linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), c("Hours = .12"))
 ```
 
 ---
@@ -2870,13 +2716,13 @@ linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), c("H
 #### 3.1. Hypothesis testing
 
 <ul>
-  <li>It can be used for <b>F tests</b> like the one from the summary</li>
+  <li> We can also use it to carry out <b>F tests</b> for joint significance</li>
 </ul>
 
 --
 
 ```{r, eval = F}
-linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), 
+car::linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), 
                  c("Hours = 0", "sqHours = 0", "SexMale = 0", "Hours:SexMale = 0"))
 ```
 
@@ -2888,7 +2734,7 @@ linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
 #### 3.1. Hypothesis testing
 
 ```{r}
-linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), 
+car::linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec), 
                  c("Hours = 0", "sqHours = 0", "SexMale = 0", "Hours:SexMale = 0"))
 ```
 
@@ -2923,210 +2769,6 @@ linearHypothesis(lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
 
 ---
 
-### 3. Inference
-
-#### 3.2. Confidence intervals
-
-<ul>
-  <li>Now we know how to get the area below a given value of a Student \(t\) distribution</li>
-  <ul>
-    <li>But sometimes the opposite is useful as well</li>
-    <li>In particular to compute <b>confidence intervals</b></li>
-  </ul>
-</ul>
-
---
-
- * Indeed the confidence interval for a $\hat{\beta}$ coefficient is given by:
- 
-$$\hat{\beta} \pm t_{1-(\alpha/2), \text{df}} \times \text{s.e.}(\hat{\beta})$$
-
-<ul><ul><li>Where \(\alpha\) denotes the desired significance level</li></ul></ul>
-
---
-
-<ul>
-  <li><b>qt()</b> gives the \(t\)-statistic below which lies the desired share of the area of a given Student \(t\) distribution</li>
-  <ul>
-    <li></li>
-    <li></li>
-  </ul>
-</ul>
-
-```{r, eval = F}
-qt( , )
-```
-
----
-
-### 3. Inference
-
-#### 3.2. Confidence intervals
-
-<ul>
-  <li>Now we know how to get the area below a given value of a Student \(t\) distribution</li>
-  <ul>
-    <li>But sometimes the opposite is useful as well</li>
-    <li>In particular to compute <b>confidence intervals</b></li>
-  </ul>
-</ul>
-
- * Indeed the confidence interval for a $\hat{\beta}$ coefficient is given by:
- 
-$$\hat{\beta} \pm t_{1-(\alpha/2), \text{df}} \times \text{s.e.}(\hat{\beta})$$
-
-<ul><ul><li>Where \(\alpha\) denotes the desired significance level</li></ul></ul>
-
-
-<ul>
-  <li><b>qt()</b> gives the \(t\)-statistic below which lies the desired share of the area of a given Student \(t\) distribution</li>
-  <ul>
-    <li>The first argument is \(1-(\alpha/2)\)</li>
-    <li></li>
-  </ul>
-</ul>
-
-```{r, eval = F}
-qt(.975, )
-```
-
----
-
-### 3. Inference
-
-#### 3.2. Confidence intervals
-
-<ul>
-  <li>Now we know how to get the area below a given value of a Student \(t\) distribution</li>
-  <ul>
-    <li>But sometimes the opposite is useful as well</li>
-    <li>In particular to compute <b>confidence intervals</b></li>
-  </ul>
-</ul>
-
- * Indeed the confidence interval for a $\hat{\beta}$ coefficient is given by:
- 
-$$\hat{\beta} \pm t_{1-(\alpha/2), \text{df}} \times \text{s.e.}(\hat{\beta})$$
-
-<ul><ul><li>Where \(\alpha\) denotes the desired significance level</li></ul></ul>
-
-<ul>
-  <li><b>qt()</b> gives the \(t\)-statistic below which lies the desired share of the area of a given Student \(t\) distribution</li>
-  <ul>
-    <li>The first argument is \(1-(\alpha/2)\)</li>
-    <li>The second argument is the number of <b>degrees of freedom</b></li>
-  </ul>
-</ul>
-
-```{r}
-qt(.975, Inf)
-```
-
----
-
-### 3. Inference
-
-#### 3.2. Confidence intervals
-
-<ul>
-  <li>So if we want a 97% <b>confidence interval</b> for our coefficients associated with hours, we feed <b>qt()</b> with:</li>
-  <ul>
-    <li></li>
-    <li></li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-```{r, eval = F}
-t003 <- qt( , )
-```
-
----
-
-### 3. Inference
-
-#### 3.2. Confidence intervals
-
-<ul>
-  <li>So if we want a 97% <b>confidence interval</b> for our coefficients associated with hours, we feed <b>qt()</b> with:</li>
-  <ul>
-    <li>The <b>share</b> of the Student \(t\) <b>distribution</b> below the desired \(t\)-stat: \(1-(\alpha/2) = 1-(0.03/2) = 0.985\)</li>
-    <li></li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-```{r, eval = F}
-t003 <- qt(.985, )
-```
-
----
-
-### 3. Inference
-
-#### 3.2. Confidence intervals
-
-<ul>
-  <li>So if we want a 97% <b>confidence interval</b> for our coefficients associated with hours, we feed <b>qt()</b> with:</li>
-  <ul>
-    <li>The <b>share</b> of the Student \(t\) <b>distribution</b> below the desired \(t\)-stat: \(1-(\alpha/2) = 1-(0.03/2) = 0.985\)</li>
-    <li>The <b>degrees of freedom:</b> \(\#\text{obs.} - \#\text{params}\)</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-```{r, eval = F}
-t003 <- qt(.985, nrow(asec) - nrow(results))
-```
-
----
-
-### 3. Inference
-
-#### 3.2. Confidence intervals
-
-<ul>
-  <li>So if we want a 97% <b>confidence interval</b> for our coefficients associated with hours, we feed <b>qt()</b> with:</li>
-  <ul>
-    <li>The <b>share</b> of the Student \(t\) <b>distribution</b> below the desired \(t\)-stat: \(1-(\alpha/2) = 1-(0.03/2) = 0.985\)</li>
-    <li>The <b>degrees of freedom:</b> \(\#\text{obs.} - \#\text{params}\)</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.25cm;"></p>
-
-```{r}
-t003 <- qt(.985, nrow(asec) - nrow(results))
-t003
-```
-
---
- 
-<p style = "margin-bottom:1.25cm;"></p>
-
- * And we apply the formula:
-
---
-
-.pull-left[
-```{r}
-results[2, 1] - (results[2, 2] * t003)
-```
-]
- 
---
-
-.pull-right[
-```{r}
-results[2, 1] + (results[2, 2] * t003)
-```
-]
-
----
-
 <h3>Overview</h3>
 
 <p style = "margin-bottom:2.5cm;"></p>
@@ -3144,7 +2786,7 @@ results[2, 1] + (results[2, 2] * t003)
 <p style = "margin-bottom:1.5cm;"></p>
 
 <ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Case study &#10004;</b></li>
+  <li><b>2. Getting to the right model &#10004;</b></li>
   <ul style = "list-style: none">
     <li>2.1. Variable transformation</li>
     <li>2.2. Functional form</li>
@@ -3160,7 +2802,7 @@ results[2, 1] + (results[2, 2] * t003)
   <li><b>3. Inference &#10004;</b></li>
   <ul style = "list-style: none">
     <li>3.1. Hypothesis testing</li>
-    <li>3.2. Confidence intervals</li>
+    
   </ul>
 </ul>
  
@@ -3177,57 +2819,6 @@ results[2, 1] + (results[2, 2] * t003)
 <p style = "margin-bottom:1.5cm;"></p>
 
 <ul style = "margin-left:-1cm;list-style: none"><li><b>5. Wrap up!</b></li></ul>
-
-]
-
----
-
-<h3>Overview</h3>
-
-<p style = "margin-bottom:2.5cm;"></p>
-
-.pull-left[
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>1. Regressions &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>1.1. On continuous variables</li>
-    <li>1.2. On binary variables</li>
-    <li>1.3. On categorical variables</li>
-  </ul>
-</ul>
-
-<p style = "margin-bottom:1.5cm;"></p>
-
-<ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Case study &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>2.1. Variable transformation</li>
-    <li>2.2. Functional form</li>
-    <li>2.3. Control variables</li>
-    <li>2.4. Interactions</li>
-  </ul>
-</ul>
-]
-
-.pull-right[
-
-<ul style = "margin-left:-1cm;list-style: none">
-  <li><b>3. Inference &#10004;</b></li>
-  <ul style = "list-style: none">
-    <li>3.1. Hypothesis testing</li>
-    <li>3.2. Confidence intervals</li>
-  </ul>
-</ul>
- 
-<p style = "margin-bottom:1.5cm;"></p>
-
-<ul style = "margin-left:-1cm;list-style: none">
-  <li><b>4. Report and export results</b></li>
-<ul style = "list-style: none">
-    <li>4.1. Regression tables</li>
-    <li>4.2. Plot coefficients</li>
-    </ul>
-</ul>
 
 ]
 
@@ -3254,8 +2845,28 @@ results[2, 1] + (results[2, 2] * t003)
 
 #### 4.1. Regression tables
 
+There are many packages available. The most popular ones are:
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables.</li>
+  <li><b>stargazer</b>: classic and easy, but unmaintained since ~2015
+
+  <li><b>texreg</b>: same idea as <b>stargazer</b>, actively maintained, supports more model types.</li>
+
+  <li><b>huxtable</b>: <b>huxreg()</b> makes quick regression tables that render to LaTeX, HTML, or Word unchanged.</li>
+
+  <li><b>modelsummary</b>: most flexible and actively maintained; one call outputs to LaTeX/HTML/Word with easy customization.</li>
+
+  <li><b>kableExtra</b>: can be used on top of other packages for further customization and styling.</li>
+
+</ul>
+
+---
+
+### 4. Report and export results
+
+#### 4.1. Regression tables
+
+<ul>
+  <li>Let's start with the <b>huxreg()</b> function from <b>huxtable</b>:</li>
   <ul>
     <li></li>
     <li></li>
@@ -3285,7 +2896,7 @@ outreg <- huxreg()
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
+  <li>Let's start with the <b>huxreg()</b> function from <b>huxtable</b>:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
     <li></li>
@@ -3315,7 +2926,7 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
+  <li>Let's start with the <b>huxreg()</b> function from <b>huxtable</b>:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
     <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
@@ -3345,7 +2956,7 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
+  <li>Let's start with the <b>huxreg()</b> function from <b>huxtable</b>:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
     <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
@@ -3375,7 +2986,7 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
+  <li>Let's start with the <b>huxreg()</b> function from <b>huxtable</b>:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
     <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
@@ -3405,7 +3016,7 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
+  <li>Let's start with the <b>huxreg()</b> function from <b>huxtable</b>:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
     <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
@@ -3435,7 +3046,7 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 #### 4.1. Regression tables
 
 <ul>
-  <li>The <b>huxreg()</b> function from <b>huxtable</b> allows to create such tables. Main arguments include:</li>
+  <li>Let's start with the <b>huxreg()</b> function from <b>huxtable</b>:</li>
   <ul>
     <li>As many <b>models</b> as you want, named or not</li>
     <li>Which <b>uncertainty statistic</b> to display (std.error, p.value, conf.low, conf.high)</li>
@@ -3488,53 +3099,6 @@ outreg <- huxreg(Baseline = lm(lEarnings ~ Hours, asec),
 --
 
  * Then export it with `quick_[latex/html/pdf/docx](outreg, file = "path/filename.format")`
-
----
-
-### 4. Report and export results
-
-#### 4.1. Regression tables
-
-<center><img src = "slides_elements/figures/latex_output.png" width = "900"/></center>
-
----
-
-### 4. Report and export results
-
-#### 4.1. Regression tables
-
-<center><img src = "slides_elements/figures/html_output.png" width = "900"/></center>
-
----
-
-```{r, echo = F}
-library(huxtable)
-huxreg(Baseline = lm(lEarnings ~ Hours, asec),
-       lm(lEarnings ~ Hours + sqHours, asec),
-       lm(lEarnings ~ Hours + sqHours + Sex, asec),
-       lm(lEarnings ~ Hours + sqHours + Sex + Hours * Sex, asec),
-       error_format = "({std.error})",
-       error_pos = "below",
-       statistics = c(N = "nobs", R2 = "r.squared"), 
-       stars = c(`***` = 0.01, `**` = 0.05, `*` = 0.1),
-       note = "Dependent variable: log annual earnings. {stars}")
-```
-
----
-
-### 4. Report and export results
-
-#### 4.1. Regression tables
-
-.pull-left[
-<center><img src = "slides_elements/figures/pdf_output.png" width = "600"/></center>
-]
-
---
-
-.pull-right[
-<center><img src = "slides_elements/figures/docx_output.png" width = "600"/></center>
-]
 
 ---
 
@@ -3799,19 +3363,12 @@ huxreg(lm(lEarnings ~ Hours, asec),
 
 #### 4.2. Plot coefficients
 
-<ul>
-  <li>It can also be useful to provide a <b>graphical representation</b> of the coefficients</li>
-  <ul>
-    <li>By now you should be able to work it around with <b>dplyr</b> and <b>ggplot</b></li>
-    <li>But there exists a <b>shortcut</b></li>
-  </ul>
-</ul>
-
---
+It can also be useful to provide a <b>graphical representation</b> of the coefficients
 
 <ul>
-  <li>The <b>plot_summs()</b> function from the <b>jtools</b> package takes regression models as inputs and <b>plots the results</b></li>
-  <ul>
+  <li>You can do it with <b>dplyr</b> and <b>ggplot</b> extracting the elements from the regression output</li>
+  <li>But there exists a <b>shortcut</b>: the <b>plot_summs()</b> function from the <b>jtools</b> package
+    <ul>
     <li></li>
     <li></li>
     <li></li>
@@ -3835,17 +3392,12 @@ plot_summs()
 
 #### 4.2. Plot coefficients
 
-<ul>
-  <li>It can also be useful to provide a <b>graphical representation</b> of the coefficients</li>
-  <ul>
-    <li>By now you should be able to work it around with <b>dplyr</b> and <b>ggplot</b></li>
-    <li>But there exists a <b>shortcut</b></li>
-  </ul>
-</ul>
+It can also be useful to provide a <b>graphical representation</b> of the coefficients
 
 <ul>
-  <li>The <b>plot_summs()</b> function from the <b>jtools</b> package takes regression models as inputs and <b>plots the results</b></li>
-  <ul>
+  <li>You can do it with <b>dplyr</b> and <b>ggplot</b> extracting the elements from the regression output</li>
+  <li>But there exists a <b>shortcut</b>: the <b>plot_summs()</b> function from the <b>jtools</b> package
+    <ul>
     <li>First feed it with your <b>models</b></li>
     <li></li>
     <li></li>
@@ -3869,25 +3421,20 @@ plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
 
 #### 4.2. Plot coefficients
 
-<ul>
-  <li>It can also be useful to provide a <b>graphical representation</b> of the coefficients</li>
-  <ul>
-    <li>By now you should be able to work it around with <b>dplyr</b> and <b>ggplot</b></li>
-    <li>But there exists a <b>shortcut</b></li>
-  </ul>
-</ul>
+It can also be useful to provide a <b>graphical representation</b> of the coefficients
 
 <ul>
-  <li>The <b>plot_summs()</b> function from the <b>jtools</b> package takes regression models as inputs and <b>plots the results</b></li>
-  <ul>
-    <li>First feed it with your <b>models</b></li>
-    <li>You can choose to <b>omit</b> some <b>coefficients</b></li>
-    <li></li>
-    <li></li>
-    <li></li>
-  </ul>
+  <li>You can do it with <b>dplyr</b> and <b>ggplot</b> extracting the elements from the regression output</li>
+  <li>But there exists a <b>shortcut</b>: the <b>plot_summs()</b> function from the <b>jtools</b> package
+    <ul>
+      <li>First feed it with your <b>models</b></li>
+      <li>You can choose to <b>omit</b> some <b>coefficients</b></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </li>
 </ul>
-
 ```{r, eval = F}
 plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
            lm(lEarnings ~ Hours + Race + Sex + sqHours, asec),
@@ -3903,17 +3450,12 @@ plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
 
 #### 4.2. Plot coefficients
 
-<ul>
-  <li>It can also be useful to provide a <b>graphical representation</b> of the coefficients</li>
-  <ul>
-    <li>By now you should be able to work it around with <b>dplyr</b> and <b>ggplot</b></li>
-    <li>But there exists a <b>shortcut</b></li>
-  </ul>
-</ul>
+It can also be useful to provide a <b>graphical representation</b> of the coefficients
 
 <ul>
-  <li>The <b>plot_summs()</b> function from the <b>jtools</b> package takes regression models as inputs and <b>plots the results</b></li>
-  <ul>
+  <li>You can do it with <b>dplyr</b> and <b>ggplot</b> extracting the elements from the regression output</li>
+  <li>But there exists a <b>shortcut</b>: the <b>plot_summs()</b> function from the <b>jtools</b> package
+    <ul>
     <li>First feed it with your <b>models</b></li>
     <li>You can choose to <b>omit</b> some <b>coefficients</b></li>
     <li>Change the <b>level</b> of the <b>confidence</b> intervals</li>
@@ -3937,24 +3479,20 @@ plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
 
 #### 4.2. Plot coefficients
 
-<ul>
-  <li>It can also be useful to provide a <b>graphical representation</b> of the coefficients</li>
-  <ul>
-    <li>By now you should be able to work it around with <b>dplyr</b> and <b>ggplot</b></li>
-    <li>But there exists a <b>shortcut</b></li>
-  </ul>
-</ul>
+It can also be useful to provide a <b>graphical representation</b> of the coefficients
 
 <ul>
-  <li>The <b>plot_summs()</b> function from the <b>jtools</b> package takes regression models as inputs and <b>plots the results</b></li>
-  <ul>
+  <li>You can do it with <b>dplyr</b> and <b>ggplot</b> extracting the elements from the regression output</li>
+  <li>But there exists a <b>shortcut</b>: the <b>plot_summs()</b> function from the <b>jtools</b> package
+    <ul>
     <li>First feed it with your <b>models</b></li>
     <li>You can choose to <b>omit</b> some <b>coefficients</b></li>
     <li>Change the <b>level</b> of the <b>confidence</b> intervals</li>
-    <li>Custom the <b>color palette</b></li>
+    <li> Custom the <b>color palette</b> </li>
     <li></li>
   </ul>
 </ul>
+
 
 ```{r, eval = F}
 plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
@@ -3971,24 +3509,21 @@ plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
 
 #### 4.2. Plot coefficients
 
-<ul>
-  <li>It can also be useful to provide a <b>graphical representation</b> of the coefficients</li>
-  <ul>
-    <li>By now you should be able to work it around with <b>dplyr</b> and <b>ggplot</b></li>
-    <li>But there exists a <b>shortcut</b></li>
-  </ul>
-</ul>
+
+It can also be useful to provide a <b>graphical representation</b> of the coefficients
 
 <ul>
-  <li>The <b>plot_summs()</b> function from the <b>jtools</b> package takes regression models as inputs and <b>plots the results</b></li>
-  <ul>
+  <li>You can do it with <b>dplyr</b> and <b>ggplot</b> extracting the elements from the regression output</li>
+  <li>But there exists a <b>shortcut</b>: the <b>plot_summs()</b> function from the <b>jtools</b> package
+    <ul>
     <li>First feed it with your <b>models</b></li>
     <li>You can choose to <b>omit</b> some <b>coefficients</b></li>
     <li>Change the <b>level</b> of the <b>confidence</b> intervals</li>
-    <li>Custom the <b>color palette</b></li>
+    <li> Custom the <b>color palette</b> </li>
     <li>And add ggplot functions!</li>
   </ul>
 </ul>
+
 
 ```{r, eval = F}
 plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
@@ -4036,7 +3571,7 @@ plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
 <p style = "margin-bottom:1.5cm;"></p>
 
 <ul style = "margin-left:1.5cm;list-style: none">
-  <li><b>2. Case study &#10004;</b></li>
+  <li><b>2. Getting to the right model &#10004;</b></li>
   <ul style = "list-style: none">
     <li>2.1. Variable transformation</li>
     <li>2.2. Functional form</li>
@@ -4052,7 +3587,7 @@ plot_summs(lm(lEarnings ~ Hours + Race + Sex, asec),
   <li><b>3. Inference &#10004;</b></li>
   <ul style = "list-style: none">
     <li>3.1. Hypothesis testing</li>
-    <li>3.2. Confidence intervals</li>
+    
   </ul>
 </ul>
  
